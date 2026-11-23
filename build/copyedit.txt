@@ -41,7 +41,7 @@ R=[
 ("Special events and schedule changes are always on the full calendar",
  "Special events and changes always show up on the full calendar"),
 ("Prairie Valley Church is a church for the entire community in Campbell, Texas. We believe the Bible is God's Word and that the gospel of Jesus Christ is for everyone, so we preach it plainly and welcome anyone who wants to hear it.",
- "Prairie Valley Church is a church for the whole community in Campbell, East Texas. We believe the Bible is God's Word, and the gospel of Jesus is for everyone. So we preach it plainly. Anyone who wants to hear it is welcome here."),
+ "Prairie Valley Church is a church for the entire community in Campbell, Texas. We believe the Bible is God's Word, and the gospel of Jesus is for everyone. So we preach it plainly. Anyone who wants to hear it is welcome here."),
 ("Your gift supports a welcoming place for worship, prayer, and spiritual growth: weekly services, Bible studies, youth ministry, and outreach to neighbors in need. You can give one time or set up a weekly, bi-weekly or monthly gift, and you'll receive a tax receipt.",
  "Your giving pays for what we do together: worship, Bible studies, youth ministry, and caring for neighbors in need. Give once, or set up a weekly, bi-weekly, or monthly gift. You'll get a tax receipt."),
 ("You can also give in person during Sunday worship, or mail a check to:",
@@ -53,6 +53,13 @@ for o,n in R:
     assert t.count(o)==1,(t.count(o),o[:60])
     t=t.replace(o,n)
 
+# breakfast: keep only the callout; direct sermon links to the channel episode list
+assert t.count('<span class="sub">Light breakfast beforehand</span>')==1
+t=t.replace('<span class="sub">Light breakfast beforehand</span>','<span class="sub">Come as you are</span>')
+assert t.count('Worship at 10:45 AM, light breakfast beforehand')==2
+t=t.replace('Worship at 10:45 AM, light breakfast beforehand','Worship at 10:45 AM')
+assert t.count('https://pvbchurch.churchcenter.com/channels"')==2
+t=t.replace('https://pvbchurch.churchcenter.com/channels"','https://pvbchurch.churchcenter.com/channels/25138"')
 import re
 t,n=re.subn(r'\s*<div class="chips"[^>]*>.*?</div>','',t,count=1,flags=re.S)
 assert n==1
