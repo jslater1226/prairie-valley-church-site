@@ -1,6 +1,6 @@
 R=[
 ("We're a thriving rural church with a modern feel. We love Jesus, and we love people. Whether you're new to church or have been following Jesus for years, there's a place for you here.",
- "Grandparents, toddlers, and everybody in between worship together here. We open the Bible, we sing, and we share a light breakfast. Visitors keep telling us the same thing: they felt welcome."),
+ "We're a rural church with a modern feel. We love Jesus, and we love people. Whether you're brand new to church or have followed Jesus for years, there's a place for you here."),
 ("No pressure and no dress code. Here's what a Sunday morning at Prairie Valley looks like.",
  "Not sure what to expect? Here's what a Sunday morning looks like at Prairie Valley."),
 ("Our service starts at 10:45 AM with gospel-centered music, a mix of hymns and contemporary songs, and biblical teaching.",
