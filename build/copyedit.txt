@@ -1,0 +1,116 @@
+R=[
+("We're a thriving rural church with a modern feel. We love Jesus, and we love people. Whether you're new to church or have been following Jesus for years, there's a place for you here.",
+ "Grandparents, toddlers, and everybody in between worship together here. We open the Bible, we sing, and we share a light breakfast. Visitors keep telling us the same thing: they felt welcome."),
+("No pressure and no dress code. Here's what a Sunday morning at Prairie Valley looks like.",
+ "Not sure what to expect? Here's what a Sunday morning looks like at Prairie Valley."),
+("Our service starts at 10:45 AM with gospel-centered music, a mix of hymns and contemporary songs, and biblical teaching.",
+ "We start at 10:45 AM. We sing together, some hymns and some newer songs, and then we open the Bible."),
+("The teaching comes straight from the Bible, usually verse by verse through whole books.",
+ "We go verse by verse through whole books of the Bible, so you hear all of it, not just the favorites."),
+("Kids join us for the first part of the service and sing with us. After a short children's sermon, kids through 5th grade can head to Children's Church.",
+ "Kids start the service with us and sing along. After a short children's message, kids through 5th grade head to Children's Church."),
+("Prefer to keep your child with you for the whole service? That's totally fine.",
+ "Want to keep your kids with you the whole time? That's totally fine."),
+("Wear what's comfortable. Some folks dress up, most come casual. You'll fit in either way.",
+ "Wear what's comfortable. Some folks dress up, most come casual, and you'll fit right in either way."),
+("We serve a light breakfast every Sunday morning, from donuts to homemade breakfast items. Come feed your belly and your soul.",
+ "There's a light breakfast every Sunday morning, anything from donuts to homemade breakfast items. Come feed your belly and your soul."),
+("<strong>Visiting with kids?</strong> Fill out the guest registration form ahead of time and check-in will be quick and simple when you arrive.",
+ "<strong>Bringing kids?</strong> Fill out the guest form ahead of time and check-in will be quick when you get here."),
+("We preach straight through books of the Bible so Scripture, not us, sets the agenda. Watch or listen to any message, any time.",
+ "We preach straight through books of the Bible, so Scripture sets the agenda and not us. Missed a Sunday? You can watch or listen any time."),
+("<h3>Every Sunday's sermon, online</h3>","<h3>Catch up on a Sunday</h3>"),
+("Video and audio of each week's message are posted after the service. Missed a Sunday? Catch up here.",
+ "We post the video and audio of each message after the service."),
+("We've recently been through Romans, Psalms, Ephesians, and the Gospels of Luke and John, plus a short series on the basics of what we believe.",
+ "We've preached through Romans, Psalms, and Ephesians. This Advent, we're walking through the book of Ruth."),
+("Real community happens between Sundays too. Here's what's going on through the week.",
+ "Church isn't just Sunday morning. Here's what goes on through the week."),
+("Kids join the service for singing and a short children's message, then head to Children's Church (through 5th grade) while the sermon continues.",
+ "Kids sing with us and hear a short children's message, then head to Children's Church (through 5th grade) while the sermon goes on."),
+("A midweek gathering for kids and students to dig into the Bible, build friendships, and have fun. Bible study for all ages happens the same night.",
+ "Kids and students dig into the Bible, make friends, and have fun. Bible study for all ages is the same night, so the whole family can come."),
+("A Ladies' Group and a Men's Group meet on Monday evenings for study, prayer, and real friendship.",
+ "A Ladies' Group and a Men's Group meet Monday evenings to study the Bible, pray, and get to know each other."),
+("Men gather for prayer meetings and special nights, like our annual Forge Night. Bring a friend.",
+ "Men get together for prayer and for special nights like Forge Night. Bring a friend."),
+("We observe the Lord's Supper together as part of our worship. Check the calendar for the next Sunday.",
+ "We take the Lord's Supper together as part of worship. Check the calendar to see which Sunday is next."),
+("note:'Free chili dinner, live farrier demonstration, bring a friend. Student Building.'",
+ "note:'Free chili dinner and a live farrier demonstration. Bring a friend. Student Building.'"),
+("Special events and schedule changes are always on the full calendar",
+ "Special events and changes always show up on the full calendar"),
+("Prairie Valley Church is a church for the entire community in Campbell, Texas. We believe the Bible is God's Word and that the gospel of Jesus Christ is for everyone, so we preach it plainly and welcome anyone who wants to hear it.",
+ "Prairie Valley Church is a church for the whole community in Campbell, Texas. We believe the Bible is God's Word and the gospel of Jesus is for everyone. So we preach it plainly, and we welcome anyone who wants to hear it."),
+("Your gift supports a welcoming place for worship, prayer, and spiritual growth: weekly services, Bible studies, youth ministry, and outreach to neighbors in need. You can give one time or set up a weekly, bi-weekly or monthly gift, and you'll receive a tax receipt.",
+ "Your gift helps keep our doors open for worship, Bible studies, youth ministry, and caring for neighbors in need. Give once, or set up a weekly, bi-weekly, or monthly gift. You'll get a tax receipt."),
+("You can also give in person during Sunday worship, or mail a check to:",
+ "You can also give in person on Sunday, or mail a check to:"),
+("Come worship with us, hear the Word preached, and connect with a community that cares. If you have questions before you visit, call us or see our New Here page.",
+ "Come worship with us, hear the Word, and get to know some people who'll be glad you came. Questions before you visit? Give us a call, or start with our New Here page."),
+]
+for o,n in R:
+    assert t.count(o)==1,(t.count(o),o[:60])
+    t=t.replace(o,n)
+
+import re
+t,n=re.subn(r'\s*<div class="chips"[^>]*>.*?</div>','',t,count=1,flags=re.S)
+assert n==1
+t=t.replace('</style>','.series-badge .btn.solid{background:var(--white);color:var(--navy);border-color:var(--white);}\n</style>',1)
+B='https://pvbchurch.churchcenter.com/channels/25138/series/'
+S=[('Romans: Power of the Gospel','79553'),('Ephesians: United in Christ','68521'),('Sacred Songs','67211'),('Songs of the Savior','73927'),('Life in His Name (Easter 2026)','84988')]
+btns=''.join('<a class="btn sm" href="%s%s" target="_blank" rel="noopener">%s <span class="arrow">&rarr;</span></a>'%(B,i,n) for n,i in S)
+o="We've preached through Romans, Psalms, and Ephesians. This Advent, we're walking through the book of Ruth."
+assert t.count(o)==1
+t=t.replace(o,"Pick a series and start anywhere.</p><div class=\"series-links\">"+btns+"</div><p>This Advent, we're walking through the book of Ruth.")
+t=t.replace('</style>','.btn.sm{padding:10px 20px;font-size:.92rem;}\n.series-links{display:flex;flex-wrap:wrap;gap:10px;}\n</style>',1)
+import json
+P=json.load(open('photos.json'))
+for nm,full,role in [('Kaylee','Kaylee Kinnaird','Student Minister'),('Josh','Josh Slater','Senior Pastor / Staff Elder'),('Alesa','Alesa Benson','Administrative Assistant'),('Joey','Joey Knight','Worship Pastor')]:
+    pass
+def swap(initials,full):
+    global t
+    o='<div class="mono">%s</div><h3>%s</h3>'%(initials,full)
+    assert t.count(o)>=1,(full)
+    key={'Kaylee Kinnaird':'Kaylee','Josh Slater':'Josh','Alesa Benson':'Alesa','Joey Knight':'Joey'}[full]
+    n='<img class="avatar" src="%s" alt="%s" width="112" height="112" loading="lazy"><h3>%s</h3>'%(P[key],full,full)
+    i=t.index(o); t=t[:i]+n+t[i+len(o):]
+swap('JS','Josh Slater'); swap('JK','Joey Knight'); swap('KK','Kaylee Kinnaird'); swap('AB','Alesa Benson')
+# elders: plain list (only first Josh monogram was swapped, the second is inside the block being replaced)
+s=t.index('<div class="kicker reveal" style="margin-bottom:22px">Elders</div>')
+endmark='Ray Dooley</h3><p>Elder</p></div>'
+e=t.index(endmark)+len(endmark)
+rest=t[e:]
+assert rest.lstrip().startswith('</div>'),rest[:40]
+e=e+rest.index('</div>')+len('</div>')
+EL=[('Josh Slater','Senior Pastor / Elder'),('Terry Palmore','Elder'),('Jim Voss','Elder'),('Monty Murphy','Elder'),('Ray Dooley','Elder')]
+lst='<div class="kicker reveal" style="margin-bottom:22px">Elders</div>\n      <ul class="elder-list reveal">'+''.join('<li><b>%s</b><span>%s</span></li>'%x for x in EL)+'</ul>'
+t=t[:s]+lst+t[e:]
+t=t.replace('</style>','''.avatar{width:112px;height:112px;border-radius:50%;object-fit:cover;margin-bottom:16px;display:block;background:var(--panel);box-shadow:0 0 0 3px var(--white),0 0 0 4px var(--line);}
+.elder-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);column-gap:40px;border-top:1px solid var(--line);}
+.elder-list li{padding:16px 0;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;}
+.elder-list b{font-family:var(--serif);color:var(--navy);font-size:1.08rem;}
+.elder-list span{font-size:.9rem;opacity:.75;}
+@media (max-width:700px){.elder-list{grid-template-columns:1fr;}}
+</style>''',1)
+t=t.replace('</style>','@media (max-width:480px){.people-grid{grid-template-columns:repeat(2,1fr);gap:28px 16px;}.avatar{width:96px;height:96px;}}\n</style>',1)
+def juri(path,width,q):
+    im=Image.open(path).convert('RGB'); w,h=im.size
+    im=im.resize((width,int(h*width/w)),Image.LANCZOS)
+    b=io.BytesIO(); im.save(b,'JPEG',quality=q,optimize=True,progressive=True)
+    return 'data:image/jpeg;base64,'+base64.b64encode(b.getvalue()).decode()
+H1=juri('images/hero-source.png',1800,74)
+H2=juri('images/worship-source.png',1500,74)
+o='<div class="hero-illustration">'
+assert t.count(o)==1
+t=t.replace(o,o+'<div class="hero-photo" style="background-image:url('+H1+')"></div><div class="hero-tint"></div>')
+m='<!-- VERIFY NAMES AND TITLES BEFORE PUBLISHING -->'
+assert t.count(m)==1
+t=t.replace(m,'<figure class="wide-photo reveal"><img src="'+H2+'" alt="The congregation standing together during worship at Prairie Valley Church" width="1500" height="844" loading="lazy"></figure>\n      '+m)
+t=t.replace('</style>','''.hero-photo{position:absolute;inset:0;background-size:135% auto;background-repeat:no-repeat;background-position:left 35%;}
+.hero-tint{position:absolute;inset:0;background:linear-gradient(90deg,rgba(2,2,125,.92) 0%,rgba(2,2,125,.78) 42%,rgba(2,2,125,.34) 100%);}
+.hero-illustration svg{position:relative;z-index:2;opacity:.45;}
+.wide-photo{margin:0 0 56px;}
+.wide-photo img{width:100%;height:auto;max-height:540px;object-fit:cover;object-position:center 45%;display:block;}
+@media (max-width:760px){.hero-photo{background-size:auto 100%;background-position:42% center;}.hero-tint{background:linear-gradient(180deg,rgba(2,2,125,.86) 0%,rgba(2,2,125,.74) 60%,rgba(2,2,125,.6) 100%);}}
+</style>''',1)

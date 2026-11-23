@@ -1,0 +1,6 @@
+build/dist/
+build/index.html
+build/template.html
+build/*.zip
+build/*.png
+__pycache__/

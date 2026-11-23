@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Prairie Valley Church | Campbell, TX | Sundays 10:45 AM</title>
+<meta name="description" content="Prairie Valley Church in Campbell, Texas. Worship Sundays at 10:45 AM, Bible study and kids and student ministry on Wednesday nights. 2417 FM 513. Everyone is welcome.">
+<meta property="og:title" content="Prairie Valley Church | Campbell, TX">
+<meta property="og:description" content="A thriving rural church with a modern feel. Worship Sundays at 10:45 AM at 2417 FM 513, Campbell, TX.">
+<meta property="og:type" content="website">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Church",
+  "name": "Prairie Valley Church",
+  "alternateName": "Prairie Valley Baptist Church",
+  "url": "https://prairievalleychurch.com",
+  "telephone": "+1-903-662-5275",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "2417 FM 513",
+    "addressLocality": "Campbell",
+    "addressRegion": "TX",
+    "postalCode": "75422",
+    "addressCountry": "US"
+  },
+  "openingHoursSpecification": [
+    {"@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "10:45", "closes": "12:00"},
+    {"@type": "OpeningHoursSpecification", "dayOfWeek": "Wednesday", "opens": "18:00", "closes": "19:30"}
+  ]
+}
+</script>
+<style>
+  :root{
+    --navy:#02027D; --navy-2:#050596; --white:#fff; --charcoal:#2B2B2B;
+    --navy-tint:#C0C4EE; --line:#E2E2E2; --panel:#EEF0F3;
+    --serif:Georgia,'Times New Roman',serif;
+    --sans:Calibri,Candara,Arial,Helvetica,sans-serif;
+    --maxw:1180px; --fg:#fff;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;scroll-padding-top:84px;}
+  body{margin:0;background:var(--white);color:var(--charcoal);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.5;}
+  img,svg{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  a:focus-visible,button:focus-visible{outline:3px solid #7C83FF;outline-offset:3px;border-radius:4px;}
+  h1,h2,h3{font-family:var(--serif);color:var(--navy);text-wrap:balance;margin:0;font-weight:700;}
+  .skip{position:absolute;left:-999px;top:8px;background:var(--white);color:var(--navy);padding:10px 16px;z-index:300;font-weight:700;}
+  .skip:focus{left:8px;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:24px;position:relative;}
+  @media (max-width:600px){.wrap{padding-inline:20px;}}
+
+  .kicker{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--navy);}
+  .kicker::before{content:"";width:22px;height:2px;background:currentColor;display:block;}
+  .on-navy .kicker{color:var(--navy-tint);}
+  h2{font-size:clamp(1.9rem,3.6vw,2.9rem);letter-spacing:-.01em;}
+  h2::after{content:"";display:block;width:64px;height:3px;background:var(--navy);margin-top:20px;border-radius:2px;}
+  .on-navy h2{color:var(--white);}
+  .on-navy h2::after{background:var(--navy-tint);}
+  .section-head{margin-bottom:44px;max-width:700px;}
+  .section-head p{margin:18px 0 0;line-height:1.7;font-size:1.06rem;}
+
+  section{padding-block:104px;position:relative;}
+  section.alt{background:var(--panel);}
+  section.navy{background:var(--navy);color:var(--white);}
+  @media (max-width:700px){section{padding-block:70px;}}
+
+  .btn{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:1rem;padding:15px 30px;border-radius:999px;border:2px solid var(--navy);color:var(--navy);background:var(--white);cursor:pointer;transition:transform .2s ease,box-shadow .2s ease;}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px -8px rgba(2,2,125,.35);}
+  .btn.solid{background:var(--navy);color:var(--white);}
+  .btn .arrow{transition:transform .2s ease;}
+  .btn:hover .arrow{transform:translateX(4px);}
+  .on-navy .btn{border-color:rgba(255,255,255,.75);color:var(--white);background:transparent;}
+  .on-navy .btn.solid{background:var(--white);color:var(--navy);border-color:var(--white);}
+  .cta-row{display:flex;gap:16px;flex-wrap:wrap;}
+
+  /* header */
+  header{position:fixed;top:0;left:0;right:0;z-index:100;height:84px;display:flex;align-items:center;transition:background .3s ease,box-shadow .3s ease;border-bottom:1px solid transparent;}
+  header.scrolled{background:rgba(255,255,255,.95);backdrop-filter:blur(10px);border-color:var(--line);box-shadow:0 4px 24px -12px rgba(0,0,0,.12);--fg:var(--navy);}
+  .navbar{width:100%;display:flex;align-items:center;justify-content:space-between;}
+  .brand{display:flex;align-items:center;gap:13px;}
+  .brand svg{width:48px;height:48px;flex:none;filter:drop-shadow(0 2px 8px rgba(0,0,0,.2));}
+  .brand-word{font-family:var(--serif);font-size:1.2rem;color:var(--fg);line-height:1.15;transition:color .3s ease;}
+  .brand-word b{display:block;font-size:.6rem;letter-spacing:.2em;font-family:var(--sans);font-weight:700;opacity:.8;}
+  nav.links{display:flex;gap:4px;align-items:center;}
+  nav.links a{font-size:.88rem;font-weight:700;color:var(--fg);padding:10px 14px;position:relative;transition:color .3s ease;}
+  nav.links a::after{content:"";position:absolute;left:14px;right:14px;bottom:5px;height:2px;background:var(--fg);transform:scaleX(0);transform-origin:left;transition:transform .18s ease;}
+  nav.links a:hover::after{transform:scaleX(1);}
+  nav.links a.give-link{border:2px solid var(--fg);border-radius:999px;margin-left:6px;padding:8px 20px;}
+  nav.links a.give-link::after{display:none;}
+  .menu-btn{display:none;background:none;border:0;cursor:pointer;width:44px;height:44px;position:relative;z-index:210;}
+  .menu-btn span{display:block;width:24px;height:2px;background:var(--fg);margin:5px auto;transition:background .3s ease;}
+  .mobile-nav{position:fixed;inset:0;background:var(--navy);z-index:150;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:4px;padding:24px 40px;transform:translateY(-100%);transition:transform .4s cubic-bezier(.6,0,.3,1);visibility:hidden;}
+  .mobile-nav.open{transform:translateY(0);visibility:visible;}
+  .mobile-nav a{font-family:var(--serif);font-size:2rem;color:var(--white);padding:9px 0;}
+  .mobile-nav .msub{font-size:.8rem;letter-spacing:.14em;color:var(--navy-tint);margin-top:22px;text-transform:uppercase;}
+  body.menu-open header{--fg:var(--white);background:transparent;box-shadow:none;border-color:transparent;backdrop-filter:none;}
+  @media (max-width:960px){nav.links{display:none;}.menu-btn{display:block;}}
+
+  /* hero */
+  .hero{position:relative;overflow:hidden;background:var(--navy);color:var(--white);padding-block:180px 96px;min-height:640px;display:flex;align-items:center;}
+  .hero-illustration{position:absolute;inset:0;z-index:0;}
+  .hero-illustration svg{width:100%;height:100%;}
+  .hero-inner{position:relative;z-index:3;max-width:780px;}
+  .hero h1{color:var(--white);font-size:clamp(3rem,7.4vw,5.4rem);line-height:1;margin-top:22px;letter-spacing:-.015em;}
+  .hero p.lead{margin:26px 0 0;font-size:1.2rem;line-height:1.75;max-width:54ch;color:#EEEFFB;}
+  .hero .cta-row{margin-top:40px;}
+
+  .factbar{background:var(--white);border-bottom:1px solid var(--line);}
+  .factbar .wrap{display:grid;grid-template-columns:repeat(3,1fr);}
+  .fact{padding:32px 28px;border-left:1px solid var(--line);}
+  .fact:first-child{border-left:0;padding-left:0;}
+  .fact .kicker{margin-bottom:10px;}
+  .fact strong{font-family:var(--serif);font-size:1.3rem;color:var(--navy);display:block;}
+  .fact span.sub{display:block;margin-top:4px;font-size:.92rem;opacity:.75;}
+  @media (max-width:760px){.factbar .wrap{grid-template-columns:1fr;}.fact{border-left:0;border-top:1px solid var(--line);padding-left:0;}.fact:first-child{border-top:0;}}
+
+  .reveal{transform:translateY(14px);transition:transform .6s ease;}
+  .reveal.visible{transform:none;}
+  @media (prefers-reduced-motion:reduce){.reveal{transform:none;transition:none;}html{scroll-behavior:auto;}}
+
+  /* grids */
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--line);}
+  .grid3 .card{background:var(--white);}
+  @media (max-width:860px){.grid3{grid-template-columns:1fr;}}
+  .card{padding:38px 32px;}
+  .card h3{font-size:1.25rem;margin-bottom:12px;}
+  .card p{line-height:1.65;margin:0;}
+  .card p + p{margin-top:10px;}
+  .callout{border-left:3px solid var(--navy);padding:16px 22px;background:var(--panel);margin-top:28px;max-width:64ch;line-height:1.6;}
+  section.alt .callout{background:var(--white);}
+
+  .visit-guest{margin-top:34px;display:flex;gap:20px;align-items:center;flex-wrap:wrap;}
+  .visit-guest p{margin:0;max-width:56ch;line-height:1.65;}
+
+  /* sermons */
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;}
+  .chip{border:1px solid var(--navy);color:var(--navy);padding:8px 16px;border-radius:999px;font-weight:700;font-size:.88rem;}
+  .series-feature{display:grid;grid-template-columns:1.15fr 1fr;border:1px solid var(--line);overflow:hidden;}
+  @media (max-width:860px){.series-feature{grid-template-columns:1fr;}}
+  .series-badge{padding:46px 40px;background:var(--navy);color:var(--white);}
+  .series-badge h3{color:var(--white);font-size:1.7rem;margin:14px 0;}
+  .series-badge p{line-height:1.65;color:#EAEBFA;margin:0;}
+  .series-side{padding:46px 40px;display:flex;flex-direction:column;justify-content:center;gap:14px;}
+  .series-side p{margin:0;line-height:1.65;}
+
+  /* ministries */
+  .min-list{border-top:1px solid var(--line);}
+  .min-row{display:grid;grid-template-columns:210px 1fr;gap:32px;padding:32px 0;border-bottom:1px solid var(--line);}
+  @media (max-width:700px){.min-row{grid-template-columns:1fr;gap:8px;}}
+  .min-row h3{font-size:1.2rem;}
+  .when{font-weight:700;font-size:.76rem;letter-spacing:.08em;text-transform:uppercase;color:var(--navy);}
+  .min-row p{line-height:1.65;margin:8px 0 0;}
+
+  /* events */
+  .ev-list{border-top:1px solid var(--line);}
+  .ev-row{display:flex;align-items:center;gap:26px;padding:24px 4px;border-bottom:1px solid var(--line);}
+  .ev-date{font-family:var(--serif);color:var(--navy);min-width:78px;font-size:.9rem;text-align:center;text-transform:uppercase;}
+  .ev-date b{display:block;font-size:2rem;line-height:1;}
+  .ev-title{font-weight:700;font-family:var(--serif);font-size:1.15rem;color:var(--navy);}
+  .ev-note{font-size:.95rem;opacity:.8;margin-top:4px;}
+  .rhythm{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:var(--line);margin-top:40px;}
+  @media (max-width:700px){.rhythm{grid-template-columns:1fr;}}
+  .rhythm div{background:var(--white);padding:22px 26px;}
+  .rhythm b{display:block;font-family:var(--serif);color:var(--navy);font-size:1.05rem;}
+  .rhythm span{font-size:.92rem;opacity:.8;}
+  .head-row{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:20px;}
+
+  /* people */
+  .people-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:34px;}
+  @media (max-width:860px){.people-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:480px){.people-grid{grid-template-columns:1fr;}}
+  .mono{width:64px;height:64px;border-radius:50%;background:var(--navy);color:var(--white);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-style:italic;font-size:1.3rem;margin-bottom:14px;}
+  .person h3{font-size:1.08rem;}
+  .person p{margin:4px 0 0;font-size:.88rem;opacity:.75;}
+
+  /* give */
+  .give-box{display:grid;grid-template-columns:1.2fr 1fr;gap:2px;background:var(--line);}
+  @media (max-width:860px){.give-box{grid-template-columns:1fr;}}
+  .give-box > div{background:var(--white);padding:40px 36px;}
+  .give-box p{line-height:1.65;margin:0 0 20px;}
+  .give-box h3{font-size:1.3rem;margin-bottom:12px;}
+
+  /* visit */
+  .visit-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:64px;}
+  @media (max-width:860px){.visit-grid{grid-template-columns:1fr;gap:40px;}}
+  .info-line{display:flex;gap:20px;padding:18px 0;border-top:1px solid rgba(255,255,255,.18);}
+  .info-line:last-child{border-bottom:1px solid rgba(255,255,255,.18);}
+  .info-line .k{width:110px;flex:none;font-weight:700;font-size:.76rem;letter-spacing:.08em;text-transform:uppercase;color:var(--navy-tint);padding-top:3px;}
+  .info-line a{text-decoration:underline;text-underline-offset:3px;}
+
+  footer{background:var(--navy);color:var(--white);padding-block:60px 30px;border-top:2px solid rgba(255,255,255,.14);}
+  .foot-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:40px;}
+  @media (max-width:700px){.foot-grid{grid-template-columns:1fr;gap:28px;}}
+  footer h4{font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;color:var(--navy-tint);margin:0 0 14px;}
+  footer a.flink{display:block;padding:6px 0;color:#EDEEFA;}
+  footer a.flink:hover{text-decoration:underline;}
+  .foot-bottom{border-top:1px solid rgba(255,255,255,.16);margin-top:38px;padding-top:20px;font-size:.82rem;color:var(--navy-tint);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header id="siteHeader">
+  <div class="wrap navbar">
+    <a href="#home" class="brand" aria-label="Prairie Valley Church, home">
+      <!-- STAND-IN LOGO: replace this inline SVG with the real PV Church logo file -->
+      <svg viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="50" cy="50" r="49" fill="#02027D" stroke="#fff" stroke-width="1.5"/>
+        <text x="50" y="60" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-weight="700" font-size="44" fill="#FFFFFF">PV</text>
+        <text x="50" y="82" text-anchor="middle" font-family="Calibri, Arial, sans-serif" font-weight="700" font-size="11" letter-spacing="2" fill="#FFFFFF">CHURCH</text>
+      </svg>
+      <span class="brand-word">Prairie Valley<b>CHURCH FOR THE ENTIRE COMMUNITY</b></span>
+    </a>
+    <nav class="links" aria-label="Main">
+      <a href="#visit">Plan a Visit</a>
+      <a href="#sermons">Sermons</a>
+      <a href="#ministries">Ministries</a>
+      <a href="#events">Events</a>
+      <a href="#about">About</a>
+      <a href="#give" class="give-link">Give</a>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<nav class="mobile-nav" id="mobileNav" aria-label="Mobile">
+  <a href="#visit">Plan a Visit</a>
+  <a href="#sermons">Sermons</a>
+  <a href="#ministries">Ministries</a>
+  <a href="#events">Events</a>
+  <a href="#about">About</a>
+  <a href="#give">Give</a>
+  <span class="msub">2417 FM 513, Campbell, TX</span>
+</nav>
+
+<main id="main">
+  <div class="hero" id="home">
+    <div class="hero-illustration">
+      <svg viewBox="0 0 1440 640" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+        <defs>
+          <radialGradient id="dawn" cx="50%" cy="78%" r="55%">
+            <stop offset="0%" stop-color="#fff" stop-opacity=".28"/>
+            <stop offset="55%" stop-color="#fff" stop-opacity=".06"/>
+            <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <rect width="1440" height="640" fill="url(#dawn)"/>
+        <path d="M0,430 C260,370 420,470 700,420 C980,370 1160,460 1440,400 L1440,640 L0,640 Z" fill="#fff" opacity=".06"/>
+        <path d="M0,480 C240,520 520,430 760,470 C1020,515 1240,440 1440,480 L1440,640 L0,640 Z" fill="#fff" opacity=".1"/>
+        <path d="M0,560 C300,510 460,580 720,540 C1000,497 1200,570 1440,540 L1440,640 L0,640 Z" fill="#fff" opacity=".16"/>
+      </svg>
+    </div>
+    <div class="wrap hero-inner">
+      <span class="kicker" style="color:var(--navy-tint)">Campbell, Texas</span>
+      <h1>Prairie Valley<br>Church</h1>
+      <p class="lead">We're a thriving rural church with a modern feel. We love Jesus, and we love people. Whether you're new to church or have been following Jesus for years, there's a place for you here.</p>
+      <div class="cta-row">
+        <a class="btn solid" href="#visit">Plan Your Visit <span class="arrow">&rarr;</span></a>
+        <a class="btn" href="https://pvbchurch.churchcenter.com/channels" target="_blank" rel="noopener">Watch a Message</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="factbar">
+    <div class="wrap">
+      <div class="fact"><div class="kicker">Sundays</div><strong>Worship at 10:45 AM</strong><span class="sub">Light breakfast beforehand</span></div>
+      <div class="fact"><div class="kicker">Wednesdays</div><strong>6:00&ndash;7:30 PM</strong><span class="sub">Bible study for all ages</span></div>
+      <div class="fact"><div class="kicker">Find us</div><strong>2417 FM 513, Campbell, TX</strong><span class="sub"><a href="https://www.google.com/maps/search/?api=1&query=2417+FM+513+Campbell+TX+75422" target="_blank" rel="noopener" style="text-decoration:underline">Get directions</a></span></div>
+    </div>
+  </div>
+
+  <!-- PLAN A VISIT -->
+  <section id="visit">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="kicker">New here?</span>
+        <h2>What to expect on Sunday</h2>
+        <p>No pressure and no dress code. Here's what a Sunday morning at Prairie Valley looks like.</p>
+      </div>
+      <div class="grid3 reveal">
+        <div class="card">
+          <h3>Worship</h3>
+          <p>Our service starts at 10:45 AM with gospel-centered music, a mix of hymns and contemporary songs, and biblical teaching.</p>
+          <p>The teaching comes straight from the Bible, usually verse by verse through whole books.</p>
+        </div>
+        <div class="card">
+          <h3>Kids</h3>
+          <p>Kids join us for the first part of the service and sing with us. After a short children's sermon, kids up to 4th grade can head to Children's Church.</p>
+          <p>Prefer to keep your child with you for the whole service? That's totally fine.</p>
+        </div>
+        <div class="card">
+          <h3>What to wear</h3>
+          <p>Wear what's comfortable. Some folks dress up, most come casual. You'll fit in either way.</p>
+        </div>
+      </div>
+      <div class="callout reveal">We serve a light breakfast every Sunday morning, from donuts to homemade breakfast items. Come feed your belly and your soul.</div>
+      <div class="visit-guest reveal">
+        <p><strong>Visiting with kids?</strong> Fill out the guest registration form ahead of time and check-in will be quick and simple when you arrive.</p>
+        <a class="btn solid" href="https://pvbchurch.churchcenter.com/people/forms/1016710" target="_blank" rel="noopener">Guest registration <span class="arrow">&rarr;</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERMONS -->
+  <section id="sermons" class="alt">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="kicker">Sermons</span>
+        <h2>Verse by verse, week by week</h2>
+        <p>We preach straight through books of the Bible so Scripture, not us, sets the agenda. Watch or listen to any message, any time.</p>
+      </div>
+      <div class="series-feature reveal">
+        <div class="series-badge">
+          <span class="kicker" style="color:var(--navy-tint)">Latest messages</span>
+          <h3>Every Sunday's sermon, online</h3>
+          <p>Video and audio of each week's message are posted after the service. Missed a Sunday? Catch up here.</p>
+          <div style="margin-top:26px"><a class="btn solid" href="https://pvbchurch.churchcenter.com/channels" target="_blank" rel="noopener">Watch or listen <span class="arrow">&rarr;</span></a></div>
+        </div>
+        <div class="series-side">
+          <span class="kicker">Recent series</span>
+          <p>We've recently been through Romans, Psalms, Ephesians, and the Gospels of Luke and John, plus a short series on the basics of what we believe.</p>
+          <div class="chips" style="margin-top:4px">
+            <span class="chip">Romans</span><span class="chip">Psalms</span><span class="chip">Ephesians</span><span class="chip">Luke &amp; John</span><span class="chip">What Should You Believe?</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MINISTRIES -->
+  <section id="ministries">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="kicker">Ministries</span>
+        <h2>Find your place</h2>
+        <p>Real community happens between Sundays too. Here's what's going on through the week.</p>
+      </div>
+      <div class="min-list reveal">
+        <div class="min-row"><div class="when">Sundays &middot; 10:45 AM</div><div><h3>Children's Ministry</h3><p>Kids join the service for singing and a short children's message, then head to Children's Church (up to 4th grade) while the sermon continues.</p></div></div>
+        <div class="min-row"><div class="when">Wednesdays &middot; 6:00&ndash;7:30 PM</div><div><h3>Wednesday Night Kids &amp; Student Ministry</h3><p>A midweek gathering for kids and students to dig into the Bible, build friendships, and have fun. Bible study for all ages happens the same night.</p></div></div>
+        <div class="min-row"><div class="when">Mondays &middot; 6:00 PM</div><div><h3>Small Group Bible Studies</h3><p>A Ladies' Group and a Men's Group meet on Monday evenings for study, prayer, and real friendship.</p></div></div>
+        <div class="min-row"><div class="when">Regularly</div><div><h3>Men's Ministry</h3><p>Men gather for prayer meetings and special nights, like our annual Forge Night. Bring a friend.</p></div></div>
+        <div class="min-row"><div class="when">Regularly</div><div><h3>The Lord's Supper</h3><p>We observe the Lord's Supper together as part of our worship. Check the calendar for the next Sunday.</p></div></div>
+      </div>
+      <div style="margin-top:34px" class="reveal"><a class="btn" href="https://pvbchurch.churchcenter.com/groups" target="_blank" rel="noopener">Browse groups <span class="arrow">&rarr;</span></a></div>
+    </div>
+  </section>
+
+  <!-- EVENTS -->
+  <section id="events" class="alt">
+    <div class="wrap">
+      <div class="section-head head-row reveal" style="max-width:none">
+        <div><span class="kicker">Events</span><h2>What's happening</h2></div>
+        <a class="btn" href="https://pvbchurch.churchcenter.com/calendar" target="_blank" rel="noopener">Full calendar <span class="arrow">&rarr;</span></a>
+      </div>
+      <div class="ev-list reveal" id="evList" aria-live="polite"></div>
+      <div class="rhythm reveal">
+        <div><b>Every Sunday</b><span>Worship at 10:45 AM, light breakfast beforehand</span></div>
+        <div><b>Every Wednesday</b><span>Kids, students and Bible study, 6:00&ndash;7:30 PM</span></div>
+        <div><b>Mondays</b><span>Small Group Bible Studies, 6:00 PM</span></div>
+        <div><b>Men's Prayer Meeting</b><span>Check the calendar for the current day and time</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT / PEOPLE -->
+  <section id="about">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="kicker">About us</span>
+        <h2>Who we are</h2>
+        <p>Prairie Valley Church is a church for the entire community in Campbell, Texas. We believe the Bible is God's Word and that the gospel of Jesus Christ is for everyone, so we preach it plainly and welcome anyone who wants to hear it.</p>
+      </div>
+      <!-- VERIFY NAMES AND TITLES BEFORE PUBLISHING -->
+      <div class="kicker reveal" style="margin-bottom:22px">Staff</div>
+      <div class="people-grid reveal" style="margin-bottom:60px">
+        <div class="person"><div class="mono">JS</div><h3>Josh Slater</h3><p>Senior Pastor / Staff Elder</p></div>
+        <div class="person"><div class="mono">JK</div><h3>Joey Knight</h3><p>Worship Pastor</p></div>
+        <div class="person"><div class="mono">KK</div><h3>Kaylee Kinnaird</h3><p>Student Minister</p></div>
+        <div class="person"><div class="mono">AB</div><h3>Alesa Benson</h3><p>Administrative Assistant</p></div>
+      </div>
+      <div class="kicker reveal" style="margin-bottom:22px">Elders</div>
+      <div class="people-grid reveal">
+        <div class="person"><div class="mono">JS</div><h3>Josh Slater</h3><p>Senior Pastor / Elder</p></div>
+        <div class="person"><div class="mono">TP</div><h3>Terry Palmore</h3><p>Elder</p></div>
+        <div class="person"><div class="mono">JV</div><h3>Jim Voss</h3><p>Elder</p></div>
+        <div class="person"><div class="mono">MM</div><h3>Monty Murphy</h3><p>Elder</p></div>
+        <div class="person"><div class="mono">RD</div><h3>Ray Dooley</h3><p>Elder</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GIVE -->
+  <section id="give" class="alt">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="kicker">Give</span>
+        <h2>Generous giving</h2>
+      </div>
+      <div class="give-box reveal">
+        <div>
+          <h3>Give online</h3>
+          <p>Your gift supports a welcoming place for worship, prayer, and spiritual growth: weekly services, Bible studies, youth ministry, and outreach to neighbors in need. You can give one time or set up a weekly, bi-weekly or monthly gift, and you'll receive a tax receipt.</p>
+          <a class="btn solid" href="https://www.zeffy.com/en-US/donation-form/generous-giving" target="_blank" rel="noopener">Give now <span class="arrow">&rarr;</span></a>
+        </div>
+        <div>
+          <h3>Other ways to give</h3>
+          <p>You can also give in person during Sunday worship, or mail a check to:</p>
+          <p><strong>Prairie Valley Church<br>2417 FM 513<br>Campbell, TX 75422</strong></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISIT / CONTACT -->
+  <section class="navy on-navy" id="contact">
+    <div class="wrap">
+      <div class="visit-grid">
+        <div class="reveal">
+          <span class="kicker">Visit &amp; contact</span>
+          <h2 style="margin-top:14px">We'd love to meet you</h2>
+          <p style="margin:20px 0 0;line-height:1.75;max-width:52ch;color:#EAEBFA">Come worship with us, hear the Word preached, and connect with a community that cares. If you have questions before you visit, call us or see our New Here page.</p>
+          <div class="cta-row" style="margin-top:30px">
+            <a class="btn solid" href="https://pvbchurch.churchcenter.com/pages/im-new" target="_blank" rel="noopener">I'm new here <span class="arrow">&rarr;</span></a>
+            <a class="btn" href="https://pvbchurch.churchcenter.com/home" target="_blank" rel="noopener">Church Center</a>
+          </div>
+        </div>
+        <div class="reveal">
+          <div class="info-line"><div class="k">Address</div><div><a href="https://www.google.com/maps/search/?api=1&query=2417+FM+513+Campbell+TX+75422" target="_blank" rel="noopener">2417 FM 513, Campbell, TX 75422</a></div></div>
+          <div class="info-line"><div class="k">Phone</div><div><a href="tel:+19036625275">903.662.5275</a></div></div>
+          <div class="info-line"><div class="k">Sundays</div><div>Worship at 10:45 AM, light breakfast beforehand</div></div>
+          <div class="info-line"><div class="k">Wednesdays</div><div>Kids, students and Bible study, 6:00&ndash;7:30 PM</div></div>
+          <div class="info-line"><div class="k">Dress</div><div>Come as you are. Casual is the norm.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot-grid">
+    <div><h4>Prairie Valley Church</h4><p style="max-width:34ch;line-height:1.6;color:#EDEEFA;margin:0">Church for the entire community, in Campbell, Texas.</p></div>
+    <div><h4>Explore</h4><a class="flink" href="#visit">Plan a Visit</a><a class="flink" href="#sermons">Sermons</a><a class="flink" href="#ministries">Ministries</a><a class="flink" href="#events">Events</a></div>
+    <div><h4>Visit</h4><a class="flink" href="https://www.google.com/maps/search/?api=1&query=2417+FM+513+Campbell+TX+75422" target="_blank" rel="noopener">2417 FM 513, Campbell, TX</a><a class="flink" href="tel:+19036625275">903.662.5275</a><a class="flink" href="#give">Give</a></div>
+  </div>
+  <div class="wrap foot-bottom"><span>&copy; 2026 Prairie Valley Church</span><span>Sundays 10:45 AM &middot; Wednesdays 6:00&ndash;7:30 PM</span></div>
+</footer>
+
+<script>
+(function(){
+  /* ---- EVENTS: edit this list. Past events hide themselves automatically. ---- */
+  var EVENTS = [
+    {date:'2026-12-06', time:'4:00 PM', title:"Men's Ministry: Forge Night", note:'Free chili dinner, live farrier demonstration, bring a friend. Student Building.'}
+  ];
+
+  function pad(n){return n<10?'0'+n:''+n;}
+  var now = new Date();
+  var today = now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate());
+  var months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+  var list = document.getElementById('evList');
+  var upcoming = EVENTS.filter(function(e){return e.date >= today;}).sort(function(a,b){return a.date<b.date?-1:1;});
+  if(upcoming.length){
+    upcoming.forEach(function(e){
+      var p = e.date.split('-');
+      var row = document.createElement('div'); row.className='ev-row';
+      var d = document.createElement('div'); d.className='ev-date';
+      var b = document.createElement('b'); b.textContent = String(parseInt(p[2],10));
+      d.appendChild(b); d.appendChild(document.createTextNode(months[parseInt(p[1],10)-1]));
+      var body = document.createElement('div');
+      var t = document.createElement('div'); t.className='ev-title'; t.textContent = e.title;
+      var n = document.createElement('div'); n.className='ev-note'; n.textContent = (e.time ? e.time + ' · ' : '') + (e.note||'');
+      body.appendChild(t); body.appendChild(n);
+      row.appendChild(d); row.appendChild(body); list.appendChild(row);
+    });
+  } else {
+    list.parentNode.removeChild(list);
+  }
+
+  var header = document.getElementById('siteHeader');
+  var hero = document.querySelector('.hero');
+  function onScroll(){ header.classList.toggle('scrolled', window.scrollY > Math.max(hero.offsetHeight - 90, 120)); }
+  document.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+  var menuBtn = document.getElementById('menuBtn');
+  var mobileNav = document.getElementById('mobileNav');
+  function setMenu(open){
+    mobileNav.classList.toggle('open', open);
+    document.body.classList.toggle('menu-open', open);
+    menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  menuBtn.addEventListener('click', function(){ setMenu(!mobileNav.classList.contains('open')); });
+  mobileNav.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ setMenu(false); }); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') setMenu(false); });
+
+  var els = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, {threshold:0.12});
+    els.forEach(function(el){ io.observe(el); });
+  } else { els.forEach(function(el){ el.classList.add('visible'); }); }
+})();
+</script>
+</body>
+</html>
