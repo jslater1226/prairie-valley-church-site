@@ -71,6 +71,7 @@ print('ok',len(out))
 # ================= PRODUCTION BUILD (dist/) =================
 import os, shutil, zipfile
 DOM='https://prairievalleychurch.com'
+NOINDEX=True  # TEMPORARY: preview is public on github.io; set False at launch
 if os.path.exists('dist'): shutil.rmtree('dist')
 os.makedirs('dist/assets')
 def raw(u): return base64.b64decode(u.split(',',1)[1])
@@ -83,7 +84,7 @@ for f in os.listdir('images/events'):
     shutil.copy('images/events/'+f,'dist/assets/event-'+f)
 for uri,path in files.items():
     assert uri in prod,path
-    open('dist/'+path,'wb').write(raw(uri)); prod=prod.replace(uri,'/'+path)
+    open('dist/'+path,'wb').write(raw(uri)); prod=prod.replace(uri,path)
 Image.open('images/favicon-source.png').convert('RGBA').save('dist/favicon.ico',sizes=[(16,16),(32,32),(48,48)])
 # social share image 1200x630: aerial photo + logo
 ph=Image.open('images/hero-source.png').convert('RGB').crop((0,40,2000,1090)).resize((1200,630),Image.LANCZOS)
@@ -91,7 +92,7 @@ lg=Image.open(SRC).convert('RGBA'); lg=lg.resize((210,int(210*lg.size[1]/lg.size
 ph=ph.convert('RGBA'); ph.alpha_composite(lg,(48,630-48-lg.size[1])); ph.convert('RGB').save('dist/assets/og.jpg','JPEG',quality=82,optimize=True)
 head='<meta name="theme-color" content="#02027D">'
 assert prod.count(head)==1
-prod=prod.replace(head,head+'\n<link rel="canonical" href="%s/">\n<meta property="og:url" content="%s/">\n<meta property="og:site_name" content="Prairie Valley Church">\n<meta property="og:image" content="%s/assets/og.jpg">\n<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="630">\n<meta name="twitter:card" content="summary_large_image">\n<link rel="icon" href="/favicon.ico" sizes="any">'%(DOM,DOM,DOM))
+prod=prod.replace(head,head+'\n<link rel="canonical" href="%s/">\n<meta property="og:url" content="%s/">\n<meta property="og:site_name" content="Prairie Valley Church">\n<meta property="og:image" content="%s/assets/og.jpg">\n<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="630">\n<meta name="twitter:card" content="summary_large_image">\n<link rel="icon" href="favicon.ico" sizes="any">'%(DOM,DOM,DOM)+('\n<meta name="robots" content="noindex">' if NOINDEX else ''))
 open('dist/index.html','w',encoding='utf-8').write(prod)
 open('dist/robots.txt','w').write('User-agent: *\nAllow: /\nSitemap: %s/sitemap.xml\n'%DOM)
 open('dist/sitemap.xml','w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>%s/</loc><lastmod>2026-11-23</lastmod></url></urlset>\n'%DOM)
