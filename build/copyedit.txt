@@ -86,6 +86,10 @@ assert t.count('<div class="visit-guest reveal">')==1
 t=t.replace('<div class="visit-guest reveal">',WEL+'<div class="visit-guest reveal">')
 t=t.replace('</style>','.pastor-welcome{max-width:760px;margin:48px auto;padding:38px 40px;text-align:center;background:var(--panel);color:var(--charcoal);border-radius:12px;border-top:4px solid var(--navy);}\n.pastor-welcome .kicker{color:var(--navy);}\n.pastor-welcome p{font-size:1.12rem;line-height:1.7;}\n.pastor-welcome .sig{font-family:var(--serif);font-style:italic;font-size:1.08rem;margin-top:20px;color:var(--navy);}\n@media(max-width:600px){.pastor-welcome{padding:30px 22px;}}\n</style>',1)
 t=t.replace('</style>','#visit .callout{max-width:760px;margin:44px auto 0;text-align:center;border:1px solid var(--line);border-left:1px solid var(--line);border-radius:12px;padding:22px 28px;font-size:1.05rem;}\n#visit .visit-guest{justify-content:center;text-align:center;margin-top:40px;padding-top:36px;border-top:1px solid var(--line);}\n#visit .visit-guest p{max-width:48ch;}\n.series-badge{display:flex;flex-direction:column;justify-content:center;}\n</style>',1)
+o='<p class="lead">'
+assert t.count(o)==1
+t=t.replace(o,'<p class="hero-time"><strong>Sundays at {{SUN_TIME}}</strong><span>2417 FM 513, Campbell, TX</span></p>\n      '+o)
+t=t.replace('</style>','.hero-time{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;margin:26px 0 0;font-size:1.25rem;color:var(--white);}\n.hero-time strong{background:var(--white);color:var(--navy);padding:8px 18px;border-radius:999px;font-weight:700;letter-spacing:.01em;}\n.hero-time span{color:var(--navy-tint);font-size:1.05rem;}\n.hero p.lead{margin-top:20px;}\n</style>',1)
 import json
 P=json.load(open('photos.json'))
 for nm,full,role in [('Kaylee','Kaylee Kinnaird','Student Minister'),('Josh','Josh Slater','Senior Pastor / Staff Elder'),('Alesa','Alesa Benson','Administrative Assistant'),('Joey','Joey Knight','Worship Pastor')]:
