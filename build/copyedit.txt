@@ -76,10 +76,15 @@ t=t.replace('</style>','.series-badge .btn.solid{background:var(--white);color:v
 B='https://pvbchurch.churchcenter.com/channels/25138/series/'
 S=[('Romans: Power of the Gospel','79553'),('Ephesians: United in Christ','68521'),('Sacred Songs','67211'),('Songs of the Savior','73927'),('Life in His Name (Easter 2026)','84988')]
 btns=''.join('<a class="btn sm" href="%s%s" target="_blank" rel="noopener">%s <span class="arrow">&rarr;</span></a>'%(B,i,n) for n,i in S)
+btns+='<a class="btn sm solid" href="https://open.spotify.com/show/6NEX80RdBrwMrF0W7JqqOR" target="_blank" rel="noopener">Listen on Spotify <span class="arrow">&rarr;</span></a>'
 o="We've preached through Romans, Psalms, and Ephesians. This Advent, we're walking through the book of Ruth."
 assert t.count(o)==1
 t=t.replace(o,"Pick a series and start anywhere.</p><div class=\"series-links\">"+btns+"</div><p>This Advent, we're walking through the book of Ruth.")
 t=t.replace('</style>','.btn.sm{padding:10px 20px;font-size:.92rem;}\n.series-links{display:flex;flex-wrap:wrap;gap:10px;}\n</style>',1)
+WEL='<div class="pastor-welcome reveal"><span class="kicker">A word from Pastor Josh</span><p>If you\'re thinking about visiting, here\'s what I\'d want you to know. You don\'t have to have it all figured out. You don\'t have to know the Bible or dress a certain way. We\'re not here to impress you. We\'re here to open the Bible together and point to Jesus.</p><p>Come see for yourself. We\'d love to sit with you.</p><p class="sig">Josh Slater, Senior Pastor</p></div>\n      '
+assert t.count('<div class="visit-guest reveal">')==1
+t=t.replace('<div class="visit-guest reveal">',WEL+'<div class="visit-guest reveal">')
+t=t.replace('</style>','.pastor-welcome{max-width:720px;margin:48px auto;text-align:center;}\n.pastor-welcome p{font-size:1.12rem;line-height:1.7;}\n.pastor-welcome .sig{font-weight:600;margin-top:18px;}\n</style>',1)
 import json
 P=json.load(open('photos.json'))
 for nm,full,role in [('Kaylee','Kaylee Kinnaird','Student Minister'),('Josh','Josh Slater','Senior Pastor / Staff Elder'),('Alesa','Alesa Benson','Administrative Assistant'),('Joey','Joey Knight','Worship Pastor')]:
