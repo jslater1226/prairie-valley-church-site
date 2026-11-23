@@ -233,6 +233,23 @@ html{font-size:clamp(16px,calc(10px + .45vw),20px);}
 .wide-photo{margin:0 0 56px;}
 .wide-photo img{width:100%;height:auto;max-height:540px;object-fit:cover;object-position:center 45%;display:block;}
 @media (max-width:760px){.hero-photo{background-size:auto 100%;background-position:42% center;}.hero-tint{background:linear-gradient(180deg,rgba(2,2,125,.86) 0%,rgba(2,2,125,.74) 60%,rgba(2,2,125,.6) 100%);}}
+/* PHONE-ONLY TIGHTENING (<=760px); desktop untouched */
+@media (max-width:760px){
+  section{padding-block:48px;}
+  .section-head{margin-bottom:24px;}
+  .factbar .wrap{padding-block:4px;}
+  .fact:first-child{display:none;}
+  .fact{padding:14px 0;}
+  .fact .kicker{margin-bottom:4px;}
+  .fact strong{font-size:1.15rem;}
+  .grid3{gap:12px;}
+  .series-badge{padding:22px 24px;}
+  .series-badge .kicker,.series-badge h3,.series-badge p{display:none;}
+  .series-badge div{margin-top:0 !important;}
+  .series-links{flex-wrap:nowrap;overflow-x:auto;margin-inline:-20px;padding:2px 20px 10px;scrollbar-width:none;}
+  .series-links::-webkit-scrollbar{display:none;}
+  .series-links .btn{flex:none;white-space:nowrap;}
+}
 </style>
 </head>
 <body>
