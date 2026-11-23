@@ -84,7 +84,7 @@ t=t.replace('</style>','.btn.sm{padding:10px 20px;font-size:.92rem;}\n.series-li
 WEL='<div class="pastor-welcome reveal"><span class="kicker">A word from Pastor Josh</span><p>If you\'re thinking about visiting, here\'s what I\'d want you to know. You don\'t have to have it all figured out. You don\'t have to know the Bible or dress a certain way. We\'re not here to impress you. We\'re here to open the Bible together and point to Jesus.</p><p>Come see for yourself. We\'d love to sit with you.</p><p class="sig">Josh Slater, Senior Pastor</p></div>\n      '
 assert t.count('<div class="visit-guest reveal">')==1
 t=t.replace('<div class="visit-guest reveal">',WEL+'<div class="visit-guest reveal">')
-t=t.replace('</style>','.pastor-welcome{max-width:720px;margin:48px auto;text-align:center;}\n.pastor-welcome p{font-size:1.12rem;line-height:1.7;}\n.pastor-welcome .sig{font-weight:600;margin-top:18px;}\n</style>',1)
+t=t.replace('</style>','.pastor-welcome{max-width:760px;margin:48px auto;padding:48px 44px;text-align:center;background:var(--navy);color:var(--white);border-radius:14px;border-top:5px solid var(--navy-tint);box-shadow:0 14px 34px rgba(2,2,125,.22);}\n.pastor-welcome .kicker{color:var(--navy-tint);}\n.pastor-welcome p{font-size:1.15rem;line-height:1.75;color:var(--white);}\n.pastor-welcome .sig{font-family:var(--serif);font-style:italic;font-size:1.1rem;margin-top:22px;color:var(--navy-tint);}\n@media(max-width:600px){.pastor-welcome{padding:34px 24px;}}\n</style>',1)
 import json
 P=json.load(open('photos.json'))
 for nm,full,role in [('Kaylee','Kaylee Kinnaird','Student Minister'),('Josh','Josh Slater','Senior Pastor / Staff Elder'),('Alesa','Alesa Benson','Administrative Assistant'),('Joey','Joey Knight','Worship Pastor')]:
