@@ -105,6 +105,9 @@ o='<div class="min-row"><div class="when">Mondays'
 assert t.count(o)==1
 t=t.replace(o,'<div class="min-row"><div class="when">Wednesdays &middot; {{WED_TIME}}</div><div><h3>Wednesday Night Adult Bible Study</h3><p>Adults open the Bible together in a class taught by Pastor Josh, while kids and students meet in their own groups.</p></div></div>\n        '+o)
 t=t.replace('</style>','.wide-photo{position:relative;border-radius:14px;overflow:hidden;}\n.wide-photo img{max-height:440px;filter:saturate(.7) brightness(.9) contrast(.92);}\n.wide-photo::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(2,2,125,.14) 0%,rgba(2,2,125,.30) 100%);box-shadow:inset 0 0 90px rgba(2,2,125,.28);}\n</style>',1)
+o='<span class="brand-word">Prairie Valley<b>'
+assert t.count(o)==1
+t=t.replace(o,'<span class="brand-word">Prairie Valley Church<b>')
 import json
 P=json.load(open('photos.json'))
 for nm,full,role in [('Kaylee','Kaylee Kinnaird','Student Minister'),('Josh','Josh Slater','Senior Pastor / Staff Elder'),('Alesa','Alesa Benson','Administrative Assistant'),('Joey','Joey Knight','Worship Pastor')]:
