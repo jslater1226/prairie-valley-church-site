@@ -109,8 +109,8 @@ o='<span class="brand-word">Prairie Valley<b>'
 assert t.count(o)==1
 t=t.replace(o,'<span class="brand-word">Prairie Valley Church<b>')
 assert t.count('--maxw:1180px;')==1
-t=t.replace('--maxw:1180px;','--maxw:1360px;')
-t=t.replace('</style>','@media (min-width:1000px){.wrap{padding-inline:36px;}}\n</style>',1)
+t=t.replace('--maxw:1180px;','--maxw:clamp(1180px,86vw,1900px);')
+t=t.replace('</style>','html{font-size:clamp(16px,calc(10px + .45vw),20px);}\n@media (min-width:1000px){.wrap{padding-inline:clamp(36px,2.4vw,56px);}}\n</style>',1)
 import json
 P=json.load(open('photos.json'))
 for nm,full,role in [('Kaylee','Kaylee Kinnaird','Student Minister'),('Josh','Josh Slater','Senior Pastor / Staff Elder'),('Alesa','Alesa Benson','Administrative Assistant'),('Joey','Joey Knight','Worship Pastor')]:
