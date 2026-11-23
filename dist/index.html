@@ -191,6 +191,8 @@
   .foot-bottom{border-top:0;position:relative;margin-top:38px;padding-top:20px;font-size:.82rem;color:var(--navy-tint);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
 .foot-bottom::before{content:"";position:absolute;left:24px;right:24px;top:0;border-top:1px solid rgba(255,255,255,.16);}
 @media (max-width:600px){.foot-bottom::before{left:20px;right:20px;}}
+.player{position:relative;aspect-ratio:16/9;max-width:960px;margin:0 auto 40px;border-radius:14px;overflow:hidden;background:var(--navy);}
+.player iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
 .series-badge .btn.solid{background:var(--white);color:var(--navy);border-color:var(--white);}
 .btn.sm{padding:10px 20px;font-size:.92rem;}
 .series-links{display:flex;flex-wrap:wrap;gap:10px;}
@@ -263,7 +265,7 @@
       <p class="lead">We're a rural church with a modern feel. We love Jesus, and we love people. Whether you're brand new to church or have followed Jesus for years, there's a place for you here.</p>
       <div class="cta-row">
         <a class="btn solid" href="#visit">Plan Your Visit <span class="arrow">&rarr;</span></a>
-        <a class="btn" href="https://pvbchurch.churchcenter.com/channels/25138" target="_blank" rel="noopener">Watch a Message</a>
+        <a class="btn" href="https://www.youtube.com/@prairievalleybaptistchurch9414/streams" target="_blank" rel="noopener">Watch a Message</a>
       </div>
     </div>
   </div>
@@ -314,14 +316,15 @@
       <div class="section-head reveal">
         <span class="kicker">Sermons</span>
         <h2>Verse by verse, week by week</h2>
-        <p>We preach straight through books of the Bible, so Scripture sets the agenda and not us. Missed a Sunday? You can watch or listen any time.</p>
+        <p>We preach straight through books of the Bible, so Scripture sets the agenda and not us. Missed a Sunday? The whole service is online.</p>
       </div>
+      <div class="player reveal"><iframe src="https://www.youtube-nocookie.com/embed/videoseries?list=UUtAlXwpJFOncL7ZqwHyEeQg" title="Latest Prairie Valley Church services on YouTube" loading="lazy" allow="accelerometer; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
       <div class="series-feature reveal">
         <div class="series-badge">
-          <span class="kicker" style="color:var(--navy-tint)">Latest messages</span>
+          <span class="kicker" style="color:var(--navy-tint)">Latest service</span>
           <h3>Catch up on a Sunday</h3>
-          <p>We post the video and audio of each message after the service.</p>
-          <div style="margin-top:26px"><a class="btn solid" href="https://pvbchurch.churchcenter.com/channels/25138" target="_blank" rel="noopener">Watch or listen <span class="arrow">&rarr;</span></a></div>
+          <p>We stream every Sunday service live on YouTube. The recording stays up, so you can catch up any time.</p>
+          <div style="margin-top:26px"><a class="btn solid" href="https://www.youtube.com/@prairievalleybaptistchurch9414/streams" target="_blank" rel="noopener">Watch on YouTube <span class="arrow">&rarr;</span></a></div>
         </div>
         <div class="series-side">
           <span class="kicker">Recent series</span>

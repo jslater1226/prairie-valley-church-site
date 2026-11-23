@@ -18,10 +18,10 @@ R=[
 ("<strong>Visiting with kids?</strong> Fill out the guest registration form ahead of time and check-in will be quick and simple when you arrive.",
  "<strong>Bringing kids?</strong> Fill out the guest form ahead of time and check-in will be quick when you get here."),
 ("We preach straight through books of the Bible so Scripture, not us, sets the agenda. Watch or listen to any message, any time.",
- "We preach straight through books of the Bible, so Scripture sets the agenda and not us. Missed a Sunday? You can watch or listen any time."),
+ "We preach straight through books of the Bible, so Scripture sets the agenda and not us. Missed a Sunday? The whole service is online."),
 ("<h3>Every Sunday's sermon, online</h3>","<h3>Catch up on a Sunday</h3>"),
 ("Video and audio of each week's message are posted after the service. Missed a Sunday? Catch up here.",
- "We post the video and audio of each message after the service."),
+ "We stream every Sunday service live on YouTube. The recording stays up, so you can catch up any time."),
 ("We've recently been through Romans, Psalms, Ephesians, and the Gospels of Luke and John, plus a short series on the basics of what we believe.",
  "We've preached through Romans, Psalms, and Ephesians. This Advent, we're walking through the book of Ruth."),
 ("Real community happens between Sundays too. Here's what's going on through the week.",
@@ -53,13 +53,22 @@ for o,n in R:
     assert t.count(o)==1,(t.count(o),o[:60])
     t=t.replace(o,n)
 
-# breakfast: keep only the callout; direct sermon links to the channel episode list
+# breakfast: keep only the callout; send watch buttons to the church YouTube channel, embed its latest uploads
 assert t.count('<span class="sub">Light breakfast beforehand</span>')==1
 t=t.replace('<span class="sub">Light breakfast beforehand</span>','<span class="sub">Come as you are</span>')
 assert t.count('Worship at 10:45 AM, light breakfast beforehand')==2
 t=t.replace('Worship at 10:45 AM, light breakfast beforehand','Worship at 10:45 AM')
+YT='https://www.youtube.com/@prairievalleybaptistchurch9414/streams'
 assert t.count('https://pvbchurch.churchcenter.com/channels"')==2
-t=t.replace('https://pvbchurch.churchcenter.com/channels"','https://pvbchurch.churchcenter.com/channels/25138"')
+t=t.replace('https://pvbchurch.churchcenter.com/channels"',YT+'"')
+assert t.count('Watch or listen <span')==1
+t=t.replace('Watch or listen <span','Watch on YouTube <span')
+assert t.count('>Latest messages<')==1
+t=t.replace('>Latest messages<','>Latest service<')
+PL='<div class="player reveal"><iframe src="https://www.youtube-nocookie.com/embed/videoseries?list=UUtAlXwpJFOncL7ZqwHyEeQg" title="Latest Prairie Valley Church services on YouTube" loading="lazy" allow="accelerometer; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>\n      '
+assert t.count('<div class="series-feature reveal">')==1
+t=t.replace('<div class="series-feature reveal">',PL+'<div class="series-feature reveal">')
+t=t.replace('</style>','.player{position:relative;aspect-ratio:16/9;max-width:960px;margin:0 auto 40px;border-radius:14px;overflow:hidden;background:var(--navy);}\n.player iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}\n</style>',1)
 import re
 t,n=re.subn(r'\s*<div class="chips"[^>]*>.*?</div>','',t,count=1,flags=re.S)
 assert n==1
