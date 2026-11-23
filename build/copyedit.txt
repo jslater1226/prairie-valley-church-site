@@ -29,13 +29,13 @@ R=[
 ("Kids join the service for singing and a short children's message, then head to Children's Church (through 5th grade) while the sermon continues.",
  "Kids sing with us and hear a short children's message, then head to Children's Church (through 5th grade) while the sermon goes on."),
 ("A midweek gathering for kids and students to dig into the Bible, build friendships, and have fun. Bible study for all ages happens the same night.",
- "Kids and students dig into the Bible, make friends, and have fun. Bible study for all ages is the same night, so the whole family can come."),
+ "Kids and students dig into the Bible, make friends, and have fun. Adults have their own Bible study the same night, so the whole family can come."),
 ("A Ladies' Group and a Men's Group meet on Monday evenings for study, prayer, and real friendship.",
  "A Ladies' Group and a Men's Group meet Monday evenings to study the Bible, pray, and get to know each other."),
 ("Men gather for prayer meetings and special nights, like our annual Forge Night. Bring a friend.",
  "Men get together for prayer and for special nights like Forge Night. Bring a friend."),
 ("We observe the Lord's Supper together as part of our worship. Check the calendar for the next Sunday.",
- "We take the Lord's Supper together as part of worship. Check the calendar to see which Sunday is next."),
+ "We take the Lord's Supper together as part of worship on the first Sunday of every month."),
 ("note:'Free chili dinner, live farrier demonstration, bring a friend. Student Building.'",
  "note:'Free chili dinner and a live farrier demonstration. Bring a friend. Student Building.'"),
 ("Special events and schedule changes are always on the full calendar",
@@ -94,6 +94,16 @@ o='<div><b>Everything else</b>'
 assert t.count(o)==1
 t=t.replace(o,"<div><b>First Sunday of every month</b><span>We observe the Lord's Supper every month, during worship</span></div>\n        <div class=\"wide\"><b>Everything else</b>")
 t=t.replace('</style>','.rhythm .wide{grid-column:1/-1;}\n</style>',1)
+t=t.replace('<div class="when">Regularly</div><div><h3>The Lord\'s Supper</h3>','<div class="when">First Sunday of every month</div><div><h3>The Lord\'s Supper</h3>')
+o='<span class="sub">Bible study for all ages</span>'
+assert t.count(o)==1
+t=t.replace(o,'<span class="sub">Adult Bible study, kids and students</span>')
+o='Kids, students and Bible study, '
+assert t.count(o)==2
+t=t.replace(o,'Adult Bible study, kids and students, ')
+o='<div class="min-row"><div class="when">Mondays'
+assert t.count(o)==1
+t=t.replace(o,'<div class="min-row"><div class="when">Wednesdays &middot; {{WED_TIME}}</div><div><h3>Wednesday Night Adult Bible Study</h3><p>Adults open the Bible together in a class taught by Pastor Josh, while kids and students meet in their own groups.</p></div></div>\n        '+o)
 import json
 P=json.load(open('photos.json'))
 for nm,full,role in [('Kaylee','Kaylee Kinnaird','Student Minister'),('Josh','Josh Slater','Senior Pastor / Staff Elder'),('Alesa','Alesa Benson','Administrative Assistant'),('Joey','Joey Knight','Worship Pastor')]:
