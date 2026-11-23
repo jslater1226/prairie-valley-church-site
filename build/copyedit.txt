@@ -92,7 +92,7 @@ t=t.replace(o,'<p class="hero-time"><strong>Sundays at {{SUN_TIME}}</strong><spa
 t=t.replace('</style>','.hero-time{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;margin:26px 0 0;font-size:1.25rem;color:var(--white);}\n.hero-time strong{background:var(--white);color:var(--navy);padding:8px 18px;border-radius:999px;font-weight:700;letter-spacing:.01em;}\n.hero-time span{color:var(--navy-tint);font-size:1.05rem;}\n.hero p.lead{margin-top:20px;}\n</style>',1)
 o='<div><b>Everything else</b>'
 assert t.count(o)==1
-t=t.replace(o,"<div><b>First Sunday of the month</b><span>We observe the Lord's Supper during worship</span></div>\n        <div class=\"wide\"><b>Everything else</b>")
+t=t.replace(o,"<div><b>First Sunday of every month</b><span>We observe the Lord's Supper every month, during worship</span></div>\n        <div class=\"wide\"><b>Everything else</b>")
 t=t.replace('</style>','.rhythm .wide{grid-column:1/-1;}\n</style>',1)
 import json
 P=json.load(open('photos.json'))
