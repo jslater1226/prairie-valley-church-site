@@ -180,9 +180,9 @@ t=t.replace('</style>','''/* PHONE-ONLY TIGHTENING (<=760px); desktop untouched 
 }
 </style>''',1)
 # ---- phone navigation: full-width menu rows, fixed bottom bar, tap-to-open sections ----
-t=t.replace('</style>','''.mobile-nav{align-items:stretch;}
-.mobile-nav a{display:block;width:100%;padding:17px 4px;border-bottom:1px solid rgba(255,255,255,.18);}
-.mobile-nav .msub{border:0;}
+t=t.replace('</style>','''.mobile-nav{align-items:stretch;padding-inline:0;}
+.mobile-nav a{display:block;width:100%;padding:17px 40px;border-bottom:1px solid rgba(255,255,255,.18);}
+.mobile-nav .msub{border:0;padding-inline:40px;}
 .quickbar{display:none;}
 @media (max-width:760px){
   body{padding-bottom:calc(62px + env(safe-area-inset-bottom));}
