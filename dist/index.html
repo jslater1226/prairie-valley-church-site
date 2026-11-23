@@ -150,6 +150,10 @@
   .ev-row{display:flex;align-items:center;gap:26px;padding:24px 4px;border-bottom:1px solid var(--line);}
   .ev-date{font-family:var(--serif);color:var(--navy);min-width:78px;font-size:.9rem;text-align:center;text-transform:uppercase;}
   .ev-date b{display:block;font-size:2rem;line-height:1;}
+  .ev-row > div:nth-child(2){flex:1;min-width:0;}
+  .ev-img{flex:0 0 280px;display:block;border-radius:10px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.14);}
+  .ev-img img{display:block;width:100%;height:auto;}
+  @media (max-width:760px){.ev-row{flex-wrap:wrap;}.ev-row > div:nth-child(2){flex:1 1 60%;}.ev-img{flex:1 1 100%;}}
   .ev-title{font-weight:700;font-family:var(--serif);font-size:1.15rem;color:var(--navy);}
   .ev-note{font-size:.95rem;opacity:.8;margin-top:4px;}
   .rhythm{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:var(--line);margin-top:40px;}
@@ -466,7 +470,8 @@
 (function(){
   /* ---- EVENTS: edit this list. Past events hide themselves automatically. ---- */
   var EVENTS = [
-    {date:'2026-12-06', time:'4:00 PM', title:"Men's Ministry: Forge Night", note:'Free chili dinner and a live farrier demonstration. Bring a friend. Student Building.'}
+    {date:'2026-12-06', time:'4:00 PM', title:"Men's Ministry: Forge Night", note:'Free chili dinner and a live farrier demonstration. Bring a friend. Student Building.', img:'/assets/event-forge-night.jpg', alt:'Forge Night flyer: a night for men, live farrier demonstration, free chili dinner, Sunday December 6 at 4:00 PM in the Student Building', url:'https://pvbchurch.churchcenter.com/calendar/event/243298772'},
+    {date:'2026-12-12', time:'11:00 AM to 1:00 PM', title:"Women's Christmas Brunch", note:'Hosted at a church family\'s home. Sign up in the church foyer to attend and bring food, and bring an unwrapped gift for Community Seeds.', img:'/assets/event-womens-christmas-brunch.jpg', alt:"Women's Christmas Brunch flyer, Saturday December 12, 11:00 AM to 1:00 PM", url:'https://pvbchurch.churchcenter.com/calendar/event/243751560'}
   ];
 
   function pad(n){return n<10?'0'+n:''+n;}
@@ -486,7 +491,13 @@
       var t = document.createElement('div'); t.className='ev-title'; t.textContent = e.title;
       var n = document.createElement('div'); n.className='ev-note'; n.textContent = (e.time ? e.time + ' · ' : '') + (e.note||'');
       body.appendChild(t); body.appendChild(n);
-      row.appendChild(d); row.appendChild(body); list.appendChild(row);
+      row.appendChild(d); row.appendChild(body);
+      if(e.img){
+        var a = document.createElement('a'); a.className='ev-img'; a.href=e.url||'#'; a.target='_blank'; a.rel='noopener';
+        var im = document.createElement('img'); im.src=e.img; im.alt=e.alt||e.title; im.loading='lazy'; im.width=320; im.height=180;
+        a.appendChild(im); row.appendChild(a);
+      }
+      list.appendChild(row);
     });
   } else {
     list.parentNode.removeChild(list);

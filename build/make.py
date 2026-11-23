@@ -79,6 +79,8 @@ files[logo]='assets/logo.png'; files[fav]='assets/favicon-64.png'; files[apple]=
 files[H1]='assets/hero.jpg'; files[H2]='assets/worship.jpg'
 for k,v in P.items(): files[v]='assets/staff-%s.jpg'%k.lower()
 prod=out
+for f in os.listdir('images/events'):
+    shutil.copy('images/events/'+f,'dist/assets/event-'+f)
 for uri,path in files.items():
     assert uri in prod,path
     open('dist/'+path,'wb').write(raw(uri)); prod=prod.replace(uri,'/'+path)
