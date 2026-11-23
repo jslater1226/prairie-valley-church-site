@@ -202,7 +202,7 @@ t=t.replace('</style>','''.mobile-nav{align-items:stretch;padding-inline:0;}
   .elder-list:not(.open){display:none !important;}
 }
 </style>''',1)
-t=t.replace('</footer>','</footer>\n<nav class="quickbar" aria-label="Quick actions"><a href="https://www.google.com/maps/search/?api=1&query=2417+FM+513+Campbell+TX+75422" target="_blank" rel="noopener">Directions</a><a href="#visit">Plan your visit</a><a href="#sermons">Watch</a></nav>',1)
+t=t.replace('</footer>','</footer>\n<nav class="quickbar" aria-label="Quick actions"><a href="https://www.google.com/maps/search/?api=1&query=2417+FM+513+Campbell+TX+75422" target="_blank" rel="noopener">Directions</a><a href="#visit">What to Expect</a><a href="#sermons">Watch</a></nav>',1)
 JS="""
   (function(){
     var mq = window.matchMedia('(max-width:760px)');
@@ -225,3 +225,4 @@ JS="""
 a="  var els = document.querySelectorAll('.reveal');"
 assert t.count(a)==1
 t=t.replace(a,JS+a,1)
+t=t.replace('</style>','@media (max-width:520px){.brand-word b{display:block;font-size:.55rem;letter-spacing:.07em;margin-top:3px;}}\n</style>',1)
