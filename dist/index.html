@@ -250,6 +250,27 @@ html{font-size:clamp(16px,calc(10px + .45vw),20px);}
   .series-links::-webkit-scrollbar{display:none;}
   .series-links .btn{flex:none;white-space:nowrap;}
 }
+.mobile-nav{align-items:stretch;}
+.mobile-nav a{display:block;width:100%;padding:17px 4px;border-bottom:1px solid rgba(255,255,255,.18);}
+.mobile-nav .msub{border:0;}
+.quickbar{display:none;}
+@media (max-width:760px){
+  body{padding-bottom:calc(62px + env(safe-area-inset-bottom));}
+  .quickbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:140;background:var(--navy);border-top:1px solid rgba(255,255,255,.25);padding-bottom:env(safe-area-inset-bottom);}
+  .quickbar a{flex:1;text-align:center;color:var(--white);font-weight:700;font-size:.95rem;line-height:1.2;padding:19px 4px;border-left:1px solid rgba(255,255,255,.2);}
+  .quickbar a:first-child{border-left:0;}
+  .quickbar a:active{background:rgba(255,255,255,.14);}
+  body.menu-open .quickbar{display:none;}
+  .min-row[role=button],.ev-row[role=button],.acc-toggle{cursor:pointer;-webkit-tap-highlight-color:transparent;}
+  .min-row h3::after,.ev-title::after,.acc-toggle::after{content:"\25BE";float:right;color:var(--navy);margin-left:12px;transition:transform .2s ease;}
+  .acc-toggle::after{content:"\25BE";}
+  .min-row.open h3::after,.ev-row.open .ev-title::after,.acc-toggle.open::after{transform:rotate(180deg);}
+  .min-row p{display:none;}
+  .min-row.open p{display:block;}
+  .ev-row:not(.open) .ev-img{display:none;}
+  .ev-row:not(.open) .ev-note{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;}
+  .elder-list:not(.open){display:none !important;}
+}
 </style>
 </head>
 <body>
@@ -491,6 +512,7 @@ html{font-size:clamp(16px,calc(10px + .45vw),20px);}
   </div>
   <div class="wrap foot-bottom"><span>&copy; 2026 Prairie Valley Church</span><span>Sundays 10:45 AM &middot; Wednesdays 6:00&ndash;7:30 PM</span></div>
 </footer>
+<nav class="quickbar" aria-label="Quick actions"><a href="https://www.google.com/maps/search/?api=1&query=2417+FM+513+Campbell+TX+75422" target="_blank" rel="noopener">Directions</a><a href="#visit">Plan your visit</a><a href="#sermons">Watch</a></nav>
 
 <script>
 (function(){
@@ -544,6 +566,24 @@ html{font-size:clamp(16px,calc(10px + .45vw),20px);}
   menuBtn.addEventListener('click', function(){ setMenu(!mobileNav.classList.contains('open')); });
   mobileNav.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ setMenu(false); }); });
   document.addEventListener('keydown', function(e){ if(e.key==='Escape') setMenu(false); });
+
+
+  (function(){
+    var mq = window.matchMedia('(max-width:760px)');
+    var items = [];
+    function reg(el, panel){
+      items.push(el);
+      function toggle(){ var o = (panel||el).classList.toggle('open'); if(panel){ el.classList.toggle('open', o); } el.setAttribute('aria-expanded', o ? 'true' : 'false'); }
+      el.addEventListener('click', function(ev){ if(!mq.matches) return; if(ev.target.closest && ev.target.closest('a')) return; toggle(); });
+      el.addEventListener('keydown', function(ev){ if(!mq.matches) return; if(ev.key==='Enter' || ev.key===' '){ ev.preventDefault(); toggle(); } });
+    }
+    document.querySelectorAll('.min-row').forEach(function(r){ reg(r); });
+    document.querySelectorAll('.ev-row').forEach(function(r){ reg(r); });
+    var eld = document.querySelector('.elder-list');
+    if(eld && eld.previousElementSibling){ var k = eld.previousElementSibling; k.classList.add('acc-toggle'); reg(k, eld); }
+    function apply(){ items.forEach(function(el){ if(mq.matches){ el.setAttribute('role','button'); el.setAttribute('tabindex','0'); if(!el.hasAttribute('aria-expanded')) el.setAttribute('aria-expanded','false'); } else { el.removeAttribute('role'); el.removeAttribute('tabindex'); el.removeAttribute('aria-expanded'); } }); }
+    apply(); if(mq.addEventListener){ mq.addEventListener('change', apply); }
+  })();
 
   var els = document.querySelectorAll('.reveal');
   if('IntersectionObserver' in window){
