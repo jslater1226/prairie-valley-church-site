@@ -271,6 +271,21 @@ content:
           - name: url
             label: Link to watch (optional, starts with https://)
             type: string
+      - name: pray
+        label: Prayer tools (shows only the tools that have a link; a blank link hides that tool)
+        type: object
+        fields:
+          - {name: heading, label: Section heading, type: string}
+          - {name: intro, label: Line under the heading, type: text}
+          - name: items
+            label: Tools
+            type: object
+            list: true
+            fields:
+              - {name: name, label: Name, type: string}
+              - {name: description, label: Description, type: text}
+              - {name: button, label: Button text, type: string}
+              - {name: url, label: Link (starts with https://), type: string}
       - name: weeks
         label: Weekly growth plan (newest date shows at the top; older weeks go into "Past weeks")
         type: object

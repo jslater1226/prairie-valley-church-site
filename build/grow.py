@@ -38,7 +38,10 @@ def load():
     disc = disc if (str(disc.get('url') or '').strip()) else None
     weeks = [w for w in d.get('weeks', []) if (w.get('devotionals') or w.get('step') or w.get('questions'))]
     weeks.sort(key=_sortkey, reverse=True)
-    return {'intro': (d.get('intro') or '').strip(), 'quotes': quotes, 'issues': issues, 'disc': disc, 'weeks': weeks}
+    pr = d.get('pray') or {}
+    pitems = [i for i in (pr.get('items') or []) if re.match(r'^https?://', str(i.get('url') or '').strip()) and str(i.get('name') or '').strip()]
+    pray = {'heading': (pr.get('heading') or 'Make room to pray').strip(), 'intro': (pr.get('intro') or '').strip(), 'items': pitems} if pitems else None
+    return {'intro': (d.get('intro') or '').strip(), 'quotes': quotes, 'issues': issues, 'disc': disc, 'weeks': weeks, 'pray': pray}
 
 def latest_pdf(g):
     for n in g['issues']:
@@ -46,7 +49,7 @@ def latest_pdf(g):
         if f: return f, (n.get('title') or ((_fmt(n['date'], True) + ' newsletter') if n.get('date') else 'Newsletter'))
     return None
 
-def has_content(g): return bool(g['quotes'] or g['issues'] or g['disc'] or g['weeks'])
+def has_content(g): return bool(g['quotes'] or g['issues'] or g['disc'] or g['weeks'] or g['pray'])
 
 def _meta(q):
     bits = []
@@ -140,6 +143,9 @@ def main_html(g):
             s.append('<ul class="nl-list reveal">' + ''.join('<li><span>%s</span>%s</li>' % (label(n), ('<span><a href="%s" target="_blank" rel="noopener">Read <span class="arrow" aria-hidden="true">&rarr;</span></a> &nbsp; <a href="%s" download>Download</a></span>' % (_e(_pdf(n.get('file'))), _e(_pdf(n.get('file'))))) if _pdf(n.get('file')) else '') for n in older) + '</ul>')
         s.append('</div></section>')
         out.append(''.join(s))
+    pr = g['pray']
+    if pr:
+        out.append('<section id="pray"><div class="wrap"><div class="section-head reveal"><span class="kicker">Prayer</span><h2>%s</h2>%s</div><div class="pray-grid reveal">%s</div></div></section>' % (_e(pr['heading']), '<p class="lead">%s</p>' % _e(pr['intro']) if pr['intro'] else '', ''.join('<div class="nl-latest"><h3>%s</h3><p>%s</p><a class="btn solid" href="%s" target="_blank" rel="noopener">%s <span class="arrow" aria-hidden="true">&rarr;</span></a></div>' % (_e(i['name']), _e(i.get('description')), _e(i['url']), _e(i.get('button') or 'Open')) for i in pr['items'])))
     dd = g['disc']
     s = ['<section id="next"><div class="wrap"><div class="section-head reveal"><span class="kicker">Next steps</span><h2>Keep going between Sundays</h2></div><div class="nl-latest reveal">']
     if dd:
@@ -175,6 +181,7 @@ CSS = '''
 .nl-list{list-style:none;margin:26px 0 0;padding:0;border-top:1px solid var(--line);}
 .nl-list li{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;padding:14px 0;border-bottom:1px solid var(--line);}
 .nl-list a{font-weight:700;color:var(--navy);}
+.pray-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-top:8px;}
 .wk{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:30px 32px;}
 .wk-head h3{margin:0 0 4px;}
 .wk-step{margin:22px 0;padding:22px 24px;background:var(--panel);border-left:5px solid var(--navy);border-radius:0 12px 12px 0;}
