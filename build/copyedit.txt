@@ -362,3 +362,10 @@ t=t.replace('</style>','''.photo-wide{margin:0 0 44px;}
 .hero-tint{background:linear-gradient(90deg,rgba(2,2,125,.94) 0%,rgba(2,2,125,.84) 42%,rgba(2,2,125,.56) 100%);}
 @media (max-width:760px){.hero-tint{background:linear-gradient(180deg,rgba(2,2,125,.9) 0%,rgba(2,2,125,.82) 60%,rgba(2,2,125,.7) 100%);}}
 </style>''',1)
+
+# --- footer: places we serve (local search) ---
+_fb2='<div class="wrap foot-bottom"><span>&copy; 2026 Prairie Valley Church</span>'
+assert t.count(_fb2)==1
+_i=t.index(_fb2); _j=t.index('</div>',_i)
+t=t[:_j]+'<span class="foot-area">Serving Campbell, Lone Oak, Greenville and Hunt County.</span>'+t[_j:]
+t=t.replace('</style>','.foot-bottom .foot-area{flex-basis:100%;}\n</style>',1)
