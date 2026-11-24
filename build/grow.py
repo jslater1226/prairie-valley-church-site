@@ -127,9 +127,11 @@ def main_html(g):
         f = qs[0]
         s = ['<section id="quotes"><div class="wrap"><div class="section-head reveal"><span class="kicker">From the pulpit</span><h2>Quotes from recent sermons</h2></div>',
              '<figure class="q-feature reveal"><blockquote><p>“%s”</p></blockquote><figcaption class="q-meta">%s</figcaption>%s</figure>' % (_e(_strip_quotes(f['quote'])), _meta(f), _link(f.get('url'), 'Watch this sermon'))]
-        rest = qs[1:9]
-        if rest:
-            s.append('<div class="q-grid reveal">' + ''.join('<figure class="q-card"><blockquote><p>“%s”</p></blockquote><figcaption class="q-meta">%s</figcaption>%s</figure>' % (_e(_strip_quotes(q['quote'])), _meta(q), _link(q.get('url'), 'Watch')) for q in rest) + '</div>')
+        def _cards(L): return '<div class="q-grid reveal">' + ''.join('<figure class="q-card"><blockquote><p>“%s”</p></blockquote><figcaption class="q-meta">%s</figcaption>%s</figure>' % (_e(_strip_quotes(q['quote'])), _meta(q), _link(q.get('url'), 'Watch')) for q in L) + '</div>'
+        if qs[1:4]:
+            s.append(_cards(qs[1:4]))
+        if qs[4:12]:
+            s.append('<details class="q-more reveal"><summary>More quotes (%d)</summary>%s</details>' % (len(qs[4:12]), _cards(qs[4:12])))
         s.append('</div></section>')
         out.append(''.join(s))
     iss = g['issues']
@@ -181,6 +183,8 @@ CSS = '''
 .nl-list{list-style:none;margin:26px 0 0;padding:0;border-top:1px solid var(--line);}
 .nl-list li{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;padding:14px 0;border-bottom:1px solid var(--line);}
 .nl-list a{font-weight:700;color:var(--navy);}
+.q-more{margin-top:24px;}
+.q-more summary{cursor:pointer;font-weight:700;color:var(--navy);padding:10px 0;}
 .pray-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-top:8px;}
 .wk{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:30px 32px;}
 .wk-head h3{margin:0 0 4px;}
