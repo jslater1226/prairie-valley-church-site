@@ -369,3 +369,10 @@ assert t.count(_fb2)==1
 _i=t.index(_fb2); _j=t.index('</div>',_i)
 t=t[:_j]+'<span class="foot-area">Serving Campbell, Lone Oak, Greenville and Hunt County.</span>'+t[_j:]
 t=t.replace('</style>','.foot-bottom .foot-area{flex-basis:100%;}\n</style>',1)
+
+# --- footer: follow links ---
+_old='Church for the entire community, in Campbell, Texas.</p>'
+assert t.count(_old)==1
+_soc=[('Facebook','https://www.facebook.com/pvbchurch.org'),('Instagram','https://www.instagram.com/prairievalleychurch/'),('TikTok','https://www.tiktok.com/@pvbchurch'),('YouTube','https://www.youtube.com/@prairievalleybaptistchurch9414')]
+t=t.replace(_old,_old+'\n      <div class="foot-social" aria-label="Follow Prairie Valley Church">'+''.join('<a href="%s" target="_blank" rel="noopener" aria-label="Prairie Valley Church on %s (opens in a new tab)">%s</a>'%(u,n,n) for n,u in _soc)+'</div>',1)
+t=t.replace('</style>','.foot-social{display:flex;flex-wrap:wrap;gap:0 20px;margin-top:14px;}\n.foot-social a{color:#EDEEFA;font-weight:700;padding:10px 0;}\n.foot-social a:hover{text-decoration:underline;}\n</style>',1)
