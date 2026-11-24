@@ -283,5 +283,11 @@ t=t[:_i]+'<div class="min-list reveal" id="minList">\n        <!--MINROWS-->'+'<
 if _HAS_GROW:
     assert t.count('<a href="#ministries">Ministries</a>')>=2
     t=t.replace('<a href="#ministries">Ministries</a>','<a href="#ministries">Ministries</a>\n<a href="grow/">Grow</a>')
+
+_LP=grow.latest_pdf(_G)
+if _LP:
+    _old='<a class="flink" href="#events">Events</a></div>'
+    assert t.count(_old)==1
+    t=t.replace(_old,'<a class="flink" href="#events">Events</a><a class="flink" href="grow/">Grow</a><a class="flink" href="%s" target="_blank" rel="noopener">%s (PDF)</a></div>'%(_LP[0],_esc(_LP[1])))
 t=t.replace('</style>',grow.CSS+'</style>',1)
 

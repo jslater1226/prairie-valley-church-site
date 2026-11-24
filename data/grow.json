@@ -65,7 +65,14 @@
    "url": "https://www.youtube.com/watch?v=HjobcwQO8sM&t=2731s"
   }
  ],
- "newsletters": [],
+ "newsletters": [
+  {
+   "date": "2026-12-01",
+   "title": "",
+   "summary": "Four Sundays in Ruth, Forge Night, the Women's Christmas Brunch, the elder vote on Dec 13, Angel Tree gifts due Dec 16, and the Christmas Eve candlelight service.",
+   "file": "data/media/pvc-newsletter-2026-12.pdf"
+  }
+ ],
  "discussion": {
   "title": "",
   "description": "",

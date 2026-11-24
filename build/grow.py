@@ -40,6 +40,12 @@ def load():
     weeks.sort(key=_sortkey, reverse=True)
     return {'intro': (d.get('intro') or '').strip(), 'quotes': quotes, 'issues': issues, 'disc': disc, 'weeks': weeks}
 
+def latest_pdf(g):
+    for n in g['issues']:
+        f = _pdf(n.get('file'))
+        if f: return f, (n.get('title') or ((_fmt(n['date'], True) + ' newsletter') if n.get('date') else 'Newsletter'))
+    return None
+
 def has_content(g): return bool(g['quotes'] or g['issues'] or g['disc'] or g['weeks'])
 
 def _meta(q):
@@ -128,10 +134,10 @@ def main_html(g):
         def label(n): return _e(n.get('title') or ((_fmt(n['date'], True) + ' newsletter') if n.get('date') else 'Newsletter'))
         n0 = iss[0]; f0 = _pdf(n0.get('file'))
         s = ['<section id="newsletter" class="alt"><div class="wrap"><div class="section-head reveal"><span class="kicker">Stay in the loop</span><h2>Monthly newsletter</h2></div>',
-             '<div class="nl-latest reveal"><div class="kicker">Latest issue</div><h3>%s</h3>%s%s</div>' % (label(n0), '<p>%s</p>' % _e(n0['summary']) if n0.get('summary') else '', '<a class="btn solid" href="%s" target="_blank" rel="noopener">Read this issue <span class="arrow" aria-hidden="true">&rarr;</span></a>' % _e(f0) if f0 else '')]
+             '<div class="nl-latest reveal"><div class="kicker">Latest issue</div><h3>%s</h3>%s%s</div>' % (label(n0), '<p>%s</p>' % _e(n0['summary']) if n0.get('summary') else '', ('<a class="btn solid" href="%s" target="_blank" rel="noopener">Read this issue <span class="arrow" aria-hidden="true">&rarr;</span></a> <a class="btn" href="%s" download>Download PDF</a>' % (_e(f0), _e(f0))) if f0 else '')]
         older = iss[1:13]
         if older:
-            s.append('<ul class="nl-list reveal">' + ''.join('<li><span>%s</span>%s</li>' % (label(n), ('<a href="%s" target="_blank" rel="noopener">Read <span class="arrow" aria-hidden="true">&rarr;</span></a>' % _e(_pdf(n.get('file')))) if _pdf(n.get('file')) else '') for n in older) + '</ul>')
+            s.append('<ul class="nl-list reveal">' + ''.join('<li><span>%s</span>%s</li>' % (label(n), ('<span><a href="%s" target="_blank" rel="noopener">Read <span class="arrow" aria-hidden="true">&rarr;</span></a> &nbsp; <a href="%s" download>Download</a></span>' % (_e(_pdf(n.get('file'))), _e(_pdf(n.get('file'))))) if _pdf(n.get('file')) else '') for n in older) + '</ul>')
         s.append('</div></section>')
         out.append(''.join(s))
     dd = g['disc']
