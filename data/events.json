@@ -1,22 +1,22 @@
 {
   "events": [
     {
+      "title": "Men's Ministry: Forge Night",
       "date": "2026-12-06",
       "time": "4:00 PM",
-      "title": "Men's Ministry: Forge Night",
       "note": "Free chili dinner and a live farrier demonstration. Bring a friend. Student Building.",
+      "url": "https://pvbchurch.churchcenter.com/calendar/event/243298772",
       "img": "data/media/forge-night.jpg",
-      "alt": "Forge Night flyer: a night for men, live farrier demonstration, free chili dinner, Sunday December 6 at 4:00 PM in the Student Building",
-      "url": "https://pvbchurch.churchcenter.com/calendar/event/243298772"
+      "alt": "Forge Night flyer: a night for men, live farrier demonstration, free chili dinner, Sunday December 6 at 4:00 PM in the Student Building"
     },
     {
+      "title": "Women's Christmas Brunch",
       "date": "2026-12-12",
       "time": "11:00 AM to 1:00 PM",
-      "title": "Women's Christmas Brunch",
-      "note": "Hosted at a church family's home. Sign up in the church foyer to attend and bring food, and bring an unwrapped gift for Community Seeds.",
+      "note": "Hosted at a church family's home. Sign up in the church foyer to attend and bring food, and bring an unwrapped gift for Community Seeds.\n\nBOAH",
+      "url": "https://pvbchurch.churchcenter.com/calendar/event/243751560",
       "img": "data/media/womens-christmas-brunch.jpg",
-      "alt": "Women's Christmas Brunch flyer, Saturday December 12, 11:00 AM to 1:00 PM",
-      "url": "https://pvbchurch.churchcenter.com/calendar/event/243751560"
+      "alt": "Women's Christmas Brunch flyer, Saturday December 12, 11:00 AM to 1:00 PM"
     }
   ]
 }
