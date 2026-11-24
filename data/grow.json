@@ -1,6 +1,74 @@
 {
-  "intro": "Quotes from recent sermons, our monthly newsletter, and next steps for following Jesus between Sundays.",
-  "quotes": [],
-  "newsletters": [],
-  "discussion": { "title": "", "description": "", "url": "" }
+ "intro": "Quotes from recent sermons, our monthly newsletter, and next steps for following Jesus between Sundays.",
+ "quotes": [
+  {
+   "quote": "When God saves us, He doesn't just save us from hell, He saves us to a family.",
+   "sermon": "Friendly Isn't Family",
+   "passage": "Romans 16:1-27",
+   "date": "2026-11-22",
+   "url": "https://www.youtube.com/watch?v=ZGxyneNNfoc&t=157s"
+  },
+  {
+   "quote": "In many churches, especially the rural churches, we are very friendly with each other, but we're not family with each other.",
+   "sermon": "Friendly Isn't Family",
+   "passage": "Romans 16:1-27",
+   "date": "2026-11-22",
+   "url": "https://www.youtube.com/watch?v=ZGxyneNNfoc&t=929s"
+  },
+  {
+   "quote": "Obscurity in the eyes of men is never irrelevance in the eyes of God.",
+   "sermon": "Friendly Isn't Family",
+   "passage": "Romans 16:1-27",
+   "date": "2026-11-22",
+   "url": "https://www.youtube.com/watch?v=ZGxyneNNfoc&t=1145s"
+  },
+  {
+   "quote": "God doesn't just save us for us to sit and wait for the world to pass us by. He saves us to go out and do something.",
+   "sermon": "Why Every Christian Is a Missionary",
+   "passage": "Romans 15:14-33",
+   "date": "2026-11-15",
+   "url": "https://www.youtube.com/watch?v=eMMZKGlw-Pw&t=64s"
+  },
+  {
+   "quote": "You don't have to be clever. You don't have to close the deal. You just have to tell them.",
+   "sermon": "Why Every Christian Is a Missionary",
+   "passage": "Romans 15:14-33",
+   "date": "2026-11-15",
+   "url": "https://www.youtube.com/watch?v=eMMZKGlw-Pw&t=1436s"
+  },
+  {
+   "quote": "Do you have a Spain? If not, ask God for one.",
+   "sermon": "Why Every Christian Is a Missionary",
+   "passage": "Romans 15:14-33",
+   "date": "2026-11-15",
+   "url": "https://www.youtube.com/watch?v=eMMZKGlw-Pw&t=1949s"
+  },
+  {
+   "quote": "We welcome one another because Christ welcomed us.",
+   "sermon": "How Should a Church Welcome People?",
+   "passage": "Romans 15:1-13",
+   "date": "2026-11-08",
+   "url": "https://www.youtube.com/watch?v=HjobcwQO8sM&t=308s"
+  },
+  {
+   "quote": "Strength truly lies in giving up your right and being a blessing to somebody else.",
+   "sermon": "How Should a Church Welcome People?",
+   "passage": "Romans 15:1-13",
+   "date": "2026-11-08",
+   "url": "https://www.youtube.com/watch?v=HjobcwQO8sM&t=768s"
+  },
+  {
+   "quote": "They won't remember the sermon. They won't remember the worship set. They'll remember whether somebody loved them and showed them love, whether somebody welcomed them in.",
+   "sermon": "How Should a Church Welcome People?",
+   "passage": "Romans 15:1-13",
+   "date": "2026-11-08",
+   "url": "https://www.youtube.com/watch?v=HjobcwQO8sM&t=2731s"
+  }
+ ],
+ "newsletters": [],
+ "discussion": {
+  "title": "",
+  "description": "",
+  "url": ""
+ }
 }
