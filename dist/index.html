@@ -326,6 +326,15 @@ h2{letter-spacing:-.012em;}
 h3{line-height:1.25;}
 p{text-wrap:pretty;}
 .kicker{font-size:.78rem;letter-spacing:.18em;}
+.photo-wide{margin:0 0 44px;}
+.photo-wide img{width:100%;height:auto;display:block;border-radius:14px;}
+.photo-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:0 0 40px;}
+.photo-row figure{margin:0;}
+.photo-row img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;display:block;border-radius:14px;}
+.photo-wide figcaption,.photo-row figcaption{margin-top:10px;font-size:.86rem;color:var(--charcoal);letter-spacing:.02em;}
+@media (max-width:600px){.photo-row{grid-template-columns:1fr;gap:22px;}}
+.hero-tint{background:linear-gradient(90deg,rgba(2,2,125,.94) 0%,rgba(2,2,125,.84) 42%,rgba(2,2,125,.56) 100%);}
+@media (max-width:760px){.hero-tint{background:linear-gradient(180deg,rgba(2,2,125,.9) 0%,rgba(2,2,125,.82) 60%,rgba(2,2,125,.7) 100%);}}
 </style>
 </head>
 <body>
@@ -406,6 +415,7 @@ p{text-wrap:pretty;}
         <h2>What to expect on Sunday</h2>
         <p>Not sure what to expect? Here's what a Sunday morning looks like at Prairie Valley.</p>
       </div>
+      <figure class="photo-wide reveal"><img src="assets/photos/worship-band.jpg" alt="A worship team leading songs on a Sunday morning at Prairie Valley Church" width="1800" height="626" loading="lazy" decoding="async"><figcaption>Sunday worship at 10:45 AM</figcaption></figure>
       <div class="grid3 reveal">
         <div class="card">
           <h3>Worship</h3>
@@ -462,6 +472,10 @@ p{text-wrap:pretty;}
         <span class="kicker">Ministries</span>
         <h2>Find your place</h2>
         <p>Church isn't just Sunday morning. Here's what goes on through the week.</p>
+      </div>
+      <div class="photo-row reveal">
+        <figure><img src="assets/photos/kids-time.jpg" alt="Children gathered on the floor near the stage during children's time on a Sunday" width="1000" height="750" loading="lazy" decoding="async"><figcaption>Children's time on Sunday</figcaption></figure>
+        <figure><img src="assets/photos/youth-worship.jpg" alt="Students on stage during a youth worship night" width="1000" height="750" loading="lazy" decoding="async"><figcaption>Youth worship night</figcaption></figure>
       </div>
       <div class="min-list reveal" id="minList">
         <div class="min-row"><div class="when">Sundays · 10:45 AM</div><div><h3>Children's Ministry</h3><p>Kids sing with us and hear a short children's message, then head to Children's Church (through 5th grade) while the sermon goes on.</p></div></div>

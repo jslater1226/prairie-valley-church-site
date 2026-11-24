@@ -305,3 +305,19 @@ p{text-wrap:pretty;}
 .kicker{font-size:.78rem;letter-spacing:.18em;}
 '''
 t=t.replace('</style>',_FONTCSS+'</style>',1)
+# --- real photos: worship band (visit), kids + youth (ministries); hero overlay darkened for contrast ---
+_v=t.index('<section id="visit">'); _g=t.index('<div class="grid3 reveal">',_v)
+t=t[:_g]+'<figure class="photo-wide reveal"><img src="assets/photos/worship-band.jpg" alt="A worship team leading songs on a Sunday morning at Prairie Valley Church" width="1800" height="626" loading="lazy" decoding="async"><figcaption>Sunday worship at 10:45 AM</figcaption></figure>\n      '+t[_g:]
+_b='<div class="min-list reveal" id="minList">'
+assert t.count(_b)==1
+t=t.replace(_b,'<div class="photo-row reveal">\n        <figure><img src="assets/photos/kids-time.jpg" alt="Children gathered on the floor near the stage during children\'s time on a Sunday" width="1000" height="750" loading="lazy" decoding="async"><figcaption>Children\'s time on Sunday</figcaption></figure>\n        <figure><img src="assets/photos/youth-worship.jpg" alt="Students on stage during a youth worship night" width="1000" height="750" loading="lazy" decoding="async"><figcaption>Youth worship night</figcaption></figure>\n      </div>\n      '+_b,1)
+t=t.replace('</style>','''.photo-wide{margin:0 0 44px;}
+.photo-wide img{width:100%;height:auto;display:block;border-radius:14px;}
+.photo-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:0 0 40px;}
+.photo-row figure{margin:0;}
+.photo-row img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;display:block;border-radius:14px;}
+.photo-wide figcaption,.photo-row figcaption{margin-top:10px;font-size:.86rem;color:var(--charcoal);letter-spacing:.02em;}
+@media (max-width:600px){.photo-row{grid-template-columns:1fr;gap:22px;}}
+.hero-tint{background:linear-gradient(90deg,rgba(2,2,125,.94) 0%,rgba(2,2,125,.84) 42%,rgba(2,2,125,.56) 100%);}
+@media (max-width:760px){.hero-tint{background:linear-gradient(180deg,rgba(2,2,125,.9) 0%,rgba(2,2,125,.82) 60%,rgba(2,2,125,.7) 100%);}}
+</style>''',1)

@@ -93,6 +93,7 @@ NOINDEX=True  # TEMPORARY: preview is public on github.io; set False at launch
 if os.path.exists('dist'): shutil.rmtree('dist')
 os.makedirs('dist/assets')
 shutil.copytree('fonts','dist/assets/fonts')
+shutil.copytree('photos','dist/assets/photos')
 def raw(u): return base64.b64decode(u.split(',',1)[1])
 files={}
 files[logo]='assets/logo.png'; files[fav]='assets/favicon-64.png'; files[apple]='apple-touch-icon.png'
