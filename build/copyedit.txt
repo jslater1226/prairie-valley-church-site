@@ -71,13 +71,13 @@ import re
 t,n=re.subn(r'\s*<div class="chips"[^>]*>.*?</div>','',t,count=1,flags=re.S)
 assert n==1
 t=t.replace('</style>','.series-badge .btn.solid{background:var(--white);color:var(--navy);border-color:var(--white);}\n</style>',1)
-B='https://pvbchurch.churchcenter.com/channels/25138/series/'
-S=[('Romans: Power of the Gospel','79553'),('Ephesians: United in Christ','68521'),('Sacred Songs','67211'),('Songs of the Savior','73927'),('Life in His Name (Easter 2026)','84988')]
-btns=''.join('<a class="btn sm" href="%s%s" target="_blank" rel="noopener">%s <span class="arrow">&rarr;</span></a>'%(B,i,n) for n,i in S)
-btns+='<a class="btn sm solid" href="https://open.spotify.com/show/6NEX80RdBrwMrF0W7JqqOR" target="_blank" rel="noopener">Listen on Spotify <span class="arrow">&rarr;</span></a>'
+import json, html as _html
+def _esc(s): return _html.escape(s, quote=False)
+_ser=json.load(open('../data/series.json'))
+btns=''.join('<a class="btn sm%s" href="%s" target="_blank" rel="noopener">%s <span class="arrow">&rarr;</span></a>'%(' solid' if s.get('highlight') else '', _html.escape(s['url']), _esc(s['title'])) for s in _ser['series'])
 o="We've preached through Romans, Psalms, and Ephesians. This Advent, we're walking through the book of Ruth."
 assert t.count(o)==1
-t=t.replace(o,"Pick a series and start anywhere.</p><div class=\"series-links\">"+btns+"</div><p>This Advent, we're walking through the book of Ruth.")
+t=t.replace(o,"Pick a series and start anywhere.</p><div class=\"series-links\" id=\"seriesLinks\">"+btns+"</div><p id=\"seriesNote\">"+_esc(_ser.get('note','')))
 t=t.replace('</style>','.btn.sm{padding:10px 20px;font-size:.92rem;}\n.series-links{display:flex;flex-wrap:wrap;gap:10px;}\n</style>',1)
 WEL='<div class="pastor-welcome reveal"><span class="kicker">A word from Pastor Josh</span><p>If you\'re thinking about visiting, here\'s what I\'d want you to know. You don\'t have to have it all figured out. You don\'t have to know the Bible or dress a certain way. We\'re not here to impress you. We\'re here to open the Bible together and point to Jesus.</p><p>Come see for yourself. We\'d love to sit with you.</p><p class="sig">Josh Slater, Senior Pastor</p></div>\n      '
 assert t.count('<div class="visit-guest reveal">')==1
@@ -211,7 +211,11 @@ JS="""
       el.addEventListener('click', function(ev){ if(!mq.matches) return; if(ev.target.closest && ev.target.closest('a')) return; toggle(); });
       el.addEventListener('keydown', function(ev){ if(!mq.matches) return; if(ev.key==='Enter' || ev.key===' '){ ev.preventDefault(); toggle(); } });
     }
-    document.querySelectorAll('.min-row').forEach(function(r){ reg(r); });
+    var mnl = document.getElementById('minList');
+    if(mnl){
+      mnl.addEventListener('click', function(ev){ if(!mq.matches) return; var r = ev.target.closest('.min-row'); if(!r) return; var o = r.classList.toggle('open'); r.setAttribute('aria-expanded', o ? 'true' : 'false'); });
+      mnl.addEventListener('keydown', function(ev){ if(!mq.matches) return; var r = ev.target.closest && ev.target.closest('.min-row'); if(!r) return; if(ev.key==='Enter' || ev.key===' '){ ev.preventDefault(); var o = r.classList.toggle('open'); r.setAttribute('aria-expanded', o ? 'true' : 'false'); } });
+    }
     var evl = document.getElementById('evList');
     if(evl){
       evl.addEventListener('click', function(ev){ if(!mq.matches) return; var r = ev.target.closest('.ev-row'); if(!r || ev.target.closest('a')) return; var o = r.classList.toggle('open'); r.setAttribute('aria-expanded', o ? 'true' : 'false'); });
@@ -219,7 +223,7 @@ JS="""
     }
     var eld = document.querySelector('.elder-list');
     if(eld && eld.previousElementSibling){ var k = eld.previousElementSibling; k.classList.add('acc-toggle'); reg(k, eld); }
-    function apply(){ var all = items.slice(); document.querySelectorAll('#evList .ev-row').forEach(function(r){ all.push(r); }); all.forEach(function(el){ if(mq.matches){ el.setAttribute('role','button'); el.setAttribute('tabindex','0'); if(!el.hasAttribute('aria-expanded')) el.setAttribute('aria-expanded','false'); } else { el.removeAttribute('role'); el.removeAttribute('tabindex'); el.removeAttribute('aria-expanded'); } }); }
+    function apply(){ var all = items.slice(); document.querySelectorAll('#evList .ev-row').forEach(function(r){ all.push(r); }); document.querySelectorAll('#minList .min-row').forEach(function(r){ all.push(r); }); all.forEach(function(el){ if(mq.matches){ el.setAttribute('role','button'); el.setAttribute('tabindex','0'); if(!el.hasAttribute('aria-expanded')) el.setAttribute('aria-expanded','false'); } else { el.removeAttribute('role'); el.removeAttribute('tabindex'); el.removeAttribute('aria-expanded'); } }); }
     window.pvApplyAcc = apply; apply(); if(mq.addEventListener){ mq.addEventListener('change', apply); }
   })();
 
@@ -228,3 +232,39 @@ a="  var els = document.querySelectorAll('.reveal');"
 assert t.count(a)==1
 t=t.replace(a,JS+a,1)
 t=t.replace('</style>','@media (max-width:520px){.brand-word b{display:block;font-size:.55rem;letter-spacing:.07em;margin-top:3px;}}\n</style>',1)
+
+_mins=json.load(open('../data/ministries.json'))['ministries']
+_i=t.index('<div class="min-list reveal">'); _j=t.index('</section>',_i); _tail=t[_i:_j]
+_k=_tail.rindex('</div>'); _k2=_tail.rindex('</div>',0,_k)
+_rows=''.join('<div class="min-row"><div class="when">%s</div><div><h3>%s</h3><p>%s</p></div></div>\n        '%(_esc(m['when']),_esc(m['title']),_esc(m['description'])) for m in _mins)
+t=t[:_i]+'<div class="min-list reveal" id="minList">\n        '+_rows+'</div>'+_tail[_k2+6:]+t[_j:]
+LOAD="""
+  (function(){
+    function mk(tag, cls){ var e = document.createElement(tag); if(cls) e.className = cls; return e; }
+    function get(u){ return fetch(u, {cache:'no-cache'}).then(function(r){ return r.ok ? r.json() : null; }); }
+    get('data/series.json').then(function(d){
+      var box = document.getElementById('seriesLinks'); if(!d || !d.series || !box) return;
+      box.textContent = '';
+      d.series.forEach(function(s){
+        if(!s.title || !/^https?:[/][/]/.test(s.url||'')) return;
+        var a = mk('a', 'btn sm' + (s.highlight ? ' solid' : '')); a.href = s.url; a.target = '_blank'; a.rel = 'noopener';
+        a.appendChild(document.createTextNode(s.title + ' ')); var ar = mk('span', 'arrow'); ar.innerHTML = '&rarr;'; a.appendChild(ar); box.appendChild(a);
+      });
+      var n = document.getElementById('seriesNote'); if(n) n.textContent = d.note || '';
+    }).catch(function(){});
+    get('data/ministries.json').then(function(d){
+      var box = document.getElementById('minList'); if(!d || !d.ministries || !box) return;
+      box.textContent = '';
+      d.ministries.forEach(function(m){
+        var row = mk('div', 'min-row'), w = mk('div', 'when'), c = mk('div'), h = mk('h3'), p = mk('p');
+        w.textContent = m.when || ''; h.textContent = m.title || ''; p.textContent = m.description || '';
+        c.appendChild(h); c.appendChild(p); row.appendChild(w); row.appendChild(c); box.appendChild(row);
+      });
+      if(window.pvApplyAcc) window.pvApplyAcc();
+    }).catch(function(){});
+  })();
+
+"""
+_a="  var els = document.querySelectorAll('.reveal');"
+assert t.count(_a)==1
+t=t.replace(_a,LOAD+_a,1)

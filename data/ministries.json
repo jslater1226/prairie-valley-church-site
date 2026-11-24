@@ -1,0 +1,34 @@
+{
+  "ministries": [
+    {
+      "when": "Sundays · 10:45 AM",
+      "title": "Children's Ministry",
+      "description": "Kids sing with us and hear a short children's message, then head to Children's Church (through 5th grade) while the sermon goes on."
+    },
+    {
+      "when": "Wednesdays · 6:00–7:30 PM",
+      "title": "Wednesday Night Kids & Student Ministry",
+      "description": "Kids and students dig into the Bible, make friends, and have fun. Adults have their own Bible study the same night, so the whole family can come."
+    },
+    {
+      "when": "Wednesdays · 6:00–7:30 PM",
+      "title": "Wednesday Night Adult Bible Study",
+      "description": "Adults open the Bible together in a class taught by Pastor Josh, while kids and students meet in their own groups."
+    },
+    {
+      "when": "Mondays · 6:00 PM",
+      "title": "Small Group Bible Studies",
+      "description": "A Ladies' Group and a Men's Group meet Monday evenings to study the Bible, pray, and get to know each other."
+    },
+    {
+      "when": "Regularly",
+      "title": "Men's Ministry",
+      "description": "Men get together for prayer and for special nights like Forge Night. Bring a friend."
+    },
+    {
+      "when": "First Sunday of every month",
+      "title": "The Lord's Supper",
+      "description": "We take the Lord's Supper together as part of worship on the first Sunday of every month."
+    }
+  ]
+}

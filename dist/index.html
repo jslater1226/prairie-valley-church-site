@@ -393,7 +393,7 @@ html{font-size:clamp(16px,calc(10px + .45vw),20px);}
         </div>
         <div class="series-side">
           <span class="kicker">Recent series</span>
-          <p>Pick a series and start anywhere.</p><div class="series-links"><a class="btn sm" href="https://pvbchurch.churchcenter.com/channels/25138/series/79553" target="_blank" rel="noopener">Romans: Power of the Gospel <span class="arrow">&rarr;</span></a><a class="btn sm" href="https://pvbchurch.churchcenter.com/channels/25138/series/68521" target="_blank" rel="noopener">Ephesians: United in Christ <span class="arrow">&rarr;</span></a><a class="btn sm" href="https://pvbchurch.churchcenter.com/channels/25138/series/67211" target="_blank" rel="noopener">Sacred Songs <span class="arrow">&rarr;</span></a><a class="btn sm" href="https://pvbchurch.churchcenter.com/channels/25138/series/73927" target="_blank" rel="noopener">Songs of the Savior <span class="arrow">&rarr;</span></a><a class="btn sm" href="https://pvbchurch.churchcenter.com/channels/25138/series/84988" target="_blank" rel="noopener">Life in His Name (Easter 2026) <span class="arrow">&rarr;</span></a><a class="btn sm solid" href="https://open.spotify.com/show/6NEX80RdBrwMrF0W7JqqOR" target="_blank" rel="noopener">Listen on Spotify <span class="arrow">&rarr;</span></a></div><p>This Advent, we're walking through the book of Ruth.</p>
+          <p>Pick a series and start anywhere.</p><div class="series-links" id="seriesLinks"><a class="btn sm" href="https://pvbchurch.churchcenter.com/channels/25138/series/79553" target="_blank" rel="noopener">Romans: Power of the Gospel <span class="arrow">&rarr;</span></a><a class="btn sm" href="https://pvbchurch.churchcenter.com/channels/25138/series/68521" target="_blank" rel="noopener">Ephesians: United in Christ <span class="arrow">&rarr;</span></a><a class="btn sm" href="https://pvbchurch.churchcenter.com/channels/25138/series/67211" target="_blank" rel="noopener">Sacred Songs <span class="arrow">&rarr;</span></a><a class="btn sm" href="https://pvbchurch.churchcenter.com/channels/25138/series/73927" target="_blank" rel="noopener">Songs of the Savior <span class="arrow">&rarr;</span></a><a class="btn sm" href="https://pvbchurch.churchcenter.com/channels/25138/series/84988" target="_blank" rel="noopener">Life in His Name (Easter 2026) <span class="arrow">&rarr;</span></a><a class="btn sm solid" href="https://open.spotify.com/show/6NEX80RdBrwMrF0W7JqqOR" target="_blank" rel="noopener">Listen on Spotify <span class="arrow">&rarr;</span></a></div><p id="seriesNote">This Advent, we're walking through the book of Ruth.</p>
         </div>
       </div>
     </div>
@@ -407,14 +407,14 @@ html{font-size:clamp(16px,calc(10px + .45vw),20px);}
         <h2>Find your place</h2>
         <p>Church isn't just Sunday morning. Here's what goes on through the week.</p>
       </div>
-      <div class="min-list reveal">
-        <div class="min-row"><div class="when">Sundays &middot; 10:45 AM</div><div><h3>Children's Ministry</h3><p>Kids sing with us and hear a short children's message, then head to Children's Church (through 5th grade) while the sermon goes on.</p></div></div>
-        <div class="min-row"><div class="when">Wednesdays &middot; 6:00&ndash;7:30 PM</div><div><h3>Wednesday Night Kids &amp; Student Ministry</h3><p>Kids and students dig into the Bible, make friends, and have fun. Adults have their own Bible study the same night, so the whole family can come.</p></div></div>
-        <div class="min-row"><div class="when">Wednesdays &middot; 6:00&ndash;7:30 PM</div><div><h3>Wednesday Night Adult Bible Study</h3><p>Adults open the Bible together in a class taught by Pastor Josh, while kids and students meet in their own groups.</p></div></div>
-        <div class="min-row"><div class="when">Mondays &middot; 6:00 PM</div><div><h3>Small Group Bible Studies</h3><p>A Ladies' Group and a Men's Group meet Monday evenings to study the Bible, pray, and get to know each other.</p></div></div>
+      <div class="min-list reveal" id="minList">
+        <div class="min-row"><div class="when">Sundays · 10:45 AM</div><div><h3>Children's Ministry</h3><p>Kids sing with us and hear a short children's message, then head to Children's Church (through 5th grade) while the sermon goes on.</p></div></div>
+        <div class="min-row"><div class="when">Wednesdays · 6:00–7:30 PM</div><div><h3>Wednesday Night Kids &amp; Student Ministry</h3><p>Kids and students dig into the Bible, make friends, and have fun. Adults have their own Bible study the same night, so the whole family can come.</p></div></div>
+        <div class="min-row"><div class="when">Wednesdays · 6:00–7:30 PM</div><div><h3>Wednesday Night Adult Bible Study</h3><p>Adults open the Bible together in a class taught by Pastor Josh, while kids and students meet in their own groups.</p></div></div>
+        <div class="min-row"><div class="when">Mondays · 6:00 PM</div><div><h3>Small Group Bible Studies</h3><p>A Ladies' Group and a Men's Group meet Monday evenings to study the Bible, pray, and get to know each other.</p></div></div>
         <div class="min-row"><div class="when">Regularly</div><div><h3>Men's Ministry</h3><p>Men get together for prayer and for special nights like Forge Night. Bring a friend.</p></div></div>
         <div class="min-row"><div class="when">First Sunday of every month</div><div><h3>The Lord's Supper</h3><p>We take the Lord's Supper together as part of worship on the first Sunday of every month.</p></div></div>
-      </div>
+        </div>
     </div>
   </section>
 
@@ -577,7 +577,11 @@ html{font-size:clamp(16px,calc(10px + .45vw),20px);}
       el.addEventListener('click', function(ev){ if(!mq.matches) return; if(ev.target.closest && ev.target.closest('a')) return; toggle(); });
       el.addEventListener('keydown', function(ev){ if(!mq.matches) return; if(ev.key==='Enter' || ev.key===' '){ ev.preventDefault(); toggle(); } });
     }
-    document.querySelectorAll('.min-row').forEach(function(r){ reg(r); });
+    var mnl = document.getElementById('minList');
+    if(mnl){
+      mnl.addEventListener('click', function(ev){ if(!mq.matches) return; var r = ev.target.closest('.min-row'); if(!r) return; var o = r.classList.toggle('open'); r.setAttribute('aria-expanded', o ? 'true' : 'false'); });
+      mnl.addEventListener('keydown', function(ev){ if(!mq.matches) return; var r = ev.target.closest && ev.target.closest('.min-row'); if(!r) return; if(ev.key==='Enter' || ev.key===' '){ ev.preventDefault(); var o = r.classList.toggle('open'); r.setAttribute('aria-expanded', o ? 'true' : 'false'); } });
+    }
     var evl = document.getElementById('evList');
     if(evl){
       evl.addEventListener('click', function(ev){ if(!mq.matches) return; var r = ev.target.closest('.ev-row'); if(!r || ev.target.closest('a')) return; var o = r.classList.toggle('open'); r.setAttribute('aria-expanded', o ? 'true' : 'false'); });
@@ -585,8 +589,34 @@ html{font-size:clamp(16px,calc(10px + .45vw),20px);}
     }
     var eld = document.querySelector('.elder-list');
     if(eld && eld.previousElementSibling){ var k = eld.previousElementSibling; k.classList.add('acc-toggle'); reg(k, eld); }
-    function apply(){ var all = items.slice(); document.querySelectorAll('#evList .ev-row').forEach(function(r){ all.push(r); }); all.forEach(function(el){ if(mq.matches){ el.setAttribute('role','button'); el.setAttribute('tabindex','0'); if(!el.hasAttribute('aria-expanded')) el.setAttribute('aria-expanded','false'); } else { el.removeAttribute('role'); el.removeAttribute('tabindex'); el.removeAttribute('aria-expanded'); } }); }
+    function apply(){ var all = items.slice(); document.querySelectorAll('#evList .ev-row').forEach(function(r){ all.push(r); }); document.querySelectorAll('#minList .min-row').forEach(function(r){ all.push(r); }); all.forEach(function(el){ if(mq.matches){ el.setAttribute('role','button'); el.setAttribute('tabindex','0'); if(!el.hasAttribute('aria-expanded')) el.setAttribute('aria-expanded','false'); } else { el.removeAttribute('role'); el.removeAttribute('tabindex'); el.removeAttribute('aria-expanded'); } }); }
     window.pvApplyAcc = apply; apply(); if(mq.addEventListener){ mq.addEventListener('change', apply); }
+  })();
+
+
+  (function(){
+    function mk(tag, cls){ var e = document.createElement(tag); if(cls) e.className = cls; return e; }
+    function get(u){ return fetch(u, {cache:'no-cache'}).then(function(r){ return r.ok ? r.json() : null; }); }
+    get('data/series.json').then(function(d){
+      var box = document.getElementById('seriesLinks'); if(!d || !d.series || !box) return;
+      box.textContent = '';
+      d.series.forEach(function(s){
+        if(!s.title || !/^https?:[/][/]/.test(s.url||'')) return;
+        var a = mk('a', 'btn sm' + (s.highlight ? ' solid' : '')); a.href = s.url; a.target = '_blank'; a.rel = 'noopener';
+        a.appendChild(document.createTextNode(s.title + ' ')); var ar = mk('span', 'arrow'); ar.innerHTML = '&rarr;'; a.appendChild(ar); box.appendChild(a);
+      });
+      var n = document.getElementById('seriesNote'); if(n) n.textContent = d.note || '';
+    }).catch(function(){});
+    get('data/ministries.json').then(function(d){
+      var box = document.getElementById('minList'); if(!d || !d.ministries || !box) return;
+      box.textContent = '';
+      d.ministries.forEach(function(m){
+        var row = mk('div', 'min-row'), w = mk('div', 'when'), c = mk('div'), h = mk('h3'), p = mk('p');
+        w.textContent = m.when || ''; h.textContent = m.title || ''; p.textContent = m.description || '';
+        c.appendChild(h); c.appendChild(p); row.appendChild(w); row.appendChild(c); box.appendChild(row);
+      });
+      if(window.pvApplyAcc) window.pvApplyAcc();
+    }).catch(function(){});
   })();
 
   var els = document.querySelectorAll('.reveal');

@@ -42,3 +42,51 @@ content:
           - name: alt
             label: Flyer description for screen readers
             type: string
+
+  - name: series
+    label: Sermon series buttons
+    type: file
+    path: data/series.json
+    fields:
+      - name: series
+        label: Series
+        type: object
+        list: true
+        fields:
+          - name: title
+            label: Button text
+            type: string
+            required: true
+          - name: url
+            label: Link (starts with https://)
+            type: string
+            required: true
+          - name: highlight
+            label: Make this button stand out (use for Spotify)
+            type: boolean
+      - name: note
+        label: Line under the buttons (for example, what series is running now)
+        type: string
+
+  - name: ministries
+    label: Ministries
+    type: file
+    path: data/ministries.json
+    fields:
+      - name: ministries
+        label: Ministries
+        type: object
+        list: true
+        fields:
+          - name: when
+            label: When (for example, Wednesdays · 6:00–7:30 PM)
+            type: string
+            required: true
+          - name: title
+            label: Ministry name
+            type: string
+            required: true
+          - name: description
+            label: Description
+            type: text
+            required: true

@@ -9,3 +9,4 @@ This repo is the Prairie Valley Church website (owner: Josh Slater, jslater1226)
 - Do not commit under Josh's name or email. Commits are signed as Claude.
 
 - Events are no longer in the page code. They live in `data/events.json` and are edited through Pages CMS (config in `.pages.yml`, flyer images in `data/media/`). The deploy workflow validates the JSON and copies `data/` into the published site. Do not move `data/` under `build/` or `dist/`, because `make.py` deletes `dist/` on every build.
+- Sermon series buttons (`data/series.json`) and the ministries list (`data/ministries.json`) are also edited through Pages CMS (`.pages.yml`). `build/copyedit.txt` renders them into the page at build time as a fallback, and the page script re-renders them from the JSON at load. The workflow validates all three JSON files.
