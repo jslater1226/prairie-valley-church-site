@@ -227,6 +227,9 @@ html{font-size:clamp(16px,calc(10px + .45vw),20px);}
 .elder-list span{font-size:.9rem;opacity:.75;}
 @media (max-width:700px){.elder-list{grid-template-columns:1fr;}}
 @media (max-width:480px){.people-grid{grid-template-columns:repeat(2,1fr);gap:28px 16px;}.avatar{width:96px;height:96px;}}
+.people-grid.elders-grid{grid-template-columns:repeat(auto-fit,minmax(170px,1fr));}
+.elder-panel .wide-photo{margin:0 0 36px;}
+@media (max-width:480px){.people-grid.elders-grid{grid-template-columns:repeat(2,1fr);}}
 .hero-photo{position:absolute;inset:0;background-size:135% auto;background-repeat:no-repeat;background-position:left 35%;}
 .hero-tint{position:absolute;inset:0;background:linear-gradient(90deg,rgba(2,2,125,.92) 0%,rgba(2,2,125,.78) 42%,rgba(2,2,125,.34) 100%);}
 .hero-illustration svg{position:relative;z-index:2;opacity:.45;}
@@ -270,7 +273,7 @@ html{font-size:clamp(16px,calc(10px + .45vw),20px);}
   .min-row.open p{display:block;}
   .ev-row:not(.open) .ev-img{display:none;}
   .ev-row:not(.open) .ev-note{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;}
-  .elder-list:not(.open){display:none !important;}
+  .elder-panel:not(.open){display:none !important;}
 }
 @media (max-width:520px){.brand-word b{display:block;font-size:.55rem;letter-spacing:.07em;margin-top:3px;}}
 </style>
@@ -384,7 +387,7 @@ html{font-size:clamp(16px,calc(10px + .45vw),20px);}
         <h2>Verse by verse, week by week</h2>
         <p>We preach straight through books of the Bible, so Scripture sets the agenda and not us. Missed a Sunday? The whole service is online.</p>
       </div>
-      <div class="player reveal"><iframe src="https://www.youtube-nocookie.com/embed/videoseries?list=UUtAlXwpJFOncL7ZqwHyEeQg" title="Latest Prairie Valley Church services on YouTube" loading="lazy" allow="accelerometer; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+      <div class="player reveal"><iframe src="https://www.youtube-nocookie.com/embed/videoseries?list=UULVtAlXwpJFOncL7ZqwHyEeQg" title="Latest Prairie Valley Church services on YouTube" loading="lazy" allow="accelerometer; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
       <div class="series-feature reveal">
         <div class="series-badge">
           <span class="kicker" style="color:var(--navy-tint)">Latest service</span>
@@ -449,13 +452,15 @@ html{font-size:clamp(16px,calc(10px + .45vw),20px);}
       <!-- VERIFY NAMES AND TITLES BEFORE PUBLISHING -->
       <div class="kicker reveal" style="margin-bottom:22px">Staff</div>
       <div class="people-grid reveal" style="margin-bottom:60px">
-        <div class="person"><img class="avatar" src="assets/staff-josh.jpg" alt="Josh Slater" width="112" height="112" loading="lazy"><h3>Josh Slater</h3><p>Senior Pastor / Staff Elder</p></div>
-        <div class="person"><img class="avatar" src="assets/staff-joey.jpg" alt="Joey Knight" width="112" height="112" loading="lazy"><h3>Joey Knight</h3><p>Worship Pastor</p></div>
-        <div class="person"><img class="avatar" src="assets/staff-kaylee.jpg" alt="Kaylee Kinnaird" width="112" height="112" loading="lazy"><h3>Kaylee Kinnaird</h3><p>Student Minister</p></div>
-        <div class="person"><img class="avatar" src="assets/staff-alesa.jpg" alt="Alesa Benson" width="112" height="112" loading="lazy"><h3>Alesa Benson</h3><p>Administrative Assistant</p></div>
+        <div class="person"><img class="avatar" src="assets/people/staff-josh-slater.jpg" alt="Josh Slater" width="112" height="112" loading="lazy"><h3>Josh Slater</h3><p>Senior Pastor / Staff Elder</p></div>
+        <div class="person"><img class="avatar" src="assets/people/staff-joey-knight.jpg" alt="Joey Knight" width="112" height="112" loading="lazy"><h3>Joey Knight</h3><p>Worship Pastor</p></div>
+        <div class="person"><img class="avatar" src="assets/people/staff-kaylee-kinnaird.jpg" alt="Kaylee Kinnaird" width="112" height="112" loading="lazy"><h3>Kaylee Kinnaird</h3><p>Student Minister</p></div>
+        <div class="person"><img class="avatar" src="assets/people/staff-alesa-benson.jpg" alt="Alesa Benson" width="112" height="112" loading="lazy"><h3>Alesa Benson</h3><p>Administrative Assistant</p></div>
       </div>
       <div class="kicker reveal" style="margin-bottom:22px">Elders</div>
-      <ul class="elder-list reveal"><li><b>Josh Slater</b><span>Senior Pastor / Elder</span></li><li><b>Terry Palmore</b><span>Elder</span></li><li><b>Jim Voss</b><span>Elder</span></li><li><b>Monty Murphy</b><span>Elder</span></li><li><b>Ray Dooley</b><span>Elder</span></li></ul>
+      <div class="elder-panel reveal">
+        <ul class="elder-list"><li><b>Josh Slater</b><span>Senior Pastor / Elder</span></li><li><b>Terry Palmore</b><span>Elder</span></li><li><b>Jim Voss</b><span>Elder</span></li><li><b>Monty Murphy</b><span>Elder</span></li><li><b>Ray Dooley</b><span>Elder</span></li></ul>
+      </div>
     </div>
   </section>
 
@@ -588,7 +593,7 @@ html{font-size:clamp(16px,calc(10px + .45vw),20px);}
       evl.addEventListener('click', function(ev){ if(!mq.matches) return; var r = ev.target.closest('.ev-row'); if(!r || ev.target.closest('a')) return; var o = r.classList.toggle('open'); r.setAttribute('aria-expanded', o ? 'true' : 'false'); });
       evl.addEventListener('keydown', function(ev){ if(!mq.matches) return; var r = ev.target.closest && ev.target.closest('.ev-row'); if(!r) return; if(ev.key==='Enter' || ev.key===' '){ ev.preventDefault(); var o = r.classList.toggle('open'); r.setAttribute('aria-expanded', o ? 'true' : 'false'); } });
     }
-    var eld = document.querySelector('.elder-list');
+    var eld = document.querySelector('.elder-panel');
     if(eld && eld.previousElementSibling){ var k = eld.previousElementSibling; k.classList.add('acc-toggle'); reg(k, eld); }
     function apply(){ var all = items.slice(); document.querySelectorAll('#evList .ev-row').forEach(function(r){ all.push(r); }); document.querySelectorAll('#minList .min-row').forEach(function(r){ all.push(r); }); all.forEach(function(el){ if(mq.matches){ el.setAttribute('role','button'); el.setAttribute('tabindex','0'); if(!el.hasAttribute('aria-expanded')) el.setAttribute('aria-expanded','false'); } else { el.removeAttribute('role'); el.removeAttribute('tabindex'); el.removeAttribute('aria-expanded'); } }); }
     window.pvApplyAcc = apply; apply(); if(mq.addEventListener){ mq.addEventListener('change', apply); }

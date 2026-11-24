@@ -93,11 +93,12 @@ def raw(u): return base64.b64decode(u.split(',',1)[1])
 files={}
 files[logo]='assets/logo.png'; files[fav]='assets/favicon-64.png'; files[apple]='apple-touch-icon.png'
 files[H1]='assets/hero.jpg'; files[H2]='assets/worship.jpg'
-for k,v in P.items(): files[v]='assets/staff-%s.jpg'%k.lower()
 prod=out
 for uri,path in files.items():
     assert uri in prod,path
     open('dist/'+path,'wb').write(raw(uri)); prod=prod.replace(uri,path)
+os.makedirs('dist/assets/people',exist_ok=True)
+for _n,_b in _PIMGS.items(): open('dist/assets/people/'+_n,'wb').write(_b)
 Image.open('images/favicon-source.png').convert('RGBA').save('dist/favicon.ico',sizes=[(16,16),(32,32),(48,48)])
 # social share image 1200x630: aerial photo + logo
 ph=Image.open('images/hero-source.png').convert('RGB').crop((0,40,2000,1090)).resize((1200,630),Image.LANCZOS)

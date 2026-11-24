@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Check the editable data is valid JSON
-        run: python3 -c "import json; [json.load(open('data/'+f)) for f in ('events.json','series.json','ministries.json','site.json')]; print('data json ok')"
+        run: python3 -c "import json; [json.load(open('data/'+f)) for f in ('events.json','series.json','ministries.json','site.json','people.json')]; print('data json ok')"
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -29,6 +29,8 @@ jobs:
           cd build && python3 make.py
       - name: Add editable data to the published site
         run: mkdir -p dist && cp -r data dist/data
+      - name: Strip location data from uploaded photos and shrink them
+        run: cd build && python3 strip_media.py ../dist/data/media
       - name: Check the build produced a page
         run: test -s dist/index.html && grep -q 'id="minList"' dist/index.html && echo build ok
       - uses: actions/configure-pages@v5

@@ -63,7 +63,7 @@ assert t.count('Watch or listen <span')==1
 t=t.replace('Watch or listen <span','Watch on YouTube <span')
 assert t.count('>Latest messages<')==1
 t=t.replace('>Latest messages<','>Latest service<')
-PL='<div class="player reveal"><iframe src="https://www.youtube-nocookie.com/embed/videoseries?list=UUtAlXwpJFOncL7ZqwHyEeQg" title="Latest Prairie Valley Church services on YouTube" loading="lazy" allow="accelerometer; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>\n      '
+PL='<div class="player reveal"><iframe src="https://www.youtube-nocookie.com/embed/videoseries?list=UULVtAlXwpJFOncL7ZqwHyEeQg" title="Latest Prairie Valley Church services on YouTube" loading="lazy" allow="accelerometer; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>\n      '
 assert t.count('<div class="series-feature reveal">')==1
 t=t.replace('<div class="series-feature reveal">',PL+'<div class="series-feature reveal">')
 t=t.replace('</style>','.player{position:relative;aspect-ratio:16/9;max-width:960px;margin:0 auto 40px;border-radius:14px;overflow:hidden;background:var(--navy);}\n.player iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}\n</style>',1)
@@ -110,27 +110,66 @@ assert t.count('--maxw:1180px;')==1
 t=t.replace('--maxw:1180px;','--maxw:clamp(1180px,86vw,1900px);')
 t=t.replace('</style>','html{font-size:clamp(16px,calc(10px + .45vw),20px);}\n@media (min-width:1000px){.wrap{padding-inline:clamp(36px,2.4vw,56px);}}\n</style>',1)
 import json
-P=json.load(open('photos.json'))
-for nm,full,role in [('Kaylee','Kaylee Kinnaird','Student Minister'),('Josh','Josh Slater','Senior Pastor / Staff Elder'),('Alesa','Alesa Benson','Administrative Assistant'),('Joey','Joey Knight','Worship Pastor')]:
-    pass
-def swap(initials,full):
-    global t
-    o='<div class="mono">%s</div><h3>%s</h3>'%(initials,full)
-    assert t.count(o)>=1,(full)
-    key={'Kaylee Kinnaird':'Kaylee','Josh Slater':'Josh','Alesa Benson':'Alesa','Joey Knight':'Joey'}[full]
-    n='<img class="avatar" src="%s" alt="%s" width="112" height="112" loading="lazy"><h3>%s</h3>'%(P[key],full,full)
-    i=t.index(o); t=t[:i]+n+t[i+len(o):]
-swap('JS','Josh Slater'); swap('JK','Joey Knight'); swap('KK','Kaylee Kinnaird'); swap('AB','Alesa Benson')
-# elders: plain list (only first Josh monogram was swapped, the second is inside the block being replaced)
-s=t.index('<div class="kicker reveal" style="margin-bottom:22px">Elders</div>')
-endmark='Ray Dooley</h3><p>Elder</p></div>'
-e=t.index(endmark)+len(endmark)
-rest=t[e:]
-assert rest.lstrip().startswith('</div>'),rest[:40]
-e=e+rest.index('</div>')+len('</div>')
-EL=[('Josh Slater','Senior Pastor / Elder'),('Terry Palmore','Elder'),('Jim Voss','Elder'),('Monty Murphy','Elder'),('Ray Dooley','Elder')]
-lst='<div class="kicker reveal" style="margin-bottom:22px">Elders</div>\n      <ul class="elder-list reveal">'+''.join('<li><b>%s</b><span>%s</span></li>'%x for x in EL)+'</ul>'
-t=t[:s]+lst+t[e:]
+import os, io
+from PIL import Image, ImageOps
+_PIMGS={}   # dest file name -> JPEG bytes, written to dist/assets/people/ by make.py
+def _photo_src(rel):
+    rel=(rel or '').strip()
+    if not rel: return None
+    full=os.path.normpath(os.path.join('..',rel)); root=os.path.normpath('../data/media')
+    if not full.startswith(root+os.sep) or not os.path.isfile(full):
+        print('WARNING: photo not found or not in data/media, using initials instead:',rel); return None
+    return full
+def _square(src,dest):
+    try:
+        im=ImageOps.exif_transpose(Image.open(src)).convert('RGB')
+    except Exception as ex:
+        print('WARNING: could not read photo',src,ex); return False
+    w,h=im.size; s=min(w,h)
+    left=(w-s)//2; top=int((h-s)*0.2) if h>w else (h-s)//2
+    im=im.crop((left,top,left+s,top+s)).resize((256,256),Image.LANCZOS)
+    buf=io.BytesIO(); im.save(buf,'JPEG',quality=85,optimize=True); _PIMGS[dest]=buf.getvalue(); return True
+def _wide(src,dest):
+    try:
+        im=ImageOps.exif_transpose(Image.open(src)).convert('RGB')
+    except Exception as ex:
+        print('WARNING: could not read photo',src,ex); return None
+    if im.size[0]>1500: im=im.resize((1500,round(im.size[1]*1500/im.size[0])),Image.LANCZOS)
+    buf=io.BytesIO(); im.save(buf,'JPEG',quality=82,optimize=True); _PIMGS[dest]=buf.getvalue(); return im.size
+def _slug(n): return re.sub(r'[^a-z0-9]+','-',n.lower()).strip('-') or 'person'
+def _initials(n): return ''.join(w[0] for w in n.split()[:2]).upper()
+_PP=json.load(open('../data/people.json',encoding='utf-8'))
+_staff=[x for x in _PP.get('staff',[]) if x.get('name','').strip()]
+_elders=[x for x in _PP.get('elders',[]) if x.get('name','').strip()]
+_have={}   # lower-case name -> processed staff photo file
+def _card(x,prefix):
+    nm=x['name'].strip(); dest='%s-%s.jpg'%(prefix,_slug(nm))
+    src=_photo_src(x.get('photo'))
+    if src and _square(src,dest): _have[nm.lower()]=dest
+    elif nm.lower() in _have and prefix=='elder': dest=_have[nm.lower()]   # same person as a staff member: reuse their photo
+    else: dest=None
+    return nm,x.get('title','').strip(),dest
+def _person(nm,ti,dest):
+    top='<img class="avatar" src="assets/people/%s" alt="%s" width="112" height="112" loading="lazy">'%(dest,_esc(nm)) if dest else '<div class="mono">%s</div>'%_esc(_initials(nm))
+    return '<div class="person">%s<h3>%s</h3><p>%s</p></div>'%(top,_esc(nm),_esc(ti))
+_sc=[_card(x,'staff') for x in _staff]
+_ec=[_card(x,'elder') for x in _elders]
+_staff_html='<div class="kicker reveal" style="margin-bottom:22px">Staff</div>\n      <div class="people-grid reveal" style="margin-bottom:60px">\n        '+'\n        '.join(_person(*x) for x in _sc)+'\n      </div>'
+if _ec and all(x[2] for x in _ec): _elist='<div class="people-grid elders-grid">\n        '+'\n        '.join(_person(*x) for x in _ec)+'\n      </div>'
+else: _elist='<ul class="elder-list">'+''.join('<li><b>%s</b><span>%s</span></li>'%(_esc(n),_esc(ti)) for n,ti,_d in _ec)+'</ul>'
+_gp=''
+_gsrc=_photo_src(_PP.get('elders_group_photo'))
+if _gsrc:
+    _gs=_wide(_gsrc,'elders-group.jpg')
+    if _gs: _gp='<figure class="wide-photo"><img src="assets/people/elders-group.jpg" alt="The elders of Prairie Valley Church" width="%d" height="%d" loading="lazy"></figure>\n        '%_gs
+_elders_html='<div class="kicker reveal" style="margin-bottom:22px">Elders</div>\n      <div class="elder-panel reveal">\n        '+_gp+_elist+'\n      </div>'
+_s=t.index('<div class="kicker reveal" style="margin-bottom:22px">Staff</div>')
+_endmark='Ray Dooley</h3><p>Elder</p></div>'
+_e=t.index(_endmark)+len(_endmark)
+_rest=t[_e:]
+assert _rest.lstrip().startswith('</div>'),_rest[:40]
+_e=_e+_rest.index('</div>')+len('</div>')
+t=t[:_s]+_staff_html+'\n      '+_elders_html+t[_e:]
 t=t.replace('</style>','''.avatar{width:112px;height:112px;border-radius:50%;object-fit:cover;margin-bottom:16px;display:block;background:var(--panel);box-shadow:0 0 0 3px var(--white),0 0 0 4px var(--line);}
 .elder-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);column-gap:40px;border-top:1px solid var(--line);}
 .elder-list li{padding:16px 0;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;}
@@ -138,7 +177,7 @@ t=t.replace('</style>','''.avatar{width:112px;height:112px;border-radius:50%;obj
 .elder-list span{font-size:.9rem;opacity:.75;}
 @media (max-width:700px){.elder-list{grid-template-columns:1fr;}}
 </style>''',1)
-t=t.replace('</style>','@media (max-width:480px){.people-grid{grid-template-columns:repeat(2,1fr);gap:28px 16px;}.avatar{width:96px;height:96px;}}\n</style>',1)
+t=t.replace('</style>','@media (max-width:480px){.people-grid{grid-template-columns:repeat(2,1fr);gap:28px 16px;}.avatar{width:96px;height:96px;}}\n.people-grid.elders-grid{grid-template-columns:repeat(auto-fit,minmax(170px,1fr));}\n.elder-panel .wide-photo{margin:0 0 36px;}\n@media (max-width:480px){.people-grid.elders-grid{grid-template-columns:repeat(2,1fr);}}\n</style>',1)
 def juri(path,width,q):
     im=Image.open(path).convert('RGB'); w,h=im.size
     im=im.resize((width,int(h*width/w)),Image.LANCZOS)
@@ -198,7 +237,7 @@ t=t.replace('</style>','''.mobile-nav{align-items:stretch;padding-inline:0;}
   .min-row.open p{display:block;}
   .ev-row:not(.open) .ev-img{display:none;}
   .ev-row:not(.open) .ev-note{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;}
-  .elder-list:not(.open){display:none !important;}
+  .elder-panel:not(.open){display:none !important;}
 }
 </style>''',1)
 t=t.replace('</footer>','</footer>\n<nav class="quickbar" aria-label="Quick actions"><a href="https://www.google.com/maps/search/?api=1&query=2417+FM+513+Campbell+TX+75422" target="_blank" rel="noopener">Directions</a><a href="#visit">What to Expect</a><a href="#sermons">Watch</a></nav>',1)
@@ -222,7 +261,7 @@ JS="""
       evl.addEventListener('click', function(ev){ if(!mq.matches) return; var r = ev.target.closest('.ev-row'); if(!r || ev.target.closest('a')) return; var o = r.classList.toggle('open'); r.setAttribute('aria-expanded', o ? 'true' : 'false'); });
       evl.addEventListener('keydown', function(ev){ if(!mq.matches) return; var r = ev.target.closest && ev.target.closest('.ev-row'); if(!r) return; if(ev.key==='Enter' || ev.key===' '){ ev.preventDefault(); var o = r.classList.toggle('open'); r.setAttribute('aria-expanded', o ? 'true' : 'false'); } });
     }
-    var eld = document.querySelector('.elder-list');
+    var eld = document.querySelector('.elder-panel');
     if(eld && eld.previousElementSibling){ var k = eld.previousElementSibling; k.classList.add('acc-toggle'); reg(k, eld); }
     function apply(){ var all = items.slice(); document.querySelectorAll('#evList .ev-row').forEach(function(r){ all.push(r); }); document.querySelectorAll('#minList .min-row').forEach(function(r){ all.push(r); }); all.forEach(function(el){ if(mq.matches){ el.setAttribute('role','button'); el.setAttribute('tabindex','0'); if(!el.hasAttribute('aria-expanded')) el.setAttribute('aria-expanded','false'); } else { el.removeAttribute('role'); el.removeAttribute('tabindex'); el.removeAttribute('aria-expanded'); } }); }
     window.pvApplyAcc = apply; apply(); if(mq.addEventListener){ mq.addEventListener('change', apply); }

@@ -128,3 +128,42 @@ content:
         label: Phone number (10 digits, like 430.808.2655)
         type: string
         required: true
+
+  - name: people
+    label: Staff and elders
+    type: file
+    path: data/people.json
+    fields:
+      - name: staff
+        label: Staff
+        type: object
+        list: true
+        fields:
+          - name: name
+            label: Name
+            type: string
+            required: true
+          - name: title
+            label: Title
+            type: string
+          - name: photo
+            label: Photo (optional; shows initials if blank)
+            type: image
+      - name: elders
+        label: Elders
+        type: object
+        list: true
+        fields:
+          - name: name
+            label: Name
+            type: string
+            required: true
+          - name: title
+            label: Title
+            type: string
+          - name: photo
+            label: Photo (optional). Photos only show once EVERY elder has one. An elder who is also on staff reuses their staff photo.
+            type: image
+      - name: elders_group_photo
+        label: Elders group photo (optional; shows above the elders)
+        type: image

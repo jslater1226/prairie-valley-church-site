@@ -1,0 +1,16 @@
+{
+  "staff": [
+    { "name": "Josh Slater", "title": "Senior Pastor / Staff Elder", "photo": "data/media/staff-josh.jpg" },
+    { "name": "Joey Knight", "title": "Worship Pastor", "photo": "data/media/staff-joey.jpg" },
+    { "name": "Kaylee Kinnaird", "title": "Student Minister", "photo": "data/media/staff-kaylee.jpg" },
+    { "name": "Alesa Benson", "title": "Administrative Assistant", "photo": "data/media/staff-alesa.jpg" }
+  ],
+  "elders": [
+    { "name": "Josh Slater", "title": "Senior Pastor / Elder", "photo": "" },
+    { "name": "Terry Palmore", "title": "Elder", "photo": "" },
+    { "name": "Jim Voss", "title": "Elder", "photo": "" },
+    { "name": "Monty Murphy", "title": "Elder", "photo": "" },
+    { "name": "Ray Dooley", "title": "Elder", "photo": "" }
+  ],
+  "elders_group_photo": ""
+}
