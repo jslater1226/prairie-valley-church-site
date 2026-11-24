@@ -17,12 +17,24 @@ fav=data_uri(ic.resize((64,64),Image.LANCZOS))
 apple=data_uri(ic.resize((180,180),Image.LANCZOS))
 
 # ---- SINGLE SOURCE OF TRUTH: edit here, rebuild ----
+import json, html as _h, urllib.parse as _u
+_S=json.load(open('../data/site.json',encoding='utf-8'))
+def _e(v): return _h.escape(str(v).strip(),quote=True).replace('\u2013','&ndash;')
+_d=re.sub(r'\D','',_S['phone'])[-10:]
+assert len(_d)==10, 'phone in data/site.json needs 10 digits'
 CFG={
- 'SUN_TIME':'10:45 AM',
- 'WED_TIME':'6:00&ndash;7:30 PM',
- 'MON_TIME':'6:00 PM',
- 'PHONE':'430.808.2655',
- 'PHONE_TEL':'+14308082655',
+ 'SUN_TIME':_e(_S['sunday_time']),
+ 'WED_TIME':_e(_S['wednesday_time']),
+ 'MON_TIME':_e(_S['monday_time']),
+ 'PHONE':_e(_S['phone']),
+ 'PHONE_TEL':'+1'+_d,
+ 'PHONE_LD':'+1-%s-%s-%s'%(_d[:3],_d[3:6],_d[6:]),
+ 'STREET':_e(_S['street']),
+ 'CITY':_e(_S['city']),
+ 'STATE':_e(_S['state']),
+ 'ZIP':_e(_S['zip']),
+ 'ADDR_LINE':_e('%s, %s, %s'%(_S['street'],_S['city'],_S['state'])),
+ 'MAP_QUERY':_u.quote_plus('%s %s %s %s'%(_S['street'],_S['city'],_S['state'],_S['zip'])),
  'LOGO_HEADER':logo,'FAV':fav,'APPLE':apple,
 }
 
@@ -43,7 +55,7 @@ t=t.replace("  @media (max-width:960px){nav.links{display:none;}",
 t=t.replace('<meta name="description"','<meta name="theme-color" content="#02027D">\n<link rel="icon" type="image/png" href="{{FAV}}">\n<link rel="apple-touch-icon" href="{{APPLE}}">\n<meta name="description"',1)
 # structured data: only what is verified
 t=re.sub(r'<script type="application/ld\+json">.*?</script>','''<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Church","name":"Prairie Valley Church","telephone":"+1-430-808-2655","alternateName":"Prairie Valley Baptist Church","address":{"@type":"PostalAddress","streetAddress":"2417 FM 513","addressLocality":"Campbell","addressRegion":"TX","postalCode":"75422","addressCountry":"US"}}
+{"@context":"https://schema.org","@type":"Church","name":"Prairie Valley Church","telephone":"{{PHONE_LD}}","alternateName":"Prairie Valley Baptist Church","address":{"@type":"PostalAddress","streetAddress":"{{STREET}}","addressLocality":"{{CITY}}","addressRegion":"{{STATE}}","postalCode":"{{ZIP}}","addressCountry":"US"}}
 </script>''',t,flags=re.S,count=1)
 # dead-end groups button
 t=re.sub(r'\s*<div style="margin-top:34px" class="reveal"><a class="btn" href="https://pvbchurch.churchcenter.com/groups".*?</div>','',t,flags=re.S,count=1)
@@ -58,8 +70,11 @@ t=t.replace('</style>','.foot-bottom::before{content:"";position:absolute;left:2
 t=t.replace('up to 4th grade','through 5th grade')
 exec(open('copyedit.txt').read())
 # tokens (single source)
+t=t.replace("2417+FM+513+Campbell+TX+75422","{{MAP_QUERY}}").replace("2417 FM 513<br>Campbell, TX 75422","{{STREET}}<br>{{CITY}}, {{STATE}} {{ZIP}}").replace("2417 FM 513, Campbell, TX 75422","{{ADDR_LINE}} {{ZIP}}").replace("2417 FM 513, Campbell, TX","{{ADDR_LINE}}").replace("2417 FM 513","{{STREET}}")
+assert '2417' not in t, 'a hard-coded address is still in the page'
 t=t.replace("10:45 AM","{{SUN_TIME}}").replace("6:00&ndash;7:30 PM","{{WED_TIME}}")
 t=t.replace("6:00 PM","{{MON_TIME}}").replace("903.662.5275","{{PHONE}}").replace("+19036625275","{{PHONE_TEL}}")
+t=t.replace('<!--MINROWS-->',_MINROWS)  # ministries are inserted after the site-wide replacements so what staff type is what shows
 open('template.html','w',encoding='utf-8').write(t)
 
 out=t
@@ -96,6 +111,7 @@ open('dist/robots.txt','w').write('User-agent: *\nAllow: /\nSitemap: %s/sitemap.
 open('dist/sitemap.xml','w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>%s/</loc><lastmod>2026-11-23</lastmod></url></urlset>\n'%DOM)
 open('dist/_headers','w').write('/assets/*\n  Cache-Control: public, max-age=86400\n/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n')
 open('dist/404.html','w',encoding='utf-8').write('''<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Page not found | Prairie Valley Church</title><meta name="robots" content="noindex"><link rel="icon" href="/assets/favicon-64.png"><style>body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#02027D;color:#fff;font-family:Calibri,Candara,Arial,sans-serif;text-align:center;padding:24px}img{width:84px;height:84px;margin-bottom:20px}h1{font-family:Georgia,serif;font-size:2.2rem;margin:0 0 12px}p{margin:0 0 28px;font-size:1.1rem;color:#C0C4EE}a{display:inline-block;background:#fff;color:#02027D;font-weight:700;padding:14px 30px;border-radius:999px;text-decoration:none}</style></head><body><main><img src="/assets/logo.png" alt=""><h1>We couldn't find that page</h1><p>It may have moved. Sundays at 10:45 AM, though, you'll find us right where we always are.</p><a href="/">Back to the home page</a></main></body></html>''')
+_p='dist/404.html'; _404=open(_p,encoding='utf-8').read().replace('10:45 AM',CFG['SUN_TIME']); open(_p,'w',encoding='utf-8').write(_404)
 with zipfile.ZipFile('prairie-valley-church-site.zip','w',zipfile.ZIP_DEFLATED) as z:
     for r,_,fs in os.walk('dist'):
         for f in fs:

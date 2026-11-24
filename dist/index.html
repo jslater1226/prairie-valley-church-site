@@ -594,32 +594,6 @@ html{font-size:clamp(16px,calc(10px + .45vw),20px);}
     window.pvApplyAcc = apply; apply(); if(mq.addEventListener){ mq.addEventListener('change', apply); }
   })();
 
-
-  (function(){
-    function mk(tag, cls){ var e = document.createElement(tag); if(cls) e.className = cls; return e; }
-    function get(u){ return fetch(u, {cache:'no-cache'}).then(function(r){ return r.ok ? r.json() : null; }); }
-    get('data/series.json').then(function(d){
-      var box = document.getElementById('seriesLinks'); if(!d || !d.series || !box) return;
-      box.textContent = '';
-      d.series.forEach(function(s){
-        if(!s.title || !/^https?:[/][/]/.test(s.url||'')) return;
-        var a = mk('a', 'btn sm' + (s.highlight ? ' solid' : '')); a.href = s.url; a.target = '_blank'; a.rel = 'noopener';
-        a.appendChild(document.createTextNode(s.title + ' ')); var ar = mk('span', 'arrow'); ar.innerHTML = '&rarr;'; a.appendChild(ar); box.appendChild(a);
-      });
-      var n = document.getElementById('seriesNote'); if(n) n.textContent = d.note || '';
-    }).catch(function(){});
-    get('data/ministries.json').then(function(d){
-      var box = document.getElementById('minList'); if(!d || !d.ministries || !box) return;
-      box.textContent = '';
-      d.ministries.forEach(function(m){
-        var row = mk('div', 'min-row'), w = mk('div', 'when'), c = mk('div'), h = mk('h3'), p = mk('p');
-        w.textContent = m.when || ''; h.textContent = m.title || ''; p.textContent = m.description || '';
-        c.appendChild(h); c.appendChild(p); row.appendChild(w); row.appendChild(c); box.appendChild(row);
-      });
-      if(window.pvApplyAcc) window.pvApplyAcc();
-    }).catch(function(){});
-  })();
-
   var els = document.querySelectorAll('.reveal');
   if('IntersectionObserver' in window){
     var io = new IntersectionObserver(function(entries){

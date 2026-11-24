@@ -90,3 +90,41 @@ content:
             label: Description
             type: text
             required: true
+
+  - name: site
+    label: Service times, address and phone
+    type: file
+    path: data/site.json
+    fields:
+      - name: sunday_time
+        label: Sunday worship time (for example, 10:45 AM)
+        type: string
+        required: true
+      - name: wednesday_time
+        label: Wednesday night time (for example, 6:00–7:30 PM)
+        type: string
+        required: true
+      - name: monday_time
+        label: Monday small group time (for example, 6:00 PM)
+        type: string
+        required: true
+      - name: street
+        label: Street address
+        type: string
+        required: true
+      - name: city
+        label: City
+        type: string
+        required: true
+      - name: state
+        label: State
+        type: string
+        required: true
+      - name: zip
+        label: ZIP code
+        type: string
+        required: true
+      - name: phone
+        label: Phone number (10 digits, like 430.808.2655)
+        type: string
+        required: true
