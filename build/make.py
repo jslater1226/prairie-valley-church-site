@@ -58,7 +58,7 @@ t=t.replace("  @media (max-width:960px){nav.links{display:none;}",
 t=t.replace('<meta name="description"','<meta name="theme-color" content="#02027D">\n<link rel="icon" type="image/png" href="{{FAV}}">\n<link rel="apple-touch-icon" href="{{APPLE}}">\n<meta name="description"',1)
 # structured data: only what is verified
 t=re.sub(r'<script type="application/ld\+json">.*?</script>','''<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Church","name":"Prairie Valley Church","telephone":"{{PHONE_LD}}","alternateName":"Prairie Valley Baptist Church","address":{"@type":"PostalAddress","streetAddress":"{{STREET}}","addressLocality":"{{CITY}}","addressRegion":"{{STATE}}","postalCode":"{{ZIP}}","addressCountry":"US"}}
+{"@context":"https://schema.org","@type":"Church","name":"Prairie Valley Church","telephone":"{{PHONE_LD}}","address":{"@type":"PostalAddress","streetAddress":"{{STREET}}","addressLocality":"{{CITY}}","addressRegion":"{{STATE}}","postalCode":"{{ZIP}}","addressCountry":"US"}}
 </script>''',t,flags=re.S,count=1)
 # dead-end groups button
 t=re.sub(r'\s*<div style="margin-top:34px" class="reveal"><a class="btn" href="https://pvbchurch.churchcenter.com/groups".*?</div>','',t,flags=re.S,count=1)
