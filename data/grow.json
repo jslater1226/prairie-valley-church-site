@@ -151,8 +151,8 @@
       {
         "name": "Echo Prayer",
         "description": "Keep a list of the people and needs you're praying for, set reminders, and mark prayers answered so you can see what God has done. Follow our church's prayer feed in the app. Available on iPhone and Android.",
-        "button": "Get Echo",
-        "url": ""
+        "button": "Follow our prayer feed",
+        "url": "https://app.echoprayer.com/feed/prairie-valley-church"
       },
       {
         "name": "Pause",
