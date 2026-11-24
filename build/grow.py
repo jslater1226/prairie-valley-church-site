@@ -74,7 +74,7 @@ def _week_html(w, current):
     title = _e(w.get('sermon') or 'This week')
     meta = ' &middot; '.join(x for x in [_e(w.get('passage')), _e(_fmt(w['date'])) if w.get('date') else ''] if x)
     s = ['<article class="wk" id="%s">' % wid,
-         '<header class="wk-head"><h3>%s</h3><p class="q-meta">%s</p>%s</header>' % (title, meta, _link(w.get('watch_url'), 'Watch the sermon'))]
+         '<div class="wk-head"><h3>%s</h3><p class="q-meta">%s</p>%s</div>' % (title, meta, _link(w.get('watch_url'), 'Watch the sermon'))]
     if w.get('step'):
         s.append('<div class="wk-step"><div class="kicker">Your step this week</div><p>%s</p></div>' % _e(w['step']))
     if w.get('quote'):
