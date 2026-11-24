@@ -460,6 +460,7 @@
   var months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
   var list = document.getElementById('evList');
   function renderEvents(EVENTS){
+  if(!list) return;
   var upcoming = EVENTS.filter(function(e){return e.date >= today;}).sort(function(a,b){return a.date<b.date?-1:1;});
   if(upcoming.length){
     upcoming.forEach(function(e){

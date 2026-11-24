@@ -3,8 +3,8 @@
 media:
   input: data/media
   output: data/media
-  extensions: [jpg, jpeg, png, webp]
-  categories: [image]
+  extensions: [jpg, jpeg, png, webp, pdf]
+  categories: [image, document]
 
 content:
   - name: events
@@ -167,3 +167,71 @@ content:
       - name: elders_group_photo
         label: Elders group photo (optional; shows above the elders)
         type: image
+
+  - name: grow
+    label: Grow page (sermon quotes and newsletter)
+    type: file
+    path: data/grow.json
+    fields:
+      - name: intro
+        label: Line under the page title
+        type: string
+      - name: quotes
+        label: Sermon quotes (newest date shows biggest; the page appears once there is at least one item anywhere on it)
+        type: object
+        list: true
+        fields:
+          - name: quote
+            label: Quote (the words only, no quotation marks needed)
+            type: text
+            required: true
+          - name: sermon
+            label: Sermon title
+            type: string
+          - name: passage
+            label: Passage (for example, Romans 12:9-21)
+            type: string
+          - name: date
+            label: Date preached
+            type: date
+            options:
+              format: yyyy-MM-dd
+          - name: url
+            label: Link to watch (optional, starts with https://)
+            type: string
+      - name: newsletters
+        label: Monthly newsletters (newest date shows first)
+        type: object
+        list: true
+        fields:
+          - name: date
+            label: Issue date (use the 1st of the month)
+            type: date
+            required: true
+            options:
+              format: yyyy-MM-dd
+          - name: title
+            label: Title (optional; blank shows "December 2026 newsletter")
+            type: string
+          - name: summary
+            label: One or two sentences about this issue
+            type: text
+          - name: file
+            label: PDF file
+            type: file
+            options:
+              extensions: [pdf]
+              rename: safe
+      - name: discussion
+        label: Discussion questions link (optional)
+        type: object
+        fields:
+          - name: title
+            label: Title
+            type: string
+          - name: description
+            label: One sentence
+            type: string
+          - name: url
+            label: Link (starts with https://; leave blank to hide)
+            type: string

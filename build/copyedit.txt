@@ -279,3 +279,9 @@ _k=_tail.rindex('</div>'); _k2=_tail.rindex('</div>',0,_k)
 _rows=''.join('<div class="min-row"><div class="when">%s</div><div><h3>%s</h3><p>%s</p></div></div>\n        '%(_esc(m['when']),_esc(m['title']),_esc(m['description'])) for m in _mins)
 _MINROWS=_rows
 t=t[:_i]+'<div class="min-list reveal" id="minList">\n        <!--MINROWS-->'+'</div>'+_tail[_k2+6:]+t[_j:]
+
+if _HAS_GROW:
+    assert t.count('<a href="#ministries">Ministries</a>')>=2
+    t=t.replace('<a href="#ministries">Ministries</a>','<a href="#ministries">Ministries</a>\n<a href="grow/">Grow</a>')
+t=t.replace('</style>',grow.CSS+'</style>',1)
+

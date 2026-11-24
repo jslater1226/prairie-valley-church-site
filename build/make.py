@@ -17,6 +17,9 @@ fav=data_uri(ic.resize((64,64),Image.LANCZOS))
 apple=data_uri(ic.resize((180,180),Image.LANCZOS))
 
 # ---- SINGLE SOURCE OF TRUTH: edit here, rebuild ----
+import grow
+_G=grow.load()
+_HAS_GROW=grow.has_content(_G)
 import json, html as _h, urllib.parse as _u
 _S=json.load(open('../data/site.json',encoding='utf-8'))
 def _e(v): return _h.escape(str(v).strip(),quote=True).replace('\u2013','&ndash;')
@@ -108,8 +111,11 @@ head='<meta name="theme-color" content="#02027D">'
 assert prod.count(head)==1
 prod=prod.replace(head,head+'\n<link rel="canonical" href="%s/">\n<meta property="og:url" content="%s/">\n<meta property="og:site_name" content="Prairie Valley Church">\n<meta property="og:image" content="%s/assets/og.jpg">\n<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="630">\n<meta name="twitter:card" content="summary_large_image">\n<link rel="icon" href="favicon.ico" sizes="any">'%(DOM,DOM,DOM)+('\n<meta name="robots" content="noindex">' if NOINDEX else ''))
 open('dist/index.html','w',encoding='utf-8').write(prod)
+if _HAS_GROW:
+    os.makedirs('dist/grow',exist_ok=True)
+    open('dist/grow/index.html','w',encoding='utf-8').write(grow.page(prod,_G,DOM))
 open('dist/robots.txt','w').write('User-agent: *\nAllow: /\nSitemap: %s/sitemap.xml\n'%DOM)
-open('dist/sitemap.xml','w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>%s/</loc><lastmod>2026-11-23</lastmod></url></urlset>\n'%DOM)
+open('dist/sitemap.xml','w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>%s/</loc><lastmod>2026-11-23</lastmod></url>%s</urlset>\n'%(DOM,('<url><loc>%s/grow/</loc></url>'%DOM) if _HAS_GROW else ''))
 open('dist/_headers','w').write('/assets/*\n  Cache-Control: public, max-age=86400\n/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n')
 open('dist/404.html','w',encoding='utf-8').write('''<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Page not found | Prairie Valley Church</title><meta name="robots" content="noindex"><link rel="icon" href="/assets/favicon-64.png"><style>body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#02027D;color:#fff;font-family:Calibri,Candara,Arial,sans-serif;text-align:center;padding:24px}img{width:84px;height:84px;margin-bottom:20px}h1{font-family:Georgia,serif;font-size:2.2rem;margin:0 0 12px}p{margin:0 0 28px;font-size:1.1rem;color:#C0C4EE}a{display:inline-block;background:#fff;color:#02027D;font-weight:700;padding:14px 30px;border-radius:999px;text-decoration:none}</style></head><body><main><img src="/assets/logo.png" alt=""><h1>We couldn't find that page</h1><p>It may have moved. Sundays at 10:45 AM, though, you'll find us right where we always are.</p><a href="/">Back to the home page</a></main></body></html>''')
 _p='dist/404.html'; _404=open(_p,encoding='utf-8').read().replace('10:45 AM',CFG['SUN_TIME']); open(_p,'w',encoding='utf-8').write(_404)
