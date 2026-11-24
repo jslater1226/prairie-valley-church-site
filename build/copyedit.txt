@@ -36,8 +36,6 @@ R=[
  "Men get together for prayer and for special nights like Forge Night. Bring a friend."),
 ("We observe the Lord's Supper together as part of our worship. Check the calendar for the next Sunday.",
  "We take the Lord's Supper together as part of worship on the first Sunday of every month."),
-("note:'Free chili dinner, live farrier demonstration, bring a friend. Student Building.'",
- "note:'Free chili dinner and a live farrier demonstration. Bring a friend. Student Building.'"),
 ("Special events and schedule changes are always on the full calendar",
  "Special events and changes always show up on the full calendar"),
 ("Prairie Valley Church is a church for the entire community in Campbell, Texas. We believe the Bible is God's Word and that the gospel of Jesus Christ is for everyone, so we preach it plainly and welcome anyone who wants to hear it.",
@@ -214,11 +212,15 @@ JS="""
       el.addEventListener('keydown', function(ev){ if(!mq.matches) return; if(ev.key==='Enter' || ev.key===' '){ ev.preventDefault(); toggle(); } });
     }
     document.querySelectorAll('.min-row').forEach(function(r){ reg(r); });
-    document.querySelectorAll('.ev-row').forEach(function(r){ reg(r); });
+    var evl = document.getElementById('evList');
+    if(evl){
+      evl.addEventListener('click', function(ev){ if(!mq.matches) return; var r = ev.target.closest('.ev-row'); if(!r || ev.target.closest('a')) return; var o = r.classList.toggle('open'); r.setAttribute('aria-expanded', o ? 'true' : 'false'); });
+      evl.addEventListener('keydown', function(ev){ if(!mq.matches) return; var r = ev.target.closest && ev.target.closest('.ev-row'); if(!r) return; if(ev.key==='Enter' || ev.key===' '){ ev.preventDefault(); var o = r.classList.toggle('open'); r.setAttribute('aria-expanded', o ? 'true' : 'false'); } });
+    }
     var eld = document.querySelector('.elder-list');
     if(eld && eld.previousElementSibling){ var k = eld.previousElementSibling; k.classList.add('acc-toggle'); reg(k, eld); }
-    function apply(){ items.forEach(function(el){ if(mq.matches){ el.setAttribute('role','button'); el.setAttribute('tabindex','0'); if(!el.hasAttribute('aria-expanded')) el.setAttribute('aria-expanded','false'); } else { el.removeAttribute('role'); el.removeAttribute('tabindex'); el.removeAttribute('aria-expanded'); } }); }
-    apply(); if(mq.addEventListener){ mq.addEventListener('change', apply); }
+    function apply(){ var all = items.slice(); document.querySelectorAll('#evList .ev-row').forEach(function(r){ all.push(r); }); all.forEach(function(el){ if(mq.matches){ el.setAttribute('role','button'); el.setAttribute('tabindex','0'); if(!el.hasAttribute('aria-expanded')) el.setAttribute('aria-expanded','false'); } else { el.removeAttribute('role'); el.removeAttribute('tabindex'); el.removeAttribute('aria-expanded'); } }); }
+    window.pvApplyAcc = apply; apply(); if(mq.addEventListener){ mq.addEventListener('change', apply); }
   })();
 
 """

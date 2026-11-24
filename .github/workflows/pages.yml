@@ -18,6 +18,10 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+      - name: Check the editable data is valid JSON
+        run: python3 -c "import json; json.load(open('data/events.json')); print('events.json ok')"
+      - name: Add editable data to the published site
+        run: mkdir -p dist && cp -r data dist/data
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

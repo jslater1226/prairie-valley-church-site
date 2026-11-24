@@ -452,17 +452,14 @@
 
 <script>
 (function(){
-  /* ---- EVENTS: edit this list. Past events hide themselves automatically. ---- */
-  var EVENTS = [
-    {date:'2026-12-06', time:'4:00 PM', title:"Men's Ministry: Forge Night", note:'Free chili dinner, live farrier demonstration, bring a friend. Student Building.', img:'assets/event-forge-night.jpg', alt:'Forge Night flyer: a night for men, live farrier demonstration, free chili dinner, Sunday December 6 at 4:00 PM in the Student Building', url:'https://pvbchurch.churchcenter.com/calendar/event/243298772'},
-    {date:'2026-12-12', time:'11:00 AM to 1:00 PM', title:"Women's Christmas Brunch", note:'Hosted at a church family\'s home. Sign up in the church foyer to attend and bring food, and bring an unwrapped gift for Community Seeds.', img:'assets/event-womens-christmas-brunch.jpg', alt:"Women's Christmas Brunch flyer, Saturday December 12, 11:00 AM to 1:00 PM", url:'https://pvbchurch.churchcenter.com/calendar/event/243751560'}
-  ];
+  /* Events live in data/events.json (edited with Pages CMS). Past events hide themselves automatically. */
 
   function pad(n){return n<10?'0'+n:''+n;}
   var now = new Date();
   var today = now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate());
   var months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
   var list = document.getElementById('evList');
+  function renderEvents(EVENTS){
   var upcoming = EVENTS.filter(function(e){return e.date >= today;}).sort(function(a,b){return a.date<b.date?-1:1;});
   if(upcoming.length){
     upcoming.forEach(function(e){
@@ -486,6 +483,9 @@
   } else {
     list.parentNode.removeChild(list);
   }
+    if(window.pvApplyAcc) window.pvApplyAcc();
+  }
+  fetch('data/events.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():{};}).then(function(d){renderEvents(d&&d.events?d.events:[]);}).catch(function(){renderEvents([]);});
 
   var header = document.getElementById('siteHeader');
   var hero = document.querySelector('.hero');

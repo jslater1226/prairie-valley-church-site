@@ -1,0 +1,44 @@
+# Pages CMS configuration: defines what staff can edit in the form editor.
+# Edits are saved as commits to this repository; GitHub Pages then republishes the site.
+media:
+  input: data/media
+  output: data/media
+  extensions: [jpg, jpeg, png, webp]
+  categories: [image]
+
+content:
+  - name: events
+    label: Events
+    type: file
+    path: data/events.json
+    fields:
+      - name: events
+        label: Events
+        type: object
+        list: true
+        fields:
+          - name: title
+            label: Title
+            type: string
+            required: true
+          - name: date
+            label: Date
+            type: date
+            required: true
+            options:
+              format: yyyy-MM-dd
+          - name: time
+            label: Time (as people should read it, e.g. 4:00 PM)
+            type: string
+          - name: note
+            label: Short description
+            type: text
+          - name: url
+            label: Church Center link (opens when someone taps the flyer)
+            type: string
+          - name: img
+            label: Flyer image
+            type: image
+          - name: alt
+            label: Flyer description for screen readers
+            type: string

@@ -7,3 +7,5 @@ This repo is the Prairie Valley Church website (owner: Josh Slater, jslater1226)
 - Edit `build/` (mostly `build/copyedit.txt` and `build/make.py`), run `cd build && python3 make.py`, check the result, then commit `build/` and `dist/` together and push to `main`.
 - Do not change DNS, Netlify settings, or repo visibility without Josh's yes.
 - Do not commit under Josh's name or email. Commits are signed as Claude.
+
+- Events are no longer in the page code. They live in `data/events.json` and are edited through Pages CMS (config in `.pages.yml`, flyer images in `data/media/`). The deploy workflow validates the JSON and copies `data/` into the published site. Do not move `data/` under `build/` or `dist/`, because `make.py` deletes `dist/` on every build.
