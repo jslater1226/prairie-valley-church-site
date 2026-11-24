@@ -199,6 +199,54 @@ content:
           - name: url
             label: Link to watch (optional, starts with https://)
             type: string
+      - name: weeks
+        label: Weekly growth plan (newest date shows at the top; older weeks go into "Past weeks")
+        type: object
+        list: true
+        fields:
+          - name: date
+            label: Sunday it was preached
+            type: date
+            required: true
+            options:
+              format: yyyy-MM-dd
+          - name: sermon
+            label: Sermon title
+            type: string
+          - name: passage
+            label: Passage
+            type: string
+          - name: watch_url
+            label: Link to watch the sermon (starts with https://)
+            type: string
+          - name: step
+            label: Your step this week (one concrete thing, in Josh's words)
+            type: text
+          - name: quote
+            label: Quote that goes with the step
+            type: text
+          - name: reflection_scripture
+            label: Passages to read this week (separate with a semicolon)
+            type: string
+          - name: devotionals
+            label: Five devotionals (Monday first; each day gets its own link on the page)
+            type: object
+            list: true
+            fields:
+              - {name: day, label: Day, type: string}
+              - {name: title, label: Title, type: string}
+              - {name: scripture, label: Scripture reference, type: string}
+              - {name: scripture_text, label: Scripture text, type: text}
+              - {name: reflection, label: Reflection (blank line between paragraphs), type: text}
+              - {name: question, label: Question, type: text}
+              - {name: prayer, label: Prayer, type: text}
+          - name: opening_question
+            label: Group opening question
+            type: text
+          - name: questions
+            label: Discussion questions
+            type: string
+            list: true
       - name: newsletters
         label: Monthly newsletters (newest date shows first)
         type: object
