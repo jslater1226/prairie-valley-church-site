@@ -1,6 +1,11 @@
 {
   "series": [
     {
+      "title": "Listen on Spotify",
+      "url": "https://open.spotify.com/show/6NEX80RdBrwMrF0W7JqqOR",
+      "highlight": true
+    },
+    {
       "title": "Romans: Power of the Gospel",
       "url": "https://pvbchurch.churchcenter.com/channels/25138/series/79553",
       "highlight": false
@@ -24,11 +29,6 @@
       "title": "Life in His Name (Easter 2026)",
       "url": "https://pvbchurch.churchcenter.com/channels/25138/series/84988",
       "highlight": false
-    },
-    {
-      "title": "Listen on Spotify",
-      "url": "https://open.spotify.com/show/6NEX80RdBrwMrF0W7JqqOR",
-      "highlight": true
     }
   ],
   "note": "This Advent, we're walking through the book of Ruth."
