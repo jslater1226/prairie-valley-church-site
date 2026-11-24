@@ -306,11 +306,47 @@ p{text-wrap:pretty;}
 '''
 t=t.replace('</style>',_FONTCSS+'</style>',1)
 # --- real photos: worship band (visit), kids + youth (ministries); hero overlay darkened for contrast ---
+_SPHOTOS={}   # dest file name -> JPEG bytes, written to dist/assets/site-photos/ by make.py
+_SP=json.load(open('../data/photos.json',encoding='utf-8'))
+def _site_photo(slot,w,h):
+    x=_SP.get(slot) or {}
+    src=_photo_src(x.get('photo'))
+    if not src:
+        if (x.get('photo') or '').strip(): pass
+        else: print('WARNING: Site photos: no photo for "%s", that spot is skipped on the page'%slot)
+        return None
+    try:
+        im=ImageOps.exif_transpose(Image.open(src)).convert('RGB')
+    except Exception as ex:
+        print('WARNING: could not read site photo',src,ex); return None
+    iw,ih=im.size; r=w/h
+    if iw/ih>r: cw,ch=round(ih*r),ih
+    else: cw,ch=iw,round(iw/r)
+    left=(iw-cw)//2
+    top={'top':0,'bottom':ih-ch}.get((x.get('focus') or 'center').strip().lower(),(ih-ch)//2)
+    im=im.crop((left,top,left+cw,top+ch))
+    if cw>w: im=im.resize((w,h),Image.LANCZOS)
+    else: w,h=im.size
+    dest='%s.jpg'%slot
+    buf=io.BytesIO(); im.save(buf,'JPEG',quality=82,optimize=True,progressive=True); _SPHOTOS[dest]=buf.getvalue()
+    cap=(x.get('caption') or '').strip(); alt=(x.get('alt') or '').strip()
+    if not alt:
+        print('WARNING: Site photos: "%s" has no description for screen readers, using the caption instead'%slot); alt=cap
+    return dest,w,h,cap,alt
+def _site_fig(slot,w,h,wrap):
+    p=_site_photo(slot,w,h)
+    if not p: return ''
+    dest,pw,ph_,cap,alt=p
+    img='<img src="assets/site-photos/%s" alt="%s" width="%d" height="%d" loading="lazy" decoding="async">'%(dest,_esc(alt),pw,ph_)
+    if wrap: img='<span class="ph">%s</span>'%img
+    return img+('<figcaption>%s</figcaption>'%_esc(cap) if cap else '')
 _v=t.index('<section id="visit">'); _g=t.index('<div class="grid3 reveal">',_v)
-t=t[:_g]+'<figure class="photo-wide reveal"><img src="assets/photos/worship-band.jpg" alt="A worship team leading songs on a Sunday morning at Prairie Valley Church" width="1800" height="626" loading="lazy" decoding="async"><figcaption>Sunday worship at 10:45 AM</figcaption></figure>\n      '+t[_g:]
+_wf=_site_fig('worship',1800,626,False)
+if _wf: t=t[:_g]+'<figure class="photo-wide reveal">'+_wf+'</figure>\n      '+t[_g:]
 _b='<div class="min-list reveal" id="minList">'
 assert t.count(_b)==1
-t=t.replace(_b,'<div class="photo-row reveal">\n        <figure><span class="ph"><img src="assets/photos/kids-time.jpg" alt="Children gathered on the floor near the stage during the weekly children\'s sermon" width="1000" height="750" loading="lazy" decoding="async"></span><figcaption>The weekly children\'s sermon</figcaption></figure>\n        <figure><span class="ph"><img src="assets/photos/youth-worship.jpg" alt="Students on stage during a youth worship night" width="1000" height="750" loading="lazy" decoding="async"></span><figcaption>Youth worship night</figcaption></figure>\n      </div>\n      '+_b,1)
+_rf=[f for f in (_site_fig('kids',1200,900,True),_site_fig('youth',1200,900,True)) if f]
+if _rf: t=t.replace(_b,'<div class="photo-row%s reveal">\n        '%(' one' if len(_rf)==1 else '')+'\n        '.join('<figure>%s</figure>'%f for f in _rf)+'\n      </div>\n      '+_b,1)
 t=t.replace('</style>','''.photo-wide{margin:0 0 44px;}
 .photo-wide img{width:100%;height:auto;display:block;border-radius:14px;}
 .photo-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:0 0 40px;}
@@ -322,6 +358,7 @@ t=t.replace('</style>','''.photo-wide{margin:0 0 44px;}
 .photo-row figure .ph img{filter:saturate(.72) brightness(.92) contrast(.94);}
 .photo-row figure .ph::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(2,2,125,.12) 0%,rgba(2,2,125,.26) 100%);box-shadow:inset 0 0 70px rgba(2,2,125,.24);}
 .photo-row img{border-radius:0;}
+.photo-row.one{grid-template-columns:minmax(0,560px);}
 .hero-tint{background:linear-gradient(90deg,rgba(2,2,125,.94) 0%,rgba(2,2,125,.84) 42%,rgba(2,2,125,.56) 100%);}
 @media (max-width:760px){.hero-tint{background:linear-gradient(180deg,rgba(2,2,125,.9) 0%,rgba(2,2,125,.82) 60%,rgba(2,2,125,.7) 100%);}}
 </style>''',1)

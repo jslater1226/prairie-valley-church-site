@@ -168,6 +168,78 @@ content:
         label: Elders group photo (optional; shows above the elders)
         type: image
 
+  - name: photos
+    label: Site photos
+    type: file
+    path: data/photos.json
+    fields:
+      - name: worship
+        label: Worship photo (wide banner under "Visit")
+        type: object
+        fields:
+          - name: photo
+            label: Photo (a wide landscape shot works best; it is cropped to a banner about three times wider than tall). Leave blank to hide this spot.
+            type: image
+          - name: caption
+            label: Caption under the photo (optional)
+            type: string
+          - name: alt
+            label: Describe the photo for screen readers (who and what is happening, one sentence)
+            type: string
+          - name: focus
+            label: If the photo gets cropped, keep the
+            type: select
+            default: center
+            options:
+              values:
+                - {value: top, label: Top (faces near the top)}
+                - {value: center, label: Middle}
+                - {value: bottom, label: Bottom}
+      - name: kids
+        label: Photo 1 (above the ministries list)
+        type: object
+        fields:
+          - name: photo
+            label: Photo (landscape; cropped to 4:3). Leave blank to hide this spot.
+            type: image
+          - name: caption
+            label: Caption under the photo (optional)
+            type: string
+          - name: alt
+            label: Describe the photo for screen readers (who and what is happening, one sentence)
+            type: string
+          - name: focus
+            label: If the photo gets cropped, keep the
+            type: select
+            default: center
+            options:
+              values:
+                - {value: top, label: Top (faces near the top)}
+                - {value: center, label: Middle}
+                - {value: bottom, label: Bottom}
+      - name: youth
+        label: Photo 2 (above the ministries list, next to photo 1)
+        type: object
+        fields:
+          - name: photo
+            label: Photo (landscape; cropped to 4:3). Leave blank to hide this spot.
+            type: image
+          - name: caption
+            label: Caption under the photo (optional)
+            type: string
+          - name: alt
+            label: Describe the photo for screen readers (who and what is happening, one sentence)
+            type: string
+          - name: focus
+            label: If the photo gets cropped, keep the
+            type: select
+            default: center
+            options:
+              values:
+                - {value: top, label: Top (faces near the top)}
+                - {value: center, label: Middle}
+                - {value: bottom, label: Bottom}
+
   - name: grow
     label: Grow page (sermon quotes and newsletter)
     type: file

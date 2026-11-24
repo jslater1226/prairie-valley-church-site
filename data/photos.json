@@ -1,0 +1,20 @@
+{
+  "worship": {
+    "photo": "data/media/site-worship.jpg",
+    "caption": "Sunday worship at 10:45 AM",
+    "alt": "A worship team leading songs on a Sunday morning at Prairie Valley Church",
+    "focus": "center"
+  },
+  "kids": {
+    "photo": "data/media/site-kids.jpg",
+    "caption": "The weekly children's sermon",
+    "alt": "Children gathered on the floor near the stage during the weekly children's sermon",
+    "focus": "center"
+  },
+  "youth": {
+    "photo": "data/media/site-youth.jpg",
+    "caption": "Youth worship night",
+    "alt": "Students on stage during a youth worship night",
+    "focus": "center"
+  }
+}
