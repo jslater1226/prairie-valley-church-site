@@ -49,7 +49,7 @@ def _meta(q):
 
 def _link(url, text):
     url = str(url or '').strip()
-    return '<a class="q-link" href="%s" target="_blank" rel="noopener">%s <span class="arrow">&rarr;</span></a>' % (_e(url), text) if re.match(r'^https?://', url) else ''
+    return '<a class="q-link" href="%s" target="_blank" rel="noopener">%s <span class="arrow" aria-hidden="true">&rarr;</span></a>' % (_e(url), text) if re.match(r'^https?://', url) else ''
 
 def main_html(g):
     out = ['<main id="main">',
@@ -70,19 +70,19 @@ def main_html(g):
         def label(n): return _e(n.get('title') or ((_fmt(n['date'], True) + ' newsletter') if n.get('date') else 'Newsletter'))
         n0 = iss[0]; f0 = _pdf(n0.get('file'))
         s = ['<section id="newsletter" class="alt"><div class="wrap"><div class="section-head reveal"><span class="kicker">Stay in the loop</span><h2>Monthly newsletter</h2></div>',
-             '<div class="nl-latest reveal"><div class="kicker">Latest issue</div><h3>%s</h3>%s%s</div>' % (label(n0), '<p>%s</p>' % _e(n0['summary']) if n0.get('summary') else '', '<a class="btn solid" href="%s" target="_blank" rel="noopener">Read this issue <span class="arrow">&rarr;</span></a>' % _e(f0) if f0 else '')]
+             '<div class="nl-latest reveal"><div class="kicker">Latest issue</div><h3>%s</h3>%s%s</div>' % (label(n0), '<p>%s</p>' % _e(n0['summary']) if n0.get('summary') else '', '<a class="btn solid" href="%s" target="_blank" rel="noopener">Read this issue <span class="arrow" aria-hidden="true">&rarr;</span></a>' % _e(f0) if f0 else '')]
         older = iss[1:13]
         if older:
-            s.append('<ul class="nl-list reveal">' + ''.join('<li><span>%s</span>%s</li>' % (label(n), ('<a href="%s" target="_blank" rel="noopener">Read <span class="arrow">&rarr;</span></a>' % _e(_pdf(n.get('file')))) if _pdf(n.get('file')) else '') for n in older) + '</ul>')
+            s.append('<ul class="nl-list reveal">' + ''.join('<li><span>%s</span>%s</li>' % (label(n), ('<a href="%s" target="_blank" rel="noopener">Read <span class="arrow" aria-hidden="true">&rarr;</span></a>' % _e(_pdf(n.get('file')))) if _pdf(n.get('file')) else '') for n in older) + '</ul>')
         s.append('</div></section>')
         out.append(''.join(s))
     dd = g['disc']
     s = ['<section id="next"><div class="wrap"><div class="section-head reveal"><span class="kicker">Next steps</span><h2>Keep going between Sundays</h2></div><div class="nl-latest reveal">']
     if dd:
-        s.append('<h3>%s</h3>%s<a class="btn solid" href="%s" target="_blank" rel="noopener">Open <span class="arrow">&rarr;</span></a>' % (_e(dd.get('title') or 'Discussion questions'), '<p>%s</p>' % _e(dd['description']) if dd.get('description') else '', _e(dd['url'])))
+        s.append('<h3>%s</h3>%s<a class="btn solid" href="%s" target="_blank" rel="noopener">Open <span class="arrow" aria-hidden="true">&rarr;</span></a>' % (_e(dd.get('title') or 'Discussion questions'), '<p>%s</p>' % _e(dd['description']) if dd.get('description') else '', _e(dd['url'])))
     else:
         s.append('<h3>Find your people</h3><p>Growing happens best with others. See our Wednesday night Bible study and small groups.</p>')
-    s.append('<p style="margin-top:18px"><a class="q-link" href="#ministries">See our ministries <span class="arrow">&rarr;</span></a></p></div></div></section>')
+    s.append('<p style="margin-top:18px"><a class="q-link" href="#ministries">See our ministries <span class="arrow" aria-hidden="true">&rarr;</span></a></p></div></div></section>')
     out.append(''.join(s))
     out.append('</main>')
     return '\n'.join(out)

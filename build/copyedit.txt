@@ -74,7 +74,7 @@ t=t.replace('</style>','.series-badge .btn.solid{background:var(--white);color:v
 import json, html as _html
 def _esc(s): return _html.escape(s, quote=False)
 _ser=json.load(open('../data/series.json'))
-btns=''.join('<a class="btn sm%s" href="%s" target="_blank" rel="noopener">%s <span class="arrow">&rarr;</span></a>'%(' solid' if s.get('highlight') else '', _html.escape(s['url']), _esc(s['title'])) for s in _ser['series'])
+btns=''.join('<a class="btn sm%s" href="%s" target="_blank" rel="noopener">%s <span class="arrow" aria-hidden="true">&rarr;</span></a>'%(' solid' if s.get('highlight') else '', _html.escape(s['url']), _esc(s['title'])) for s in _ser['series'])
 o="We've preached through Romans, Psalms, and Ephesians. This Advent, we're walking through the book of Ruth."
 assert t.count(o)==1
 t=t.replace(o,"Pick a series and start anywhere.</p><div class=\"series-links\" id=\"seriesLinks\">"+btns+"</div><p id=\"seriesNote\">"+_esc(_ser.get('note','')))
