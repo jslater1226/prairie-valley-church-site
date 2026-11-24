@@ -291,3 +291,17 @@ if _LP:
     t=t.replace(_old,'<a class="flink" href="#events">Events</a><a class="flink" href="grow/">Grow</a><a class="flink" href="%s" target="_blank" rel="noopener">%s (PDF)</a></div>'%(_LP[0],_esc(_LP[1])))
 t=t.replace('</style>',grow.CSS+'</style>',1)
 
+_FONTCSS='''@font-face{font-family:"Gelasio";font-style:normal;font-weight:400;font-display:swap;src:url(assets/fonts/gelasio-latin-400-normal.woff2) format("woff2");}
+@font-face{font-family:"Gelasio";font-style:italic;font-weight:400;font-display:swap;src:url(assets/fonts/gelasio-latin-400-italic.woff2) format("woff2");}
+@font-face{font-family:"Gelasio";font-style:normal;font-weight:700;font-display:swap;src:url(assets/fonts/gelasio-latin-700-normal.woff2) format("woff2");}
+@font-face{font-family:"Carlito";font-style:normal;font-weight:400;font-display:swap;src:url(assets/fonts/carlito-latin-400-normal.woff2) format("woff2");}
+@font-face{font-family:"Carlito";font-style:normal;font-weight:700;font-display:swap;src:url(assets/fonts/carlito-latin-700-normal.woff2) format("woff2");}
+:root{--serif:Georgia,Gelasio,'Times New Roman',serif;--sans:Calibri,Carlito,Candara,Arial,Helvetica,sans-serif;}
+body{font-size:1.04rem;line-height:1.6;font-kerning:normal;text-rendering:optimizeLegibility;}
+h1,h2,h3{line-height:1.12;}
+h2{letter-spacing:-.012em;}
+h3{line-height:1.25;}
+p{text-wrap:pretty;}
+.kicker{font-size:.78rem;letter-spacing:.18em;}
+'''
+t=t.replace('</style>',_FONTCSS+'</style>',1)
