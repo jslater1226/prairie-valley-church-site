@@ -379,3 +379,16 @@ def _icon(n,f,u):
     return '<a href="%s" target="_blank" rel="noopener" aria-label="Prairie Valley Church on %s (opens in a new tab)"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="%s"/></svg></a>'%(u,n,d)
 t=t.replace(_old,_old+'\n      <div class="foot-social" role="group" aria-label="Follow Prairie Valley Church">'+''.join(_icon(*x) for x in _soc)+'</div>',1)
 t=t.replace('</style>','.foot-social{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px;}\n.foot-social a{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:50%;color:#fff;border:1px solid rgba(255,255,255,.4);transition:background .15s ease,color .15s ease;}\n.foot-social a:hover,.foot-social a:focus-visible{background:#fff;color:#02027D;}\n</style>',1)
+
+# --- header + mobile menu: social icons ---
+def _icon_plain(n,f,u):
+    d=re.search(r'<path d="([^"]+)"',open('icons/%s.svg'%f,encoding='utf-8').read()).group(1)
+    return '<a href="%s" target="_blank" rel="noopener" aria-label="Prairie Valley Church on %s (opens in a new tab)"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="%s"/></svg></a>'%(u,n,d)
+_gl='<a href="#give" class="give-link">Give</a>'
+assert t.count(_gl)==1
+t=t.replace(_gl,_gl+'\n      <span class="hdr-social" role="group" aria-label="Follow Prairie Valley Church">'+''.join(_icon_plain(*x) for x in _soc)+'</span>',1)
+_mg='<a href="#give">Give</a>\n  <span class="msub">'
+assert t.count(_mg)==1
+t=t.replace(_mg,'<a href="#give">Give</a>\n  <div class="m-social" role="group" aria-label="Follow Prairie Valley Church">'+''.join(_icon(*x) for x in _soc)+'</div>\n  <span class="msub">',1)
+t=t.replace('</style>','.links .hdr-social{display:none;margin-left:10px;align-items:center;gap:2px;}\n.links .hdr-social a{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;padding:0;border-radius:50%;color:var(--fg);}\n.links .hdr-social a::after{display:none;}\n.links .hdr-social a:hover,.links .hdr-social a:focus-visible{background:rgba(127,127,127,.22);}\n@media (min-width:1180px){.links .hdr-social{display:inline-flex;}}\n.mobile-nav .m-social{display:flex;gap:12px;padding:22px 40px 0;}\n.mobile-nav .m-social a{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;padding:0;border:1px solid rgba(255,255,255,.4);border-radius:50%;}\n</style>',1)
+t=t.replace('</style>','.mobile-nav{justify-content:flex-start;padding-top:96px;padding-bottom:40px;overflow-y:auto;-webkit-overflow-scrolling:touch;}\n</style>',1)
