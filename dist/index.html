@@ -359,6 +359,8 @@ p{text-wrap:pretty;}
 .mobile-nav .m-social a{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;padding:0;border:1px solid rgba(255,255,255,.4);border-radius:50%;}
 .mobile-nav{justify-content:flex-start;padding-top:96px;padding-bottom:40px;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 </style>
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>window.OneSignalDeferred=window.OneSignalDeferred||[];OneSignalDeferred.push(async function(OneSignal){await OneSignal.init({appId:"e2332ce6-fe04-4082-b557-57e3d48dccc5",serviceWorkerPath:"/prairie-valley-church-site/push/onesignal/OneSignalSDKWorker.js",serviceWorkerParam:{scope:"/prairie-valley-church-site/push/onesignal/"}});});</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -608,7 +610,14 @@ p{text-wrap:pretty;}
     <div><h3>Explore</h3><a class="flink" href="#visit">What to Expect</a><a class="flink" href="#sermons">Sermons</a><a class="flink" href="#ministries">Ministries</a><a class="flink" href="#events">Events</a><a class="flink" href="grow/">Grow</a><a class="flink" href="data/media/pvc-newsletter-2026-12.pdf" target="_blank" rel="noopener">December 2026 newsletter (PDF)</a></div>
     <div><h3>Visit</h3><a class="flink" href="https://www.google.com/maps/search/?api=1&query=2417+FM+513+Campbell+TX+75422" target="_blank" rel="noopener">2417 FM 513, Campbell, TX</a><a class="flink" href="tel:+14308082655">430.808.2655</a><a class="flink" href="#give">Give</a></div>
   </div>
-  <div class="wrap foot-bottom"><span>&copy; 2026 Prairie Valley Church</span><span>Sundays 10:45 AM &middot; Wednesdays 6:00&ndash;7:30 PM</span><span class="foot-area">Serving Campbell, Lone Oak, Greenville and Hunt County.</span></div>
+  <div class="wrap notify" id="notify"><div><strong>Church notifications</strong><p id="notify-msg">Get announcements from Prairie Valley on your phone. You choose; you can turn them off anytime.</p></div><button type="button" id="notify-btn">Turn on notifications</button></div>
+<style>.notify{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.16);margin-top:30px;padding-top:22px;color:#fff;}.notify p{margin:4px 0 0;color:var(--navy-tint);max-width:56ch;}.notify button{font:inherit;font-weight:700;background:#fff;color:#02027D;border:0;border-radius:999px;padding:13px 26px;cursor:pointer;}.notify button[hidden]{display:none;}</style>
+<script>(function(){var b=document.getElementById("notify-btn"),m=document.getElementById("notify-msg");if(!b)return;var ua=navigator.userAgent||"",ios=/iPad|iPhone|iPod/.test(ua)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1),sa=window.navigator.standalone===true||matchMedia("(display-mode: standalone)").matches||matchMedia("(display-mode: fullscreen)").matches;
+if(ios&&!sa){b.hidden=true;m.textContent="On iPhone: tap the Share button in Safari, choose Add to Home Screen, then open the Prairie Valley icon from your home screen and come back to this button.";return;}
+window.OneSignalDeferred=window.OneSignalDeferred||[];
+OneSignalDeferred.push(function(OneSignal){try{if(OneSignal.Notifications.permission){m.textContent="Notifications are on. Thank you!";b.hidden=true;}}catch(e){}});
+b.addEventListener("click",function(){OneSignalDeferred.push(async function(OneSignal){try{await OneSignal.Notifications.requestPermission();if(OneSignal.Notifications.permission){m.textContent="Notifications are on. Thank you!";b.hidden=true;}else{m.textContent="Notifications are off. You can change this in your phone settings.";}}catch(e){m.textContent="Sorry, something went wrong. Please try again later.";}});});})();</script>
+<div class="wrap foot-bottom"><span>&copy; 2026 Prairie Valley Church</span><span>Sundays 10:45 AM &middot; Wednesdays 6:00&ndash;7:30 PM</span><span class="foot-area">Serving Campbell, Lone Oak, Greenville and Hunt County.</span></div>
 </footer>
 <nav class="quickbar" aria-label="Quick actions"><a href="https://www.google.com/maps/search/?api=1&query=2417+FM+513+Campbell+TX+75422" target="_blank" rel="noopener">Directions</a><a href="#visit">What to Expect</a><a href="#sermons">Watch</a></nav>
 
