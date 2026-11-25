@@ -223,6 +223,10 @@ t=t.replace('</style>','''.mobile-nav{align-items:stretch;padding-inline:0;}
 .mobile-nav a{display:block;width:100%;padding:17px 40px;border-bottom:1px solid rgba(255,255,255,.18);}
 .mobile-nav .msub{border:0;padding-inline:40px;}
 .quickbar{display:none;}
+.quickbar .qb-app{display:none;}
+html.is-app .quickbar .qb-web{display:none;}
+html.is-app .quickbar .qb-app{display:block;border-left:0;}
+@media (display-mode: standalone){.quickbar .qb-web{display:none;}.quickbar .qb-app{display:block;border-left:0;}}
 @media (max-width:760px){
   body{padding-bottom:calc(62px + env(safe-area-inset-bottom));}
   .quickbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:140;background:var(--navy);border-top:1px solid rgba(255,255,255,.25);padding-bottom:env(safe-area-inset-bottom);}
@@ -241,7 +245,7 @@ t=t.replace('</style>','''.mobile-nav{align-items:stretch;padding-inline:0;}
   .elder-panel:not(.open){display:none !important;}
 }
 </style>''',1)
-t=t.replace('</footer>','</footer>\n<nav class="quickbar" aria-label="Quick actions"><a href="#visit">What to Expect</a><a href="#sermons">Watch</a></nav>',1)
+t=t.replace('</footer>','</footer>\n<nav class="quickbar" aria-label="Quick actions"><a class="qb-web" href="#visit">What to Expect</a><a class="qb-app" href="https://pvbchurch.churchcenter.com/calendar" target="_blank" rel="noopener">Events</a><a href="#sermons">Sermons</a></nav>\n<script>try{if(navigator.standalone===true)document.documentElement.classList.add("is-app");}catch(e){}</script>',1)
 JS="""
   (function(){
     var mq = window.matchMedia('(max-width:760px)');
@@ -284,8 +288,8 @@ t=t[:_i]+'<div class="min-list reveal" id="minList">\n        <!--MINROWS-->'+'<
 if _HAS_GROW:
     assert t.count('<a href="#ministries">Ministries</a>')>=2
     t=t.replace('<a href="#ministries">Ministries</a>','<a href="#ministries">Ministries</a>\n<a href="grow/">Grow</a>')
-    assert t.count('<a href="#sermons">Watch</a></nav>')==1
-    t=t.replace('<a href="#sermons">Watch</a></nav>','<a href="#sermons">Watch</a><a href="grow/">Grow</a></nav>')
+    assert t.count('<a href="#sermons">Sermons</a></nav>')==1
+    t=t.replace('<a href="#sermons">Sermons</a></nav>','<a href="#sermons">Sermons</a><a href="grow/">Grow</a></nav>')
 
 _LP=grow.latest_pdf(_G)
 if _LP:
