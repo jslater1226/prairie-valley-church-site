@@ -90,6 +90,7 @@
       "devotionals": [
         {
           "day": "Monday",
+          "quote": "When God saves us, He doesn't just save us from hell, He saves us to a family.",
           "title": "Saved to a Family",
           "scripture": "Ephesians 2:19",
           "scripture_text": "So then you are no longer strangers and foreigners, but fellow citizens with the saints, and members of God's household.",
@@ -99,6 +100,7 @@
         },
         {
           "day": "Tuesday",
+          "quote": "In many churches, especially the rural churches, we are very friendly with each other, but we're not family with each other.",
           "title": "Friendly Is Not Family",
           "scripture": "Romans 12:15",
           "scripture_text": "Rejoice with those who rejoice; weep with those who weep.",
@@ -117,6 +119,7 @@
         },
         {
           "day": "Thursday",
+          "quote": "Obscurity in the eyes of men is never irrelevance in the eyes of God.",
           "title": "Warriors, Not Heroes",
           "scripture": "Romans 16:12",
           "scripture_text": "Greet Tryphaena and Tryphosa, who have worked hard in the Lord.",

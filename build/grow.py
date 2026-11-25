@@ -83,7 +83,12 @@ def _week_html(w, current):
     if w.get('step'):
         s.append('<div class="wk-step"><div class="kicker">Your step this week</div><p>%s</p></div>' % _e(w['step']))
     if w.get('quote'):
-        s.append('<figure class="q-card wk-quote"><blockquote><p>&ldquo;%s&rdquo;</p></blockquote></figure>' % _e(_strip_quotes(w['quote'])))
+        s.append('<figure class="q-card wk-quote wk-quote-default"><blockquote><p>&ldquo;%s&rdquo;</p></blockquote></figure>' % _e(_strip_quotes(w['quote'])))
+    for i, dv in enumerate(w.get('devotionals') or []):
+        if str(dv.get('quote') or '').strip():
+            iso = _day_iso(w, i)
+            s.append('<figure class="q-card wk-quote day-quote" data-for="%s" hidden><blockquote><p>&ldquo;%s&rdquo;</p></blockquote><figcaption class="q-meta">%s: %s</figcaption></figure>' % (
+                     _e('d-' + (iso or 'x%d' % i)), _e(_strip_quotes(dv['quote'])), _e(dv.get('day')), _e(dv.get('title'))))
     refs = [r.strip() for r in str(w.get('reflection_scripture') or '').split(';') if r.strip()]
     if refs:
         s.append('<p class="wk-refs"><strong>Read this week:</strong> %s</p>' % '; '.join(_e(r) for r in refs))
@@ -175,7 +180,9 @@ def main_html(g):
 
 JS = """<script>(function(){try{var d=document.querySelectorAll('.wk-devs .dev');if(!d.length)return;var h=(location.hash||'').slice(1),t=new Date(),iso=t.getFullYear()+'-'+('0'+(t.getMonth()+1)).slice(-2)+'-'+('0'+t.getDate()).slice(-2),hit=null;
 for(var i=0;i<d.length;i++){if(d[i].id===h)hit=d[i];}if(!hit){for(var j=0;j<d.length;j++){if(d[j].getAttribute('data-date')===iso)hit=d[j];}}
-for(var k=0;k<d.length;k++){d[k].open=(d[k]===hit);}if(hit&&h===hit.id){setTimeout(function(){hit.scrollIntoView();},50);}}catch(e){}})();</script>"""
+for(var k=0;k<d.length;k++){d[k].open=(d[k]===hit);}if(hit&&h===hit.id){setTimeout(function(){hit.scrollIntoView();},50);}
+function sync(art,pick){var def=art.querySelector('.wk-quote-default'),figs=art.querySelectorAll('.day-quote'),op=(pick&&pick.open)?pick:art.querySelector('.wk-devs .dev[open]'),tg=null,n;for(n=0;n<figs.length;n++){figs[n].hidden=true;if(op&&figs[n].getAttribute('data-for')===op.id)tg=figs[n];}if(tg){tg.hidden=false;if(def)def.hidden=true;}else if(def){def.hidden=false;}}
+var arts=document.querySelectorAll('.wk');for(var a=0;a<arts.length;a++){(function(art){if(!art.querySelector('.day-quote'))return;sync(art);var dd=art.querySelectorAll('.wk-devs .dev');for(var z=0;z<dd.length;z++){dd[z].addEventListener('toggle',function(){sync(art,this);});}})(arts[a]);}}catch(e){}})();</script>"""
 
 CSS = '''
 .grow-hero{min-height:0;padding-block:150px 64px;}
@@ -185,6 +192,8 @@ CSS = '''
 .q-feature blockquote,.q-card blockquote{margin:0;}
 .q-feature p{font-family:var(--serif);font-size:clamp(1.3rem,2.3vw,1.85rem);line-height:1.4;color:var(--navy);margin:0 0 16px;}
 .q-meta{font-size:.95rem;opacity:.8;}
+.day-quote[hidden],.wk-quote[hidden]{display:none;}
+.day-quote figcaption{margin-top:10px;}
 .q-link{display:inline-block;margin-top:12px;font-weight:700;color:var(--navy);}
 .q-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin-top:28px;}
 .q-card{margin:0;padding:22px 24px;border:1px solid var(--line);border-radius:12px;background:var(--white);}

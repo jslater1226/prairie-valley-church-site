@@ -333,6 +333,7 @@ content:
               - {name: reflection, label: Reflection (blank line between paragraphs), type: text}
               - {name: question, label: Question, type: text}
               - {name: prayer, label: Prayer, type: text}
+              - {name: quote, label: "Quote card for this day (optional: a few of your own words from the sermon. Blank shows the week's quote instead)", type: text}
           - name: opening_question
             label: Group opening question
             type: text
