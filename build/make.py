@@ -127,8 +127,11 @@ prod=prod.replace(head,head+'\n<link rel="canonical" href="%s/">\n<meta property
 _OS=str(_S.get('onesignal_app_id') or '').strip()
 if _OS:
     assert re.match(r'^[0-9a-fA-F-]{36}$',_OS), 'onesignal_app_id in data/site.json should look like xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
-    open('dist/OneSignalSDKWorker.js','w').write('importScripts("https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.sw.js");\n')
-    _osh='<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>\n<script>window.OneSignalDeferred=window.OneSignalDeferred||[];OneSignalDeferred.push(async function(OneSignal){await OneSignal.init({appId:"%s"});});</script>'%_OS
+    _base=str(_S.get('onesignal_base_path') or '').strip().rstrip('/')
+    assert _base=='' or re.match(r'^/[A-Za-z0-9._~/-]+$',_base), 'onesignal_base_path should be blank or start with / (for example /prairie-valley-church-site)'
+    os.makedirs('dist/push/onesignal',exist_ok=True)
+    open('dist/push/onesignal/OneSignalSDKWorker.js','w').write('importScripts("https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.sw.js");\n')
+    _osh='<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>\n<script>window.OneSignalDeferred=window.OneSignalDeferred||[];OneSignalDeferred.push(async function(OneSignal){await OneSignal.init({appId:"%s",serviceWorkerPath:"%s/push/onesignal/OneSignalSDKWorker.js",serviceWorkerParam:{scope:"%s/push/onesignal/"}});});</script>'%(_OS,_base,_base)
     assert prod.count('</head>')==1
     prod=prod.replace('</head>',_osh+'\n</head>',1)
     _nf='''<div class="wrap notify" id="notify"><div><strong>Church notifications</strong><p id="notify-msg">Get announcements from Prairie Valley on your phone. You choose; you can turn them off anytime.</p></div><button type="button" id="notify-btn">Turn on notifications</button></div>

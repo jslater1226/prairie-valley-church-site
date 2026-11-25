@@ -131,6 +131,9 @@ content:
       - name: onesignal_app_id
         label: OneSignal App ID for church notifications (leave blank to keep notifications off)
         type: string
+      - name: onesignal_base_path
+        label: OneSignal folder (leave blank on the real website; on the github.io preview use /prairie-valley-church-site)
+        type: string
 
   - name: people
     label: Staff and elders
