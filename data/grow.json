@@ -146,8 +146,9 @@
   ],
   "pray": {
     "heading": "Make room to pray",
-    "intro": "Prayer grows a life with God, and it usually starts small. Here are two tools. They are tools, not requirements, and there are many others.",
+    "intro": "Prayer grows a life with God, and it usually starts small. Ask us to pray for you, or try one of these tools. They are tools, not requirements, and there are many others.",
     "items": [
+      {"name":"Ask us to pray for you","description":"Share a need and we will pray for you. You can also ask to talk with an elder or pastor.","button":"Send a prayer request","url":"https://pvbchurch.churchcenter.com/people/forms/644795"},
       {
         "name": "Echo Prayer",
         "description": "Keep a list of the people and needs you're praying for, set reminders, and mark prayers answered so you can see what God has done. Follow our church's prayer feed in the app. Available on iPhone and Android.",
