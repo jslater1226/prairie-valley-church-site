@@ -241,7 +241,7 @@ t=t.replace('</style>','''.mobile-nav{align-items:stretch;padding-inline:0;}
   .elder-panel:not(.open){display:none !important;}
 }
 </style>''',1)
-t=t.replace('</footer>','</footer>\n<nav class="quickbar" aria-label="Quick actions"><a href="https://www.google.com/maps/search/?api=1&query=2417+FM+513+Campbell+TX+75422" target="_blank" rel="noopener">Directions</a><a href="#visit">What to Expect</a><a href="#sermons">Watch</a></nav>',1)
+t=t.replace('</footer>','</footer>\n<nav class="quickbar" aria-label="Quick actions"><a href="#visit">What to Expect</a><a href="#sermons">Watch</a></nav>',1)
 JS="""
   (function(){
     var mq = window.matchMedia('(max-width:760px)');
