@@ -128,6 +128,9 @@ content:
         label: Phone number (10 digits, like 430.808.2655)
         type: string
         required: true
+      - name: onesignal_app_id
+        label: OneSignal App ID for church notifications (leave blank to keep notifications off)
+        type: string
 
   - name: people
     label: Staff and elders

@@ -123,6 +123,25 @@ head='<meta name="theme-color" content="#02027D">'
 assert prod.count(head)==1
 prod=prod.replace('@@DOM@@',DOM)
 prod=prod.replace(head,head+'\n<link rel="canonical" href="%s/">\n<meta property="og:url" content="%s/">\n<meta property="og:site_name" content="Prairie Valley Church">\n<meta property="og:image" content="%s/assets/og.jpg">\n<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="630">\n<meta name="twitter:card" content="summary_large_image">\n<link rel="icon" href="favicon.ico" sizes="any">\n<link rel="manifest" href="manifest.webmanifest">\n<meta name="apple-mobile-web-app-title" content="Prairie Valley">\n<meta name="mobile-web-app-capable" content="yes">'%(DOM,DOM,DOM)+('\n<meta name="robots" content="noindex">' if NOINDEX else ''))
+# ---- optional OneSignal push (does nothing until data/site.json has onesignal_app_id) ----
+_OS=str(_S.get('onesignal_app_id') or '').strip()
+if _OS:
+    assert re.match(r'^[0-9a-fA-F-]{36}$',_OS), 'onesignal_app_id in data/site.json should look like xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+    open('dist/OneSignalSDKWorker.js','w').write('importScripts("https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.sw.js");\n')
+    _osh='<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>\n<script>window.OneSignalDeferred=window.OneSignalDeferred||[];OneSignalDeferred.push(async function(OneSignal){await OneSignal.init({appId:"%s"});});</script>'%_OS
+    assert prod.count('</head>')==1
+    prod=prod.replace('</head>',_osh+'\n</head>',1)
+    _nf='''<div class="wrap notify" id="notify"><div><strong>Church notifications</strong><p id="notify-msg">Get announcements from Prairie Valley on your phone. You choose; you can turn them off anytime.</p></div><button type="button" id="notify-btn">Turn on notifications</button></div>
+<style>.notify{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.16);margin-top:30px;padding-top:22px;color:#fff;}.notify p{margin:4px 0 0;color:var(--navy-tint);max-width:56ch;}.notify button{font:inherit;font-weight:700;background:#fff;color:#02027D;border:0;border-radius:999px;padding:13px 26px;cursor:pointer;}.notify button[hidden]{display:none;}</style>
+<script>(function(){var b=document.getElementById("notify-btn"),m=document.getElementById("notify-msg");if(!b)return;var ua=navigator.userAgent||"",ios=/iPad|iPhone|iPod/.test(ua)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1),sa=window.navigator.standalone===true||matchMedia("(display-mode: standalone)").matches||matchMedia("(display-mode: fullscreen)").matches;
+if(ios&&!sa){b.hidden=true;m.textContent="On iPhone: tap the Share button in Safari, choose Add to Home Screen, then open the Prairie Valley icon from your home screen and come back to this button.";return;}
+window.OneSignalDeferred=window.OneSignalDeferred||[];
+OneSignalDeferred.push(function(OneSignal){try{if(OneSignal.Notifications.permission){m.textContent="Notifications are on. Thank you!";b.hidden=true;}}catch(e){}});
+b.addEventListener("click",function(){OneSignalDeferred.push(async function(OneSignal){try{await OneSignal.Notifications.requestPermission();if(OneSignal.Notifications.permission){m.textContent="Notifications are on. Thank you!";b.hidden=true;}else{m.textContent="Notifications are off. You can change this in your phone settings.";}}catch(e){m.textContent="Sorry, something went wrong. Please try again later.";}});});})();</script>
+'''
+    _fb='<div class="wrap foot-bottom">'
+    assert prod.count(_fb)==1
+    prod=prod.replace(_fb,_nf+_fb,1)
 open('dist/index.html','w',encoding='utf-8').write(prod)
 if _HAS_GROW:
     os.makedirs('dist/grow',exist_ok=True)
