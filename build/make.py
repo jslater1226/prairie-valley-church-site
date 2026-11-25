@@ -106,6 +106,15 @@ for _n,_b in _PIMGS.items(): open('dist/assets/people/'+_n,'wb').write(_b)
 os.makedirs('dist/assets/site-photos',exist_ok=True)
 for _n,_b in _SPHOTOS.items(): open('dist/assets/site-photos/'+_n,'wb').write(_b)
 Image.open('images/favicon-source.png').convert('RGBA').save('dist/favicon.ico',sizes=[(16,16),(32,32),(48,48)])
+# installable web app: icons + manifest
+def _app_icon(size, frac):
+    c=Image.new('RGBA',(size,size),(2,2,125,255)); d=int(size*frac)
+    l=Image.open(SRC).convert('RGBA').resize((d,d),Image.LANCZOS); c.alpha_composite(l,((size-d)//2,(size-d)//2)); return c.convert('RGB')
+os.makedirs('dist/assets/app',exist_ok=True)
+_app_icon(192,.86).save('dist/assets/app/icon-192.png',optimize=True)
+_app_icon(512,.86).save('dist/assets/app/icon-512.png',optimize=True)
+_app_icon(512,.66).save('dist/assets/app/icon-maskable-512.png',optimize=True)
+open('dist/manifest.webmanifest','w',encoding='utf-8').write(json.dumps({"name":"Prairie Valley Church","short_name":"Prairie Valley","description":"Prairie Valley Church in Campbell, Texas","start_url":"./","scope":"./","display":"standalone","background_color":"#02027D","theme_color":"#02027D","icons":[{"src":"assets/app/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any"},{"src":"assets/app/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any"},{"src":"assets/app/icon-maskable-512.png","sizes":"512x512","type":"image/png","purpose":"maskable"}]},indent=1))
 # social share image 1200x630: aerial photo + logo
 ph=Image.open('images/hero-source.png').convert('RGB').crop((0,40,2000,1090)).resize((1200,630),Image.LANCZOS)
 lg=Image.open(SRC).convert('RGBA'); lg=lg.resize((210,int(210*lg.size[1]/lg.size[0])),Image.LANCZOS)
@@ -113,7 +122,7 @@ ph=ph.convert('RGBA'); ph.alpha_composite(lg,(48,630-48-lg.size[1])); ph.convert
 head='<meta name="theme-color" content="#02027D">'
 assert prod.count(head)==1
 prod=prod.replace('@@DOM@@',DOM)
-prod=prod.replace(head,head+'\n<link rel="canonical" href="%s/">\n<meta property="og:url" content="%s/">\n<meta property="og:site_name" content="Prairie Valley Church">\n<meta property="og:image" content="%s/assets/og.jpg">\n<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="630">\n<meta name="twitter:card" content="summary_large_image">\n<link rel="icon" href="favicon.ico" sizes="any">'%(DOM,DOM,DOM)+('\n<meta name="robots" content="noindex">' if NOINDEX else ''))
+prod=prod.replace(head,head+'\n<link rel="canonical" href="%s/">\n<meta property="og:url" content="%s/">\n<meta property="og:site_name" content="Prairie Valley Church">\n<meta property="og:image" content="%s/assets/og.jpg">\n<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="630">\n<meta name="twitter:card" content="summary_large_image">\n<link rel="icon" href="favicon.ico" sizes="any">\n<link rel="manifest" href="manifest.webmanifest">\n<meta name="apple-mobile-web-app-title" content="Prairie Valley">\n<meta name="mobile-web-app-capable" content="yes">'%(DOM,DOM,DOM)+('\n<meta name="robots" content="noindex">' if NOINDEX else ''))
 open('dist/index.html','w',encoding='utf-8').write(prod)
 if _HAS_GROW:
     os.makedirs('dist/grow',exist_ok=True)

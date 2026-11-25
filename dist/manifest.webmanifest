@@ -1,0 +1,30 @@
+{
+ "name": "Prairie Valley Church",
+ "short_name": "Prairie Valley",
+ "description": "Prairie Valley Church in Campbell, Texas",
+ "start_url": "./",
+ "scope": "./",
+ "display": "standalone",
+ "background_color": "#02027D",
+ "theme_color": "#02027D",
+ "icons": [
+  {
+   "src": "assets/app/icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "assets/app/icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "assets/app/icon-maskable-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  }
+ ]
+}
