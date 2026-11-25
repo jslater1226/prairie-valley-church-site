@@ -34,6 +34,8 @@ def load():
     quotes.sort(key=_sortkey, reverse=True)
     issues = [n for n in d.get('newsletters', []) if (n.get('file') or n.get('summary') or n.get('title'))]
     issues.sort(key=_sortkey, reverse=True)
+    bulletins = [b for b in d.get('bulletins', []) if b.get('file')]
+    bulletins.sort(key=_sortkey, reverse=True)
     disc = d.get('discussion') or {}
     disc = disc if (str(disc.get('url') or '').strip()) else None
     weeks = [w for w in d.get('weeks', []) if (w.get('devotionals') or w.get('step') or w.get('questions'))]
@@ -41,7 +43,7 @@ def load():
     pr = d.get('pray') or {}
     pitems = [i for i in (pr.get('items') or []) if re.match(r'^https?://', str(i.get('url') or '').strip()) and str(i.get('name') or '').strip()]
     pray = {'heading': (pr.get('heading') or 'Make room to pray').strip(), 'intro': (pr.get('intro') or '').strip(), 'items': pitems} if pitems else None
-    return {'intro': (d.get('intro') or '').strip(), 'quotes': quotes, 'issues': issues, 'disc': disc, 'weeks': weeks, 'pray': pray}
+    return {'intro': (d.get('intro') or '').strip(), 'quotes': quotes, 'issues': issues, 'disc': disc, 'weeks': weeks, 'pray': pray, 'bulletins': bulletins}
 
 def latest_pdf(g):
     for n in g['issues']:
@@ -49,7 +51,7 @@ def latest_pdf(g):
         if f: return f, (n.get('title') or ((_fmt(n['date'], True) + ' newsletter') if n.get('date') else 'Newsletter'))
     return None
 
-def has_content(g): return bool(g['quotes'] or g['issues'] or g['disc'] or g['weeks'] or g['pray'])
+def has_content(g): return bool(g['quotes'] or g['issues'] or g['disc'] or g['weeks'] or g['pray'] or g['bulletins'])
 
 def _meta(q):
     bits = []
@@ -143,6 +145,17 @@ def main_html(g):
         older = iss[1:13]
         if older:
             s.append('<ul class="nl-list reveal">' + ''.join('<li><span>%s</span>%s</li>' % (label(n), ('<span><a href="%s" target="_blank" rel="noopener">Read <span class="arrow" aria-hidden="true">&rarr;</span></a> &nbsp; <a href="%s" download>Download</a></span>' % (_e(_pdf(n.get('file'))), _e(_pdf(n.get('file'))))) if _pdf(n.get('file')) else '') for n in older) + '</ul>')
+        s.append('</div></section>')
+        out.append(''.join(s))
+    bl = [b for b in g['bulletins'] if _pdf(b.get('file'))]
+    if bl:
+        def blabel(b): return _e(b.get('title') or ((_fmt(b['date'], True) if False else _fmt(b['date'])) + ' bulletin' if b.get('date') else 'Bulletin'))
+        b0 = bl[0]; f0 = _pdf(b0['file'])
+        s = ['<section id="bulletins"><div class="wrap"><div class="section-head reveal"><span class="kicker">This week</span><h2>Sunday bulletin</h2></div>',
+             '<div class="nl-latest reveal"><div class="kicker">Latest</div><h3>%s</h3>%s<a class="btn solid" href="%s" target="_blank" rel="noopener">Read the bulletin <span class="arrow" aria-hidden="true">&rarr;</span></a> <a class="btn" href="%s" download>Download PDF</a></div>' % (blabel(b0), '<p>%s</p>' % _e(b0['summary']) if b0.get('summary') else '', _e(f0), _e(f0))]
+        older = bl[1:13]
+        if older:
+            s.append('<details class="q-more reveal"><summary>Past bulletins (%d)</summary><ul class="nl-list">%s</ul></details>' % (len(older), ''.join('<li><span>%s</span><span><a href="%s" target="_blank" rel="noopener">Read <span class="arrow" aria-hidden="true">&rarr;</span></a> &nbsp; <a href="%s" download>Download</a></span></li>' % (blabel(b), _e(_pdf(b['file'])), _e(_pdf(b['file']))) for b in older)))
         s.append('</div></section>')
         out.append(''.join(s))
     pr = g['pray']

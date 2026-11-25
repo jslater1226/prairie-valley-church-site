@@ -357,6 +357,29 @@ content:
             options:
               extensions: [pdf]
               rename: safe
+      - name: bulletins
+        label: Sunday bulletins (newest date shows first; the latest 13 are listed). Only upload what you would post on a billboard. This repository is public.
+        type: object
+        list: true
+        fields:
+          - name: date
+            label: Sunday date
+            type: date
+            required: true
+            options:
+              format: yyyy-MM-dd
+          - name: title
+            label: Title (optional; blank shows "Dec 6, 2026 bulletin")
+            type: string
+          - name: summary
+            label: One sentence about this week (optional)
+            type: text
+          - name: file
+            label: PDF file
+            type: file
+            options:
+              extensions: [pdf]
+              rename: safe
       - name: discussion
         label: Discussion questions link (optional)
         type: object
