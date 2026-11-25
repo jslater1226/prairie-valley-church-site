@@ -142,12 +142,14 @@ if _OS:
 if(ios&&!sa){b.hidden=true;m.textContent="On iPhone: tap the Share button in Safari, choose Add to Home Screen, then open the Prairie Valley icon from your home screen and come back to this button.";return;}
 window.OneSignalDeferred=window.OneSignalDeferred||[];
 OneSignalDeferred.push(function(OneSignal){try{if(OneSignal.Notifications.permission){m.textContent="Notifications are on. Thank you!";b.hidden=true;}}catch(e){}});
-b.addEventListener("click",function(){OneSignalDeferred.push(async function(OneSignal){try{await OneSignal.Notifications.requestPermission();if(OneSignal.Notifications.permission){m.textContent="Notifications are on. Thank you!";b.hidden=true;}else{m.textContent="Notifications are off. You can change this in your phone settings.";}}catch(e){m.textContent="Sorry, something went wrong. Please try again later.";}});});
+function enable(say){var done=false,tm=setTimeout(function(){if(!done)say("Notifications are not available on this page right now. Please try again in a moment, or open the site in Chrome.",1);},4000);
+OneSignalDeferred.push(async function(OneSignal){done=true;clearTimeout(tm);try{if(window.Notification&&Notification.permission==="denied"){say("Notifications are blocked for this site. Tap the lock icon by the address, open Notifications, and choose Allow.",1);return;}await OneSignal.Notifications.requestPermission();if(OneSignal.Notifications.permission){try{if(OneSignal.User.PushSubscription.optedIn===false)await OneSignal.User.PushSubscription.optIn();}catch(e){}say("Notifications are on. Thank you!",2);}else{say("Notifications are off. You can change this in your browser or phone settings.",1);}}catch(e){say("Sorry, something went wrong. Please try again later.",1);}});}
+b.addEventListener("click",function(){m.textContent="One moment...";enable(function(t,s){m.textContent=t;if(s===2)b.hidden=true;});});
 try{var bar=document.getElementById("notify-bar"),KEY="pvc_notify_dismissed",ok=sa&&window.Notification&&Notification.permission==="default";
 if(ok){var t=parseInt(localStorage.getItem(KEY)||"0",10);if(t&&Date.now()-t<30*864e5)ok=false;}
 if(ok){setTimeout(function(){bar.hidden=false;},6000);
 document.getElementById("nb-no").addEventListener("click",function(){try{localStorage.setItem(KEY,String(Date.now()));}catch(e){}bar.hidden=true;});
-document.getElementById("nb-yes").addEventListener("click",function(){bar.hidden=true;b.click();});}}catch(e){}})();</script>
+document.getElementById("nb-yes").addEventListener("click",function(){var pp=bar.querySelector("p"),yy=document.getElementById("nb-yes"),nn=document.getElementById("nb-no");pp.textContent="One moment...";yy.hidden=true;enable(function(t,s){pp.textContent=t;m.textContent=t;nn.textContent="Close";if(s===2){b.hidden=true;setTimeout(function(){bar.hidden=true;},3500);}});});}}catch(e){}})();</script>
 '''
     _fb='<div class="wrap foot-bottom">'
     assert prod.count(_fb)==1
