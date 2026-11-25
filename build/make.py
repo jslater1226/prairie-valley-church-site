@@ -152,6 +152,23 @@ document.getElementById("nb-yes").addEventListener("click",function(){bar.hidden
     _fb='<div class="wrap foot-bottom">'
     assert prod.count(_fb)==1
     prod=prod.replace(_fb,_nf+_fb,1)
+# ---- install nudge (browser only; return visitors; Android/desktop use the install event, iPhone gets instructions) ----
+_inst='''<div id="install-bar" role="dialog" aria-label="Install the Prairie Valley app" hidden><p id="ib-text">Install the Prairie Valley app for quick access?</p><div><button type="button" id="ib-yes">Install</button><button type="button" id="ib-no">Not now</button></div></div>
+<style>#install-bar{position:fixed;left:12px;right:12px;bottom:12px;z-index:145;background:#fff;color:#02027D;border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,.35);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;max-width:520px;margin:0 auto;}#install-bar[hidden]{display:none;}#install-bar p{margin:0;font-weight:700;}#install-bar div{display:flex;gap:8px;}#install-bar button{font:inherit;font-weight:700;border-radius:999px;padding:10px 18px;cursor:pointer;border:2px solid #02027D;}#ib-yes{background:#02027D;color:#fff;}#ib-no{background:#fff;color:#02027D;}#install-bar button[hidden]{display:none;}@media (max-width:760px){#install-bar{bottom:calc(72px + env(safe-area-inset-bottom));}}</style>
+<script>(function(){try{var sa=navigator.standalone===true||matchMedia("(display-mode: standalone)").matches||matchMedia("(display-mode: fullscreen)").matches;if(sa)return;
+var bar=document.getElementById("install-bar"),txt=document.getElementById("ib-text"),yes=document.getElementById("ib-yes"),no=document.getElementById("ib-no"),KEY="pvc_install_dismissed",VK="pvc_visits",demo=/install-demo/.test(location.hash);
+var t=parseInt(localStorage.getItem(KEY)||"0",10);if(!demo&&t&&Date.now()-t<30*864e5)return;
+var v=parseInt(localStorage.getItem(VK)||"0",10);if(!sessionStorage.getItem("pvc_counted")){v++;localStorage.setItem(VK,String(v));sessionStorage.setItem("pvc_counted","1");}
+if(!demo&&v<2)return;
+var ua=navigator.userAgent||"",ios=/iPad|iPhone|iPod/.test(ua)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1),dp=null;
+function show(){setTimeout(function(){bar.hidden=false;},6000);}
+if(ios){txt.textContent="Add Prairie Valley to your home screen: tap the Share button, then Add to Home Screen.";yes.hidden=true;no.textContent="Got it";show();}
+else{window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();dp=e;show();});yes.addEventListener("click",function(){bar.hidden=true;if(dp){dp.prompt();dp=null;}});}
+no.addEventListener("click",function(){try{localStorage.setItem(KEY,String(Date.now()));}catch(e){}bar.hidden=true;});
+window.addEventListener("appinstalled",function(){bar.hidden=true;});}catch(e){}})();</script>
+'''
+assert prod.count('</body>')==1
+prod=prod.replace('</body>',_inst+'</body>',1)
 open('dist/index.html','w',encoding='utf-8').write(prod)
 if _HAS_GROW:
     os.makedirs('dist/grow',exist_ok=True)
