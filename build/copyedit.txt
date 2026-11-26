@@ -87,8 +87,8 @@ t=t.replace('</style>','.pastor-welcome{max-width:760px;margin:48px auto;padding
 t=t.replace('</style>','#visit .callout{max-width:640px;margin:44px auto 0;text-align:center;background:none;border:0;border-radius:0;padding:0;font-family:var(--serif);font-size:1.2rem;line-height:1.55;color:var(--navy);}\n#visit .visit-guest{justify-content:center;text-align:center;margin-top:40px;padding-top:36px;border-top:1px solid var(--line);}\n#visit .visit-guest p{max-width:48ch;}\n.series-badge{display:flex;flex-direction:column;justify-content:center;}\n</style>',1)
 o='<p class="lead">'
 assert t.count(o)==1
-t=t.replace(o,'<p class="hero-time"><strong>Sundays at {{SUN_TIME}}</strong><span>2417 FM 513, Campbell, TX</span></p>\n      '+o)
-t=t.replace('</style>','.hero-time{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;margin:26px 0 0;font-size:1.25rem;color:var(--white);}\n.hero-time strong{background:var(--white);color:var(--navy);padding:8px 18px;border-radius:999px;font-weight:700;letter-spacing:.01em;}\n.hero-time span{color:var(--navy-tint);font-size:1.05rem;}\n.hero p.lead{margin-top:20px;}\n</style>',1)
+t=t.replace(o,'<p class="hero-time"><strong>Sundays at {{SUN_TIME}}</strong><span><a class="hero-map" href="https://www.google.com/maps/search/?api=1&query={{MAP_QUERY}}" target="_blank" rel="noopener">2417 FM 513, Campbell, TX</a></span></p>\n      '+o)
+t=t.replace('</style>','.hero-time{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;margin:26px 0 0;font-size:1.25rem;color:var(--white);}\n.hero-time strong{background:var(--white);color:var(--navy);padding:8px 18px;border-radius:999px;font-weight:700;letter-spacing:.01em;}\n.hero-time span{color:var(--navy-tint);font-size:1.05rem;}\n.hero-time .hero-map{color:inherit;text-decoration:underline;text-underline-offset:3px;display:inline-block;padding:12px 0;}\n.hero p.lead{margin-top:20px;}\n</style>',1)
 o='<div><b>Everything else</b>'
 assert t.count(o)==1
 t=t.replace(o,"<div><b>First Sunday of every month</b><span>We observe the Lord's Supper every month, during worship</span></div>\n        <div class=\"wide\"><b>Everything else</b>")
