@@ -88,7 +88,7 @@ print('ok',len(out))
 
 # ================= PRODUCTION BUILD (dist/) =================
 import os, shutil, zipfile
-DOM='https://prairievalleychurch.com'
+DOM='https://pvbchurch.org'
 NOINDEX=True  # TEMPORARY: preview is public on github.io; set False at launch
 if os.path.exists('dist'): shutil.rmtree('dist')
 os.makedirs('dist/assets')
