@@ -55,6 +55,11 @@ for o,n in R:
 # breakfast: keep only the callout; send watch buttons to the church YouTube channel, embed its latest uploads
 assert t.count('<span class="sub">Light breakfast beforehand</span>')==1
 t=t.replace('<span class="sub">Light breakfast beforehand</span>','<span class="sub">Come as you are</span>')
+# PREVIEW headline test: speak to the visitor; church name moves to the kicker
+assert t.count('<span class="kicker" style="color:var(--navy-tint)">Campbell, Texas</span>')==1 and t.count('<h1>Prairie Valley<br>Church</h1>')==1
+t=t.replace('<span class="kicker" style="color:var(--navy-tint)">Campbell, Texas</span>','<span class="kicker" style="color:var(--navy-tint)">Campbell, Texas</span>').replace('<h1>Prairie Valley<br>Church</h1>','<h1>Come as you are.<br>Stay as family.</h1>')
+t=t.replace('<span class="sub">Come as you are</span>','<span class="sub">Casual and friendly</span>',1)
+t=t.replace('</style>','@media (max-width:480px){.hero h1{font-size:2.3rem;line-height:1.08;}}\n</style>',1)
 assert t.count('Worship at 10:45 AM, light breakfast beforehand')==2
 t=t.replace('Worship at 10:45 AM, light breakfast beforehand','Worship at 10:45 AM')
 YT='https://www.youtube.com/@prairievalleybaptistchurch9414/streams'
