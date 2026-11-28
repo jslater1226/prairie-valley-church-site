@@ -89,7 +89,7 @@ print('ok',len(out))
 # ================= PRODUCTION BUILD (dist/) =================
 import os, shutil, zipfile
 DOM='https://pvbchurch.org'
-NOINDEX=True  # TEMPORARY: preview is public on github.io; set False at launch
+NOINDEX=False  # launched on pvbchurch.org
 if os.path.exists('dist'): shutil.rmtree('dist')
 os.makedirs('dist/assets')
 shutil.copytree('fonts','dist/assets/fonts')
